@@ -243,73 +243,7 @@
     });
   });
 
-  // Stage controls start music and LED footage only on a visitor action.
-  var stopStageSound = function(){};
-  var stage = document.querySelector('.stage-preview');
-  if (stage) {
-    var stageButtons = document.querySelectorAll('[data-stage]');
-    var stageStatus = document.getElementById('stage-status');
-    var stageAll = document.getElementById('stage-all');
-    var stageMusic = document.getElementById('stage-music');
-    var ledVideo = document.getElementById('stage-led-video');
-    stageMusic.volume = .45;
-    stageMusic.addEventListener('playing', function(){ stage.classList.add('music-playing'); });
-    stageMusic.addEventListener('pause', function(){ stage.classList.remove('music-playing'); });
-    ledVideo.addEventListener('playing', function(){ stage.classList.add('led-playing'); stage.classList.remove('led-fallback'); });
-    ledVideo.addEventListener('pause', function(){ stage.classList.remove('led-playing'); });
-    ledVideo.muted = true;
-    stopStageSound = function(){
-      document.querySelector('[data-stage="sound"]').setAttribute('aria-pressed', 'false');
-      updateStage();
-    };
-    function updateStage(){
-      var enabled = [];
-      var labels = { sound: 'Música', lights: 'Luces', led: 'Video LED' };
-      stageButtons.forEach(function(button){
-        var on = button.getAttribute('aria-pressed') === 'true';
-        stage.classList.toggle(button.dataset.stage + '-on', on);
-        if (on) enabled.push(labels[button.dataset.stage]);
-      });
-      stageStatus.textContent = enabled.length ? enabled.join(' + ') + ' · Escenario en acción.' : 'Todo apagado. Enciende tu escenario.';
-      var allOn = enabled.length === stageButtons.length;
-      stageAll.firstChild.textContent = allOn ? 'Apagar todo ' : 'Encender todo ';
-      var soundButton = document.querySelector('[data-stage="sound"]');
-      if (soundButton.getAttribute('aria-pressed') === 'true') {
-        if (stageMusic.paused) stageMusic.play().catch(function(){
-          if (soundButton.getAttribute('aria-pressed') !== 'true') return;
-          soundButton.setAttribute('aria-pressed', 'false');
-          updateStage();
-          stageStatus.textContent = 'No se pudo iniciar la música. Pulsa Sonido para volver a intentarlo.';
-        });
-      } else { stageMusic.pause(); stageMusic.currentTime = 0; }
-      if (document.querySelector('[data-stage="led"]').getAttribute('aria-pressed') === 'true') {
-        if (ledVideo.paused) ledVideo.play().catch(function(error){ if (error.name !== 'AbortError' && stage.classList.contains('led-on')) stage.classList.add('led-fallback'); });
-      } else { ledVideo.pause(); stage.classList.remove('led-fallback'); }
-
-    }
-    stageButtons.forEach(function(button){
-      button.addEventListener('click', function(){
-        button.setAttribute('aria-pressed', String(button.getAttribute('aria-pressed') !== 'true'));
-        updateStage();
-      });
-    });
-    document.addEventListener('visibilitychange', function(){
-      if (document.hidden) { stopStageSound(); ledVideo.pause(); }
-      else if (stage.classList.contains('led-on')) ledVideo.play().catch(function(error){ if (error.name !== 'AbortError' && stage.classList.contains('led-on')) stage.classList.add('led-fallback'); });
-    });
-    addEventListener('pagehide', function(){ stageMusic.pause(); ledVideo.pause(); });
-    var lightEffect = document.getElementById('light-effect');
-    lightEffect.addEventListener('change', function(){
-      stage.dataset.lightEffect = lightEffect.value;
-      document.querySelector('[data-stage="lights"]').setAttribute('aria-pressed', 'true');
-      updateStage();
-    });
-    stageAll.addEventListener('click', function(){
-      var allOn = Array.prototype.every.call(stageButtons, function(button){ return button.getAttribute('aria-pressed') === 'true'; });
-      stageButtons.forEach(function(button){ button.setAttribute('aria-pressed', String(!allOn)); });
-      updateStage();
-    });
-  }
+  var stopStageSound = function(){ if (window.psmStage) window.psmStage.stopSound(); };
 
   // Shared cinema dialog; the same video returns to its card after closing.
   var cinema = null, cinemaVideo = null, cinemaFrame = null, cinemaTrigger = null;
