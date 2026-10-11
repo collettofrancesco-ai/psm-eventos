@@ -5,6 +5,43 @@
   var WHATSAPP_NUMBER = '59170067767';
   function waLink(msg){ return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg); }
   document.querySelectorAll('[data-wa]').forEach(function(a){ a.href = waLink(a.getAttribute('data-wa')); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+  // Selettore lingua ES/EN/IT/PT via Google Translate (traduce tutta la pagina)
+  function getLang(){
+    var m = document.cookie.match(/(?:^|;)\s*googtrans=\/es\/(\w+)/);
+    return m ? m[1] : 'es';
+  }
+  window.googleTranslateElementInit = function(){
+    try { new google.translate.TranslateElement({ pageLanguage: 'es', autoDisplay: false }, 'google_translate_element'); } catch(e){}
+  };
+  (function(){
+    var d = document.createElement('div');
+    d.id = 'google_translate_element';
+    d.style.cssText = 'position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;';
+    document.body.appendChild(d);
+    var s = document.createElement('script');
+    s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    s.async = true;
+    document.body.appendChild(s);
+  })();
+  document.querySelectorAll('.lang-switch button').forEach(function(b){
+    if (b.getAttribute('data-lang') === getLang()) {
+      document.querySelectorAll('.lang-switch button').forEach(function(x){ x.classList.toggle('active', x === b); });
+    }
+    b.addEventListener('click', function(){
+      var lang = b.getAttribute('data-lang');
+      var host = location.hostname;
+      var base = 'googtrans=/es/' + lang + '; path=/;';
+      if (lang === 'es') {
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + host;
+      } else {
+        document.cookie = base;
+        document.cookie = base + ' domain=' + host;
+      }
+      location.reload();
+    });
+  });
+
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 

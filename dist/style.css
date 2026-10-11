@@ -41,6 +41,16 @@ nav a.nav-link.active::after{content:'';position:absolute;left:14px;right:14px;b
 .nav-cta:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(25,194,220,.35)}
 #menu-toggle{display:none}
 
+/* ---------- Selettore lingua ---------- */
+.lang-switch{display:inline-flex;align-items:center;gap:2px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:100px;padding:3px;margin-left:10px}
+.lang-switch button{background:transparent;border:0;color:#a6aab3;font-size:11px;font-weight:700;letter-spacing:.5px;padding:7px 10px;border-radius:100px;cursor:pointer;transition:.2s}
+.lang-switch button:hover{color:#fff}
+.lang-switch button.active{background:var(--cyan);color:#000}
+/* nascondi barra Google Translate */
+.goog-te-banner-frame,.goog-te-gadget,.goog-te-balloon-frame{display:none!important}
+body{top:0!important}
+.skiptranslate{display:none!important}
+
 /* ---------- Buttons / labels ---------- */
 .button{display:inline-flex;align-items:center;justify-content:space-between;gap:28px;background:var(--cyan);color:#061014;padding:18px 22px;font-weight:700;font-size:13px;letter-spacing:.3px;border:0;border-radius:12px;transition:.25s;box-shadow:0 16px 40px rgba(25,194,220,.28)}
 .button span{font-size:20px}
