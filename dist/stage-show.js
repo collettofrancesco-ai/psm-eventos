@@ -13,6 +13,15 @@
   var fullButton = document.getElementById('stage-fullscreen');
   var effect = document.getElementById('light-effect');
   var reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  function psmLang(){ return window.PSM_LANG || 'es'; }
+  function ST(key, fallback){
+    try {
+      var D = window.PSM_DYN && window.PSM_DYN.stage[psmLang()];
+      if (D && D[key] !== undefined) return D[key];
+    } catch(e){}
+    return fallback;
+  }
+
   var state = {sound:false, lights:false, led:false};
   var showRunning = false, intro = false, timers = [], showCycle = null;
   var context = null, analyser = null, frequencies = null;
@@ -47,7 +56,7 @@
     music.play().catch(function(error){
       if (error.name === 'AbortError' || (!state.sound && !intro)) return;
       cancelShow(); state.sound = false; render();
-      status.textContent = 'Pulsa Sonido para volver a iniciar la música.';
+      status.textContent = ST('musicErr', 'Pulsa Sonido para volver a iniciar la música.');
     });
   }
   function startVideo(){
@@ -57,16 +66,16 @@
     });
   }
   function render(){
-    var labels = {sound:'Música', lights:'Luces', led:'Video LED'}, active = [];
+    var labels = {sound:ST('music','Música'), lights:ST('lights','Luces'), led:ST('led','Video LED')}, active = [];
     buttons.forEach(function(button){
       var key = button.dataset.stage;
       button.setAttribute('aria-pressed', String(state[key]));
       stage.classList.toggle(key + '-on', state[key]);
       if (state[key]) active.push(labels[key]);
     });
-    status.textContent = active.length ? active.join(' + ') + ' · ' + (showRunning ? 'Show en vivo.' : 'Escenario en acción.') : (showRunning ? 'Preparando tu show…' : 'Todo apagado. Enciende tu escenario.');
-    allButton.firstChild.textContent = buttons.every(function(button){return state[button.dataset.stage];}) ? 'Apagar todo ' : 'Encender todo ';
-    showButton.firstChild.textContent = showRunning ? 'Detener show ' : 'Iniciar show ';
+    status.textContent = active.length ? active.join(' + ') + ' · ' + (showRunning ? ST('live','Show en vivo.') : ST('action','Escenario en acción.')) : (showRunning ? ST('preparing','Preparando tu show…') : ST('off','Todo apagado. Enciende tu escenario.'));
+    allButton.firstChild.textContent = buttons.every(function(button){return state[button.dataset.stage];}) ? ST('allOff','Apagar todo ') : ST('allOn','Encender todo ');
+    showButton.firstChild.textContent = showRunning ? ST('stopShow','Detener show ') : ST('startShow','Iniciar show ');
     stage.classList.toggle('show-running', showRunning);
     if (state.sound) { music.volume = .45; startMusic(); }
     else if (!intro) { music.pause(); music.currentTime = 0; }
@@ -151,8 +160,8 @@
 
   function fullLabel(){
     var expanded=document.fullscreenElement===experience || experience.classList.contains('stage-expanded');
-    fullButton.firstChild.textContent=expanded?'Salir de pantalla completa ':'Pantalla completa ';
-    fullButton.setAttribute('aria-label',expanded?'Salir de pantalla completa':'Ver escenario a pantalla completa');
+    fullButton.firstChild.textContent=expanded?ST('exitFs','Salir de pantalla completa '):ST('enterFs','Pantalla completa ');
+    fullButton.setAttribute('aria-label',expanded?ST('exitFsAria','Salir de pantalla completa'):ST('viewFsAria','Ver escenario a pantalla completa'));
   }
   function closeExpanded(){experience.classList.remove('stage-expanded');document.body.classList.remove('stage-fullscreen-open');fullLabel();}
   fullButton.addEventListener('click',function(){
@@ -164,4 +173,5 @@
   document.addEventListener('fullscreenchange',fullLabel);
   document.addEventListener('keydown',function(event){if(event.key==='Escape')closeExpanded();});
   render();
+  document.addEventListener('psm-lang',function(){render();});
 })();
