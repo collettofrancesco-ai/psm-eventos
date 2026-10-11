@@ -67,7 +67,16 @@
   }
   function render(){
     var labels = {sound:ST('music','Música'), lights:ST('lights','Luces'), led:ST('led','Video LED')}, active = [];
-    buttons.forEach(function(button){
+    var presets = Array.from(document.querySelectorAll('[data-preset]'));
+  function applyPreset(name){
+    if (!name) return;
+    stage.dataset.preset = name;
+    presets.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.preset === name)); });
+  }
+  presets.forEach(function(b){
+    b.addEventListener('click', function(){ cancelShow(); applyPreset(b.dataset.preset); render(); });
+  });
+  buttons.forEach(function(button){
       var key = button.dataset.stage;
       button.setAttribute('aria-pressed', String(state[key]));
       stage.classList.toggle(key + '-on', state[key]);
@@ -158,6 +167,13 @@
   addEventListener('pagehide',function(){cancelShow();music.pause();video.pause();cancelAnimationFrame(frame);});
   window.psmStage={stopSound:function(){cancelShow();state.sound=false;render();}};
 
+  var dayBtn = document.getElementById('stage-daynight');
+  function renderDay(){
+    if (!dayBtn) return;
+    var day = stage.dataset.mode === 'day';
+    dayBtn.firstChild.textContent = day ? ST('nightBtn', 'Ver de noche ') : ST('dayBtn', 'Ver de día ');
+  }
+  if (dayBtn) dayBtn.addEventListener('click', function(){ stage.dataset.mode = stage.dataset.mode === 'day' ? 'night' : 'day'; renderDay(); });
   function fullLabel(){
     var expanded=document.fullscreenElement===experience || experience.classList.contains('stage-expanded');
     fullButton.firstChild.textContent=expanded?ST('exitFs','Salir de pantalla completa '):ST('enterFs','Pantalla completa ');
@@ -173,5 +189,6 @@
   document.addEventListener('fullscreenchange',fullLabel);
   document.addEventListener('keydown',function(event){if(event.key==='Escape')closeExpanded();});
   render();
-  document.addEventListener('psm-lang',function(){render();});
+  renderDay();
+  document.addEventListener('psm-lang',function(){render();renderDay();});
 })();

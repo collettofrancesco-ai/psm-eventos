@@ -137,6 +137,11 @@ en: {
 'home.109': 'psmeventos@hotmail.com',
 'home.110': '© <span id="year"></span> <span class="brand-mark brand-footer"><img src="assets/logo.jpg" alt="PSM Eventos"></span> · Santa Cruz de la Sierra, Bolivia',
 'home.111': 'SINCE 2000 · PRODUCTION · SOUND · LIGHTING',
+'home.112': 'Pick a scene',
+'home.113': 'Concert',
+'home.114': 'Corporate',
+'home.115': 'Wedding',
+'home.116': 'See it by day <span aria-hidden="true">☀</span>',
 'serv.1': '<i></i>What we do',
 'serv.2': 'Full <em style="font-style:normal;color:var(--cyan)">production.</em>',
 'serv.3': 'Five services, one experience. We design every setup around your space, your audience and your idea — with our own equipment and expert crew.',
@@ -500,6 +505,11 @@ it: {
 'home.109': 'psmeventos@hotmail.com',
 'home.110': '© <span id="year"></span> <span class="brand-mark brand-footer"><img src="assets/logo.jpg" alt="PSM Eventos"></span> · Santa Cruz de la Sierra, Bolivia',
 'home.111': 'DAL 2000 · PRODUCTION · SOUND · LIGHTING',
+'home.112': 'Scegli la scena',
+'home.113': 'Concerto',
+'home.114': 'Aziendale',
+'home.115': 'Matrimonio',
+'home.116': 'Vedi di giorno <span aria-hidden="true">☀</span>',
 'serv.1': '<i></i>Cosa facciamo',
 'serv.2': 'Produzione <em style="font-style:normal;color:var(--cyan)">integrale.</em>',
 'serv.3': 'Cinque servizi, un’unica esperienza. Disegniamo ogni allestimento su misura del tuo spazio, del tuo pubblico e della tua idea — con attrezzatura propria e personale esperto.',
@@ -863,6 +873,11 @@ pt: {
 'home.109': 'psmeventos@hotmail.com',
 'home.110': '© <span id="year"></span> <span class="brand-mark brand-footer"><img src="assets/logo.jpg" alt="PSM Eventos"></span> · Santa Cruz de la Sierra, Bolivia',
 'home.111': 'DESDE 2000 · PRODUCTION · SOUND · LIGHTING',
+'home.112': 'Escolha a cena',
+'home.113': 'Show',
+'home.114': 'Corporativo',
+'home.115': 'Casamento',
+'home.116': 'Ver de dia <span aria-hidden="true">☀</span>',
 'serv.1': '<i></i>O que fazemos',
 'serv.2': 'Produção <em style="font-style:normal;color:var(--cyan)">integral.</em>',
 'serv.3': 'Cinco serviços, uma mesma experiência. Desenhamos cada montagem sob medida para seu espaço, seu público e sua ideia — com equipamento próprio e equipe especializada.',
@@ -1108,9 +1123,9 @@ it: { greet: { 'Evento corporativo': 'Ciao, PSM. Vorrei un preventivo per un eve
 pt: { greet: { 'Evento corporativo': 'Olá, PSM. Quero um orçamento para um evento corporativo na Bolívia.', 'Concierto': 'Olá, PSM. Quero um orçamento para um show na Bolívia.', 'Evento social': 'Olá, PSM. Quero um orçamento para um evento social na Bolívia.', 'Otro evento': 'Olá, PSM. Quero um orçamento para um evento na Bolívia.' }, date: 'Data', city: 'Cidade ou local', guests: 'Participantes', services: 'Serviços', names: { 'Sonido': 'Som', 'Iluminación': 'Iluminação', 'Pantallas LED': 'Telas de LED', 'Tarimas': 'Praticáveis', 'Escenarios': 'Palcos' } }
 },
 stage: {
-en: { music: 'Music', lights: 'Lights', led: 'LED video', live: 'Live show.', action: 'Stage in action.', preparing: 'Setting up your show…', off: 'Everything is off. Switch on your stage.', allOff: 'Switch everything off ', allOn: 'Switch everything on ', stopShow: 'Stop show ', startShow: 'Start show ', enterFs: 'Full screen ', exitFs: 'Exit full screen ', enterFsAria: 'View stage full screen', exitFsAria: 'Exit full screen', musicErr: 'Press Sound to restart the music.' },
-it: { music: 'Musica', lights: 'Luci', led: 'Video LED', live: 'Show dal vivo.', action: 'Palco in azione.', preparing: 'Preparo il tuo show…', off: 'Tutto spento. Accendi il tuo palco.', allOff: 'Spegni tutto ', allOn: 'Accendi tutto ', stopShow: 'Ferma lo show ', startShow: 'Avvia lo show ', enterFs: 'Schermo intero ', exitFs: 'Esci da schermo intero ', enterFsAria: 'Vedi il palco a schermo intero', exitFsAria: 'Esci da schermo intero', musicErr: 'Premi Audio per riavviare la musica.' },
-pt: { music: 'Música', lights: 'Luzes', led: 'Vídeo LED', live: 'Show ao vivo.', action: 'Palco em ação.', preparing: 'Preparando seu show…', off: 'Tudo desligado. Ligue seu palco.', allOff: 'Desligar tudo ', allOn: 'Ligar tudo ', stopShow: 'Parar show ', startShow: 'Iniciar show ', enterFs: 'Tela cheia ', exitFs: 'Sair da tela cheia ', enterFsAria: 'Ver palco em tela cheia', exitFsAria: 'Sair da tela cheia', musicErr: 'Pressione Som para reiniciar a música.' }
+en: { music: 'Music', lights: 'Lights', led: 'LED video', dayBtn: 'See it by day ', nightBtn: 'See it by night ', live: 'Live show.', action: 'Stage in action.', preparing: 'Setting up your show…', off: 'Everything is off. Switch on your stage.', allOff: 'Switch everything off ', allOn: 'Switch everything on ', stopShow: 'Stop show ', startShow: 'Start show ', enterFs: 'Full screen ', exitFs: 'Exit full screen ', enterFsAria: 'View stage full screen', exitFsAria: 'Exit full screen', musicErr: 'Press Sound to restart the music.' },
+it: { music: 'Musica', lights: 'Luci', led: 'Video LED', dayBtn: 'Vedi di giorno ', nightBtn: 'Vedi di notte ', live: 'Show dal vivo.', action: 'Palco in azione.', preparing: 'Preparo il tuo show…', off: 'Tutto spento. Accendi il tuo palco.', allOff: 'Spegni tutto ', allOn: 'Accendi tutto ', stopShow: 'Ferma lo show ', startShow: 'Avvia lo show ', enterFs: 'Schermo intero ', exitFs: 'Esci da schermo intero ', enterFsAria: 'Vedi il palco a schermo intero', exitFsAria: 'Esci da schermo intero', musicErr: 'Premi Audio per riavviare la musica.' },
+pt: { music: 'Música', lights: 'Luzes', led: 'Vídeo LED', dayBtn: 'Ver de dia ', nightBtn: 'Ver de noite ', live: 'Show ao vivo.', action: 'Palco em ação.', preparing: 'Preparando seu show…', off: 'Tudo desligado. Ligue seu palco.', allOff: 'Desligar tudo ', allOn: 'Ligar tudo ', stopShow: 'Parar show ', startShow: 'Iniciar show ', enterFs: 'Tela cheia ', exitFs: 'Sair da tela cheia ', enterFsAria: 'Ver palco em tela cheia', exitFsAria: 'Sair da tela cheia', musicErr: 'Pressione Som para reiniciar a música.' }
 },
 cinema: {
 en: { live: 'PSM LIVE', close: 'Close video', photo: 'PSM photo' },
