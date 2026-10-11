@@ -97,15 +97,38 @@
       b.classList.toggle('selected', active);
       b.setAttribute('aria-pressed', String(active));
     });
-    var wbtn = document.getElementById('whatsapp-btn');
-    if (wbtn) { var _m = 'Hola, PSM. Quiero conversar sobre ' + (name === 'Otro evento' ? 'un evento' : 'un ' + name.toLowerCase()) + ' en Bolivia.'; wbtn.href = waLink(_m); wbtn.setAttribute('target','_blank'); wbtn.setAttribute('rel','noopener'); }
-    var prev = document.getElementById('message-preview');
-    if (prev) prev.textContent = 'Hola, PSM. Quiero conversar sobre ' + (name === 'Otro evento' ? 'un evento' : 'un ' + name.toLowerCase()) + ' en Bolivia.';
+    updateQuote();
     var st = document.getElementById('copy-status'); if (st) st.textContent = '';
   }
   document.querySelectorAll('[data-choice]').forEach(function(b){
     b.addEventListener('click', function(){ selectEvent(b.dataset.choice); });
   });
+
+  function updateQuote(){
+    var prev = document.getElementById('message-preview');
+    var wbtn = document.getElementById('whatsapp-btn');
+    if (!prev || !wbtn) return;
+    var choice = document.querySelector('[data-choice].selected');
+    var name = choice ? choice.dataset.choice : 'Otro evento';
+    var lines = ['Hola, PSM. Quiero pedir una cotización para ' + (name === 'Otro evento' ? 'un evento' : 'un ' + name.toLowerCase()) + ' en Bolivia.'];
+    var date = document.getElementById('event-date');
+    var city = document.getElementById('event-city');
+    var guests = document.getElementById('event-guests');
+    if (date && date.value) lines.push('Fecha: ' + date.value.split('-').reverse().join('/'));
+    if (city && city.value.trim()) lines.push('Ciudad o lugar: ' + city.value.trim());
+    if (guests && guests.value && guests.validity.valid) lines.push('Participantes: ' + guests.value);
+    var services = Array.prototype.map.call(document.querySelectorAll('.quote-services input:checked'), function(input){ return input.value; });
+    if (services.length) lines.push('Servicios: ' + services.join(', '));
+    var message = lines.join('\n');
+    prev.textContent = message;
+    wbtn.href = waLink(message);
+  }
+  var quoteDetails = document.getElementById('quote-details');
+  if (quoteDetails) {
+    quoteDetails.addEventListener('input', updateQuote);
+    quoteDetails.addEventListener('change', updateQuote);
+    updateQuote();
+  }
 
   var copyBtn = document.getElementById('copy-message');
   if (copyBtn) {

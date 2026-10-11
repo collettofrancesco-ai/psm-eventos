@@ -371,3 +371,18 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 .video-howto code{background:#000;color:var(--cyan);padding:2px 8px;border-radius:6px;font-size:12px}
 @media(max-width:1080px){.video-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.video-grid{grid-template-columns:1fr}.page-hero{min-height:0}}
+
+/* Cotización por WhatsApp */
+.quote-hint{font-size:13px;line-height:1.6;margin:0 0 18px;color:#234d55}
+.quote-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.quote-fields label{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:600;min-width:0}
+.quote-fields label:last-child{grid-column:1/-1}
+.quote-fields input{width:100%;min-width:0;box-sizing:border-box;padding:12px;border:1px solid #759fa7;border-radius:10px;background:#fff;color:#061318;font:inherit;font-size:16px;min-height:46px}
+.quote-fields input:focus-visible,.quote-services input:focus-visible{outline:3px solid #065e6b;outline-offset:3px}
+.quote-services{border:0;padding:0;margin:22px 0;display:flex;flex-wrap:wrap;gap:10px}
+.quote-services legend{font-size:13px;font-weight:600;margin-bottom:12px}
+.quote-services label{display:flex;align-items:center;gap:8px;border:1px solid #759fa7;border-radius:10px;background:#fff;padding:10px 12px;font-size:13px;cursor:pointer}
+.quote-services input{width:18px;height:18px;accent-color:#065e6b}
+.quote-preview-label{margin-bottom:10px}
+.message-preview{white-space:pre-line;overflow-wrap:anywhere}
+@media(max-width:600px){.quote-fields{grid-template-columns:1fr}.contact-panel{padding:22px}.contact-panel>.button{white-space:normal;line-height:1.5}}
