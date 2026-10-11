@@ -61,7 +61,8 @@
 
   // Acordeón servicios (solo servicios.html)
   var headlines = ['La energía<br>también se escucha.','La luz cambia<br>todo.','Tu mensaje.<br>A otra escala.','El espacio para<br>tu gran momento.','Aquí empieza<br>el espectáculo.'];
-  var images = ['assets/stage.jpg','assets/night.jpg','assets/cliente-5.jpg','assets/cliente-1.jpg','assets/cliente-4.jpg'];
+  var images = ['assets/evento-2.jpg','assets/cliente-2.jpg','assets/stage.jpg','assets/cliente-1.jpg','assets/cliente-5.jpg'];
+  var imageDescriptions = ['Consola de sonido profesional','Focos y haces de luz sobre un escenario','Pantallas LED en un escenario PSM','Tarimas y montaje del escenario','Escenario y estructura al aire libre'];
   var toggles = document.querySelectorAll('.service-toggle');
   if (toggles.length) {
     toggles.forEach(function(btn, i){
@@ -75,7 +76,7 @@
         });
         var h = document.getElementById('service-headline'); if (h) h.innerHTML = headlines[i] || '';
         var n = document.getElementById('service-number'); if (n) n.textContent = '0'+(i+1)+' / 05';
-        var img = document.getElementById('service-image'); if (img && images[i]) img.src = images[i];
+        var img = document.getElementById('service-image'); if (img && images[i]) { img.src = images[i]; img.alt = imageDescriptions[i]; }
       });
     });
   }
@@ -172,6 +173,42 @@
       });
     });
   }
+
+  // Cover first; native controls become visible when the visitor starts the video.
+  document.querySelectorAll('.video-card').forEach(function(card){
+    var video = card.querySelector('video');
+    var frame = card.querySelector('.video-frame');
+    var title = card.querySelector('h3');
+    if (!video || !frame || !title) return;
+    var cover = document.createElement('button');
+    cover.type = 'button';
+    cover.className = 'video-cover';
+    cover.setAttribute('aria-label', 'Reproducir video: ' + title.textContent);
+    var poster = document.createElement('img');
+    poster.src = video.poster;
+    poster.alt = '';
+    poster.loading = 'lazy';
+    var play = document.createElement('span');
+    play.className = 'video-play';
+    play.setAttribute('aria-hidden', 'true');
+    play.textContent = '▶';
+    var caption = document.createElement('span');
+    caption.className = 'video-cover-caption';
+    caption.textContent = 'VER VIDEO · ' + title.textContent;
+    cover.appendChild(poster);
+    cover.appendChild(play);
+    cover.appendChild(caption);
+    frame.appendChild(cover);
+    video.hidden = true;
+    cover.addEventListener('click', function(){
+      document.querySelectorAll('.video-card video').forEach(function(other){ if (other !== video) other.pause(); });
+      cover.hidden = true;
+      video.hidden = false;
+      video.focus();
+      var playing = video.play();
+      if (playing && playing.catch) playing.catch(function(){ /* Native controls remain available to retry. */ });
+    });
+  });
 
   // Reveal on scroll
   var rev = document.querySelectorAll('.reveal');
