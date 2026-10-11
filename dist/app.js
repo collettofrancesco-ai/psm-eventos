@@ -135,6 +135,21 @@
     });
   }
 
+  // Filtri galleria (solo galeria.html)
+  var filters = document.querySelectorAll('.filter-bar button');
+  if (filters.length) {
+    filters.forEach(function(f){
+      f.addEventListener('click', function(){
+        filters.forEach(function(x){ x.classList.toggle('active', x === f); });
+        var cat = f.getAttribute('data-filter');
+        document.querySelectorAll('.gallery-item').forEach(function(it){
+          var show = cat === 'todas' || it.getAttribute('data-cat') === cat;
+          it.classList.toggle('hide', !show);
+        });
+      });
+    });
+  }
+
   // Reveal on scroll
   var rev = document.querySelectorAll('.reveal');
   if (rev.length && 'IntersectionObserver' in window) {
