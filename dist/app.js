@@ -1,7 +1,150 @@
-document.getElementById('year').textContent=new Date().getFullYear();
-const menu=document.querySelector('nav'),menuToggle=document.getElementById('menu-toggle');menuToggle.addEventListener('click',()=>{const open=menu.classList.toggle('open');menuToggle.setAttribute('aria-expanded',String(open));menuToggle.setAttribute('aria-label',open?'Cerrar menú':'Abrir menú');});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');menuToggle.setAttribute('aria-expanded','false');menuToggle.setAttribute('aria-label','Abrir menú');}));
-const slides=[...document.querySelectorAll('.hero-photo')],dots=[...document.querySelectorAll('.slide-dot')];let slideIndex=0;function setSlide(n){slideIndex=n;slides.forEach((s,i)=>s.classList.toggle('active',i===n));dots.forEach((d,i)=>{d.classList.toggle('active',i===n);d.setAttribute('aria-pressed',String(i===n));});}dots.forEach(d=>d.addEventListener('click',()=>{setSlide(Number(d.dataset.slide));clearInterval(slideTimer);}));let slideTimer;if(!matchMedia('(prefers-reduced-motion: reduce)').matches)slideTimer=setInterval(()=>{if(!document.hidden)setSlide((slideIndex+1)%slides.length);},8000);
-const serviceHeadlines=['La energía<br>también se escucha.','La luz cambia<br>todo.','Tu mensaje.<br>A otra escala.','El espacio para<br>tu gran momento.','Aquí empieza<br>el espectáculo.'];document.querySelectorAll('.service-toggle').forEach((button,i)=>button.addEventListener('click',()=>{document.querySelectorAll('.service').forEach((s,j)=>{const active=i===j;s.classList.toggle('active',active);s.querySelector('button').setAttribute('aria-expanded',String(active));s.querySelector('.service-icon').textContent=active?'−':'+';s.querySelector('.service-detail').hidden=!active;});document.getElementById('service-headline').innerHTML=serviceHeadlines[i];document.getElementById('service-number').textContent=`0${i+1} / 05`;}));
-function selectEvent(name){document.querySelectorAll('[data-choice]').forEach(b=>{const active=b.dataset.choice===name;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});document.getElementById('message-preview').textContent=`Hola, PSM. Quiero conversar sobre ${name==='Otro evento'?'un evento':'un '+name.toLowerCase()} en Santa Cruz.`;document.getElementById('copy-status').textContent='';}document.querySelectorAll('[data-choice]').forEach(b=>b.addEventListener('click',()=>selectEvent(b.dataset.choice)));document.querySelectorAll('[data-event]').forEach(a=>a.addEventListener('click',()=>selectEvent(a.dataset.event)));
-document.getElementById('copy-message').addEventListener('click',async()=>{const text=document.getElementById('message-preview').textContent;try{await navigator.clipboard.writeText(text);document.getElementById('copy-status').textContent='Mensaje copiado. Pégalo en la conversación de Facebook.';}catch{document.getElementById('copy-status').textContent='Selecciona el mensaje de arriba y cópialo para enviarlo por Facebook.';}});
-const modal=document.getElementById('lightbox');document.querySelectorAll('[data-photo]').forEach(b=>b.addEventListener('click',()=>{modal.querySelector('img').src=b.dataset.photo;modal.querySelector('img').alt=b.dataset.caption;modal.querySelector('p').textContent=b.dataset.caption;modal.showModal();}));modal.querySelector('.close').addEventListener('click',()=>modal.close());modal.addEventListener('click',e=>{if(e.target===modal){const r=modal.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)modal.close();}});
+// PSM multipagina — seguro en todas las páginas
+(function(){
+  document.documentElement.classList.add('js');
+  // NUMERO WHATSAPP DEL PROPRIETARIO — sostituire con quello reale (formato internazionale senza +)
+  var WHATSAPP_NUMBER = '59170067767';
+  function waLink(msg){ return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg); }
+  document.querySelectorAll('[data-wa]').forEach(function(a){ a.href = waLink(a.getAttribute('data-wa')); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+  var y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+
+  // Menú móvil
+  var menu = document.querySelector('nav');
+  var toggle = document.getElementById('menu-toggle');
+  if (menu && toggle) {
+    toggle.addEventListener('click', function(){
+      var open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    });
+    menu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded','false');
+      });
+    });
+  }
+
+  // Activo automático según página (refuerzo)
+  try {
+    var page = (location.pathname.split('/').pop() || 'index.html').split('?')[0];
+    if (!page) page = 'index.html';
+    document.querySelectorAll('nav a.nav-link').forEach(function(a){
+      var href = a.getAttribute('href');
+      if (href === page) a.classList.add('active');
+      else if (page === '' && href === 'index.html') a.classList.add('active');
+    });
+  } catch(e){}
+
+  // Slider hero (solo home)
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.hero-photo'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.slide-dot'));
+  if (slides.length && dots.length) {
+    var idx = 0, timer = null;
+    function setSlide(n){
+      idx = (n + slides.length) % slides.length;
+      slides.forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+      dots.forEach(function(d,i){
+        d.classList.toggle('active', i===idx);
+        d.setAttribute('aria-pressed', String(i===idx));
+      });
+    }
+    dots.forEach(function(d){
+      d.addEventListener('click', function(){
+        setSlide(Number(d.dataset.slide)); if (timer) clearInterval(timer);
+      });
+    });
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      timer = setInterval(function(){ if(!document.hidden) setSlide(idx+1); }, 6000);
+    }
+  }
+
+  // Acordeón servicios (solo servicios.html)
+  var headlines = ['La energía<br>también se escucha.','La luz cambia<br>todo.','Tu mensaje.<br>A otra escala.','El espacio para<br>tu gran momento.','Aquí empieza<br>el espectáculo.'];
+  var images = ['assets/stage.jpg','assets/night.jpg','assets/cliente-5.jpg','assets/cliente-1.jpg','assets/cliente-4.jpg'];
+  var toggles = document.querySelectorAll('.service-toggle');
+  if (toggles.length) {
+    toggles.forEach(function(btn, i){
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('.service').forEach(function(s, j){
+          var active = i === j;
+          s.classList.toggle('active', active);
+          var b = s.querySelector('button'); if (b) b.setAttribute('aria-expanded', String(active));
+          var ic = s.querySelector('.service-icon'); if (ic) ic.textContent = active ? '−' : '+';
+          var det = s.querySelector('.service-detail'); if (det) det.hidden = !active;
+        });
+        var h = document.getElementById('service-headline'); if (h) h.innerHTML = headlines[i] || '';
+        var n = document.getElementById('service-number'); if (n) n.textContent = '0'+(i+1)+' / 05';
+        var img = document.getElementById('service-image'); if (img && images[i]) img.src = images[i];
+      });
+    });
+  }
+
+  // Preselección tipo evento desde ?tipo= (eventos -> contacto)
+  try {
+    var params = new URLSearchParams(location.search);
+    var tipo = params.get('tipo');
+    if (tipo) {
+      var map = { corporativo: 'Evento corporativo', concierto: 'Concierto', social: 'Evento social' };
+      var name = map[tipo.toLowerCase()];
+      if (name) selectEvent(name);
+    }
+  } catch(e){}
+
+  function selectEvent(name){
+    document.querySelectorAll('[data-choice]').forEach(function(b){
+      var active = b.dataset.choice === name;
+      b.classList.toggle('selected', active);
+      b.setAttribute('aria-pressed', String(active));
+    });
+    var wbtn = document.getElementById('whatsapp-btn');
+    if (wbtn) { var _m = 'Hola, PSM. Quiero conversar sobre ' + (name === 'Otro evento' ? 'un evento' : 'un ' + name.toLowerCase()) + ' en Bolivia.'; wbtn.href = waLink(_m); wbtn.setAttribute('target','_blank'); wbtn.setAttribute('rel','noopener'); }
+    var prev = document.getElementById('message-preview');
+    if (prev) prev.textContent = 'Hola, PSM. Quiero conversar sobre ' + (name === 'Otro evento' ? 'un evento' : 'un ' + name.toLowerCase()) + ' en Bolivia.';
+    var st = document.getElementById('copy-status'); if (st) st.textContent = '';
+  }
+  document.querySelectorAll('[data-choice]').forEach(function(b){
+    b.addEventListener('click', function(){ selectEvent(b.dataset.choice); });
+  });
+
+  var copyBtn = document.getElementById('copy-message');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async function(){
+      var text = document.getElementById('message-preview').textContent;
+      var st = document.getElementById('copy-status');
+      try { await navigator.clipboard.writeText(text); st.textContent = 'Mensaje copiado. Pégalo en la conversación de Facebook.'; }
+      catch(e){ st.textContent = 'Selecciona el mensaje de arriba y cópialo para enviarlo por Facebook.'; }
+    });
+  }
+
+  // Lightbox (home + galería)
+  var modal = document.getElementById('lightbox');
+  if (modal) {
+    document.querySelectorAll('[data-photo]').forEach(function(b){
+      b.addEventListener('click', function(){
+        modal.querySelector('img').src = b.dataset.photo;
+        modal.querySelector('img').alt = b.dataset.caption || 'Foto PSM';
+        modal.querySelector('p').textContent = b.dataset.caption || '';
+        if (modal.showModal) modal.showModal();
+      });
+    });
+    var c = modal.querySelector('.close');
+    if (c) c.addEventListener('click', function(){ modal.close(); });
+    modal.addEventListener('click', function(e){
+      if (e.target === modal) modal.close();
+    });
+  }
+
+  // Reveal on scroll
+  var rev = document.querySelectorAll('.reveal');
+  if (rev.length && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+      });
+    }, { threshold: .12 });
+    rev.forEach(function(el){ io.observe(el); });
+  } else {
+    rev.forEach(function(el){ el.classList.add('visible'); });
+  }
+})();
