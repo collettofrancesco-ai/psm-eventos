@@ -59,6 +59,11 @@ nav a.nav-link.active::after{content:'';position:absolute;left:14px;right:14px;b
 .hero-slides,.hero-photo,.hero-shade{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
 .hero-photo{object-fit:cover;object-position:center 60%;opacity:0;transition:opacity 1.1s ease,transform 7s linear;transform:scale(1.06)}
 .hero-photo.active{opacity:1;transform:scale(1)}
+.hero-fallback,.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero-fallback{object-position:center 60%}
+.hero-live{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.8px;font-weight:700;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:8px 14px;border-radius:100px;backdrop-filter:blur(8px)}
+.hero-live i{width:8px;height:8px;border-radius:50%;background:#ff3b5c;box-shadow:0 0 12px #ff3b5c;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.35}}
 .hero-shade{z-index:-1;background:linear-gradient(180deg,rgba(7,9,13,.55) 0%,rgba(7,9,13,.15) 35%,rgba(10,11,15,.88) 100%),linear-gradient(90deg,rgba(7,9,13,.78) 0%,rgba(7,9,13,.25) 60%,transparent 100%)}
 .hero-inner{width:100%;max-width:var(--max);margin:0 auto;padding:60px clamp(20px,4vw,40px) 0;position:relative;z-index:2}
 .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:26px}
@@ -330,6 +335,21 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
   .page-hero{min-height:52vh}
   .split img.round{height:320px}
 }
+
+/* ---------- Righe contatto ---------- */
+.contact-rows{display:grid;gap:10px;margin:22px 0 6px}
+.contact-row{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:14px 18px;transition:.2s}
+.contact-row:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.contact-row b{font-size:10px;letter-spacing:1.8px}
+.contact-row span{font-size:14px;font-weight:700}
+/* ---------- Filtri galleria ---------- */
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 6px}
+.filter-bar button{background:rgba(255,255,255,.06);border:1px solid var(--line);color:#c9ccd3;font-size:12px;font-weight:600;padding:10px 16px;border-radius:100px;cursor:pointer;transition:.2s}
+.filter-bar button:hover{border-color:var(--cyan);color:#fff}
+.filter-bar button.active{background:var(--cyan);border-color:var(--cyan);color:#000}
+.gallery-item{transition:opacity .35s,transform .35s}
+.gallery-item.hide{display:none}
+
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before{transition:none!important;animation:none!important}.reveal{opacity:1;transform:none}}
 
 /* ---------- Videos ---------- */
