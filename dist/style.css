@@ -335,13 +335,13 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
   .page-hero{min-height:52vh}
   .split img.round{height:320px}
 }
-/* ---------- WhatsApp flottante ---------- */
-.wa-float{position:fixed;right:20px;bottom:20px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 14px 34px rgba(37,211,102,.45);transition:transform .25s}
-.wa-float:hover{transform:scale(1.08)}
-.wa-float svg{width:30px;height:30px;fill:#fff}
-.wa-float::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid #25d366;animation:wa-ping 2.2s ease-out infinite}
-@keyframes wa-ping{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.55);opacity:0}}
 
+/* ---------- Righe contatto ---------- */
+.contact-rows{display:grid;gap:10px;margin:22px 0 6px}
+.contact-row{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:14px 18px;transition:.2s}
+.contact-row:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.contact-row b{font-size:10px;letter-spacing:1.8px}
+.contact-row span{font-size:14px;font-weight:700}
 /* ---------- Filtri galleria ---------- */
 .filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 6px}
 .filter-bar button{background:rgba(255,255,255,.06);border:1px solid var(--line);color:#c9ccd3;font-size:12px;font-weight:600;padding:10px 16px;border-radius:100px;cursor:pointer;transition:.2s}
