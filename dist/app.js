@@ -5,42 +5,117 @@
   var WHATSAPP_NUMBER = '59170067767';
   function waLink(msg){ return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg); }
   document.querySelectorAll('[data-wa]').forEach(function(a){ a.href = waLink(a.getAttribute('data-wa')); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
-  // Selettore lingua ES/EN/IT/PT via Google Translate (traduce tutta la pagina)
-  function getLang(){
-    var m = document.cookie.match(/(?:^|;)\s*googtrans=\/es\/(\w+)/);
-    return m ? m[1] : 'es';
-  }
-  window.googleTranslateElementInit = function(){
-    try { new google.translate.TranslateElement({ pageLanguage: 'es', autoDisplay: false }, 'google_translate_element'); } catch(e){}
-  };
+  // Dropdown lingua ES/EN/IT/PT: gadget Google (istantaneo) + fallback proxy
   (function(){
-    var d = document.createElement('div');
-    d.id = 'google_translate_element';
-    d.style.cssText = 'position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;';
-    document.body.appendChild(d);
-    var s = document.createElement('script');
-    s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    s.async = true;
-    document.body.appendChild(s);
-  })();
-  document.querySelectorAll('.lang-switch button').forEach(function(b){
-    if (b.getAttribute('data-lang') === getLang()) {
-      document.querySelectorAll('.lang-switch button').forEach(function(x){ x.classList.toggle('active', x === b); });
+    var ORIGIN_HOST = 'collettofrancesco-ai.github.io';
+    var PROXY_HOST = 'collettofrancesco-ai-github-io.translate.goog';
+    var SITE_BASE = '/psm-eventos/';
+    var box = document.querySelector('.lang-switch');
+    if (!box) return;
+    var btn = document.getElementById('lang-btn');
+    var menu = box.querySelector('.lang-menu');
+    var FLAGS = {}, CODES = { es: 'ES', en: 'EN', it: 'IT', pt: 'PT' };
+    box.querySelectorAll('.lang-menu button').forEach(function(o){
+      FLAGS[o.getAttribute('data-lang')] = o.querySelector('.flag').innerHTML;
+    });
+    function onProxy(){ return location.hostname.indexOf('translate.goog') !== -1; }
+    function currentLang(){
+      if (onProxy()) {
+        var m = location.search.match(/_x_tr_tl=([a-z-]+)/);
+        return m ? m[1].split('-')[0] : 'en';
+      }
+      var c = document.cookie.match(/(?:^|;)\s*googtrans=\/es\/(\w+)/);
+      return c ? c[1] : 'es';
     }
-    b.addEventListener('click', function(){
-      var lang = b.getAttribute('data-lang');
-      var host = location.hostname;
-      var base = 'googtrans=/es/' + lang + '; path=/;';
+    function pagePath(){
+      var path = location.pathname;
+      var i = path.indexOf(SITE_BASE);
+      var rel = i !== -1 ? path.slice(i + SITE_BASE.length) : path.replace(/^\//, '');
+      if (!rel || rel.slice(-1) === '/') rel += 'index.html';
+      return rel;
+    }
+    function setCookies(lang){
       if (lang === 'es') {
         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + host;
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + location.hostname;
       } else {
-        document.cookie = base;
-        document.cookie = base + ' domain=' + host;
+        var v = 'googtrans=/es/' + lang + '; path=/;';
+        document.cookie = v;
+        document.cookie = v + ' domain=' + location.hostname;
       }
-      location.reload();
+    }
+    function proxyUrl(lang){
+      return 'https://' + PROXY_HOST + SITE_BASE + pagePath() + '?_x_tr_sl=es&_x_tr_tl=' + lang + '&_x_tr_hl=es';
+    }
+    function syncBtn(lang){
+      if (FLAGS[lang]) {
+        btn.querySelector('.flag').innerHTML = FLAGS[lang];
+        btn.querySelector('b').textContent = CODES[lang] || lang.toUpperCase();
+      }
+      box.querySelectorAll('.lang-menu button').forEach(function(o){
+        o.classList.toggle('current', o.getAttribute('data-lang') === lang);
+      });
+    }
+    window.googleTranslateElementInit = function(){
+      try { new google.translate.TranslateElement({ pageLanguage: 'es', autoDisplay: false }, 'google_translate_element'); } catch(e){}
+    };
+    (function(){
+      var d = document.createElement('div');
+      d.id = 'google_translate_element';
+      d.style.cssText = 'position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;';
+      d.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(d);
+      var s = document.createElement('script');
+      s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      s.async = true;
+      document.body.appendChild(s);
+    })();
+    function goLang(lang){
+      closeMenu();
+      if (lang === 'es') {
+        if (onProxy()) { location.href = 'https://' + ORIGIN_HOST + SITE_BASE + pagePath(); return; }
+        setCookies('es');
+        location.reload();
+        return;
+      }
+      setCookies(lang);
+      var tries = 0;
+      (function attempt(){
+        var sel = document.querySelector('.goog-te-combo');
+        if (sel) {
+          sel.value = lang;
+          sel.dispatchEvent(new Event('change'));
+          syncBtn(lang);
+        } else if (tries++ < 24) {
+          setTimeout(attempt, 250);
+        } else {
+          location.href = proxyUrl(lang);
+        }
+      })();
+    }
+    syncBtn(currentLang());
+    box.querySelectorAll('.lang-menu button').forEach(function(o){
+      o.addEventListener('click', function(){ goLang(o.getAttribute('data-lang')); });
     });
-  });
+    function closeMenu(){
+      if (menu) menu.hidden = true;
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+    if (btn && menu) {
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var open = menu.hidden;
+        menu.hidden = !open;
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      document.addEventListener('click', function(e){
+        if (!box.contains(e.target)) closeMenu();
+      });
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape') closeMenu();
+      });
+    }
+  })();
 
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
