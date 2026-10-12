@@ -862,6 +862,38 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
   .stage-speaker{top:var(--mobile-led-top)}
   .stage-led-wing{top:calc(var(--mobile-led-top) + 2%)}
 }
+/* Ground-support truss drawn by scripts/build-truss.py: rear plane dimmer, front plane on the layout grid. */
+.stage-truss path{fill:none;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.stage-truss .truss-chord{stroke:url(#truss-metal);stroke-width:2.6}
+.stage-truss .truss-web{stroke:url(#truss-metal);stroke-width:1.1}
+.stage-truss .truss-shade{fill:#0a1521;stroke:none;opacity:.85}
+.stage-truss .truss-rear{opacity:.45}
+.stage-truss .truss-rear .truss-chord{stroke-width:1.5}
+.stage-truss .truss-rear .truss-web{stroke-width:.7}
+.stage-truss .truss-side{opacity:.75}
+.stage-truss .truss-side .truss-chord{stroke-width:2}
+.stage-truss .truss-side .truss-web{stroke-width:.9}
+.stage-truss .truss-hardware rect{fill:#1d2a37;stroke:#7d93a5;stroke-width:1;vector-effect:non-scaling-stroke}
+.stage-truss .truss-motor{fill:#0c131b}
+.stage-truss .truss-motor.rear{opacity:.5}
+.stage-truss .truss-plate,.stage-truss .truss-sleeve{fill:#2a3a49}
+@media(max-width:760px){
+  .stage-truss .truss-chord{stroke-width:1.8}
+  .stage-truss .truss-web{stroke-width:.7}
+  .stage-truss .truss-side .truss-chord{stroke-width:1.4}
+}
+/* Line arrays hang on chains from the motors under the front truss (bottom at 20.2% of the stage). */
+.stage-preview{container-type:size;--spk-top:27cqh}
+@media(max-width:760px){.stage-preview{--spk-top:max(31cqh,calc(17cqh + 60px))}}
+.la-rig{width:76%}
+.la-rig::before,.la-rig::after{top:auto;bottom:100%;height:max(0px,calc(var(--spk-top) + 9px - 20.2cqh))}
+/* Line array: separate cabinets on a bumper, the lower ones splaying towards the audience (J-curve). */
+.stage-speaker,.lights-on .stage-speaker,.sound-on .stage-speaker,.lights-on .speaker-left,.lights-on .speaker-right{background:none;border-color:transparent;box-shadow:none}
+.stage-speaker i{border:1px solid #33414f;border-left:3px solid #0d131a;border-right:3px solid #0d131a;border-radius:2px;box-shadow:inset 0 1px 0 #ffffff40,0 3px 5px #0009}
+.stage-speaker i:nth-of-type(4){rotate:x 16deg;scale:1.02 1;border-bottom:2px solid #0b1118}
+.stage-speaker i:nth-of-type(5){rotate:x 28deg;scale:1.04 1;border-bottom:3px solid #0b1118}
+.stage-speaker i:nth-of-type(6){rotate:x 40deg;scale:1.07 1;border-bottom:4px solid #0b1118}
+@media(max-width:760px){.stage-speaker{bottom:42%}} /* flown arrays clear the ground-stacked subs */
 /* Beat sync: stage-show.js toggles hit-a/hit-b on each beat of assets/beats.json and data-bar on each bar.
    Alternating a/b names restarts the animation without forcing a reflow. */
 .stage-preview{--beat-len:.5s;--energy:.6}
