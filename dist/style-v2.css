@@ -485,8 +485,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 @keyframes mh-tilt-sm{from{rotate:-14deg}to{rotate:14deg}}
 
 /* Teste mobili BEAM + WASH (aggiunte, fari esistenti invariati) */
-.stage-movers{position:absolute;top:15.5%;left:26%;right:26%;display:flex;justify-content:space-between;z-index:6;pointer-events:none}
-.mh{position:relative;width:26px;height:22px}
+.stage-movers{position:absolute;top:24%;left:29%;right:29%;display:flex;justify-content:space-between;z-index:6;pointer-events:none}
+.mh{position:relative;width:22px;height:19px}
 .mh::before{content:'';position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:20px;height:12px;border-radius:3px 3px 1px 1px;background:linear-gradient(180deg,#3a4f66,#0c141d);border:1px solid #55697e}
 .mh::after{content:'';position:absolute;left:50%;top:100%;transform-origin:50% 0;height:230px;opacity:0;transition:opacity .6s}
 .mh-beam::after{width:26px;transform:translateX(-50%) rotate(16deg);background:linear-gradient(180deg,#e8fdffd9,#19c2dc12);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%)}
@@ -498,7 +498,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 .stage-preview[data-preset="corporativo"] .mh-beam::after{background:linear-gradient(180deg,#ffffffe0,#7db8ff14)}
 .stage-preview[data-preset="boda"] .mh-beam::after{background:linear-gradient(180deg,#fff3d6e6,#ffb45e1a)}
 .stage-preview[data-mode="day"] .mh::after{opacity:.3}
-@media(max-width:760px){.stage-movers{left:20%;right:20%}.mh::after{height:150px}}
+@media(max-width:760px){.stage-movers{left:22%;right:22%;top:26%}.mh::after{height:150px}}
 @media(prefers-reduced-motion:reduce){.mh::after{animation:none!important}}
 .stage-beams{position:absolute;inset:17% 0 15%;z-index:2;opacity:0;transition:opacity .7s;pointer-events:none}
 .lights-on .stage-beams{opacity:.85}
