@@ -31,12 +31,21 @@
         if (el._psm_ph === undefined) el._psm_ph = el.getAttribute('placeholder');
         el.setAttribute('placeholder', D[k]);
       });
+      document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+        var k = el.getAttribute('data-i18n-aria');
+        if (D[k] === undefined) return;
+        if (el._psm_al === undefined) el._psm_al = el.getAttribute('aria-label');
+        el.setAttribute('aria-label', D[k]);
+      });
     } else {
       document.querySelectorAll('[data-i18n]').forEach(function(el){
         if (el._psm_es !== undefined) el.innerHTML = el._psm_es;
       });
       document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
         if (el._psm_ph !== null && el._psm_ph !== undefined) el.setAttribute('placeholder', el._psm_ph);
+      });
+      document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+        if (el._psm_al !== null && el._psm_al !== undefined) el.setAttribute('aria-label', el._psm_al);
       });
     }
     // headline servizi + didascalie lightbox dalla <b> tradotta
