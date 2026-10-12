@@ -852,3 +852,12 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-audience::after{content:'';position:absolute;inset:65% 0 0;background:linear-gradient(transparent,#03070da8);pointer-events:none}
 .lights-on .stage-audience{filter:drop-shadow(0 -1px 1px #9dd5e22e)}
 @media(max-width:760px){.stage-audience{background-size:360px 85px;background-position:5px bottom}.stage-audience::before{height:83px;bottom:10px;background-size:330px 75px}.lights-on .stage-audience{filter:none}}
+
+/* Reserve room for the rotating heads above the mobile LED and its strobes. */
+@media(max-width:760px){
+  .stage-preview{--mobile-led-top:max(31%,calc(17% + 60px))}
+  .stage-led{top:var(--mobile-led-top)}
+  .stage-movers{top:calc(var(--mobile-led-top) - 19px)}
+  .stage-speaker{top:var(--mobile-led-top)}
+  .stage-led-wing{top:calc(var(--mobile-led-top) + 2%)}
+}
