@@ -737,9 +737,9 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 
 }
 @media (orientation:landscape) and (max-width:900px){
-  .stage-interactive.stage-expanded{flex-direction:row;align-items:stretch}
-  
-  .stage-expanded .stage-preview{flex:1 1 auto;height:100%}.stage-expanded .stage-console{flex:0 0 290px;height:100%;overflow-y:auto;display:flex;flex-direction:column}
+  .stage-interactive.stage-expanded{flex-direction:row;align-items:stretch;height:100dvh}
+  .stage-expanded .stage-preview{flex:1 1 auto;height:100%;min-height:0}
+  .stage-expanded .stage-console{flex:0 0 290px;height:100%;overflow-y:auto;display:flex;flex-direction:column}
 }
 .stage-fullscreen-open{overflow:hidden}
 #escenario{scroll-margin-top:76px}
