@@ -476,13 +476,14 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 @keyframes strobe-flash{0%,86%{opacity:.12;box-shadow:none}87%,92%{opacity:1;box-shadow:0 0 26px 8px #d8fbff}93%,100%{opacity:.12;box-shadow:none}}
 @media(max-width:760px){.stage-strobes{left:16%;right:16%;top:calc(9% - 16px)}.stage-strobes b{width:22px;height:15px}}
 .stage-fixtures{position:absolute;top:17%;left:20%;right:20%;display:flex;justify-content:space-between;z-index:5}
-.stage-fixtures i{position:relative;width:26px;height:34px;background:linear-gradient(180deg,#1b2634,#0a1119);border:1px solid #3a4c60;border-radius:4px}
-.stage-fixtures i::before{content:'';position:absolute;left:50%;bottom:7px;width:21px;height:21px;transform:translateX(-50%);transform-origin:50% 92%;border-radius:6px;background:linear-gradient(180deg,#31455c,#0b121b);border:1px solid #5a7187}
-.stage-fixtures i::after{content:'';position:absolute;left:50%;bottom:11px;width:13px;height:13px;transform:translateX(-50%);transform-origin:50% 15px;border-radius:50%;background:radial-gradient(circle at 38% 35%,#eafcff,#7de6f7 45%,#0e5a6b 82%);opacity:.3;transition:opacity .5s,box-shadow .5s}
-.lights-on .stage-fixtures i::after{opacity:1;box-shadow:0 0 14px 3px #19c2dcaa}
+.stage-fixtures i{position:relative;width:30px;height:48px;background:linear-gradient(90deg,transparent 3px,#33455a 3px 7px,transparent 7px 23px,#33455a 23px 27px,transparent 27px),linear-gradient(180deg,transparent 0 34px,#0d141c 34px),radial-gradient(circle at 50% 41px,#1b4d5c 0 3px,transparent 4px)}
+.stage-fixtures i::before{content:'';position:absolute;left:50%;top:2px;width:24px;height:24px;transform:translateX(-50%);transform-origin:50% 92%;border-radius:7px;background:linear-gradient(135deg,#3a4e64,#0b1119 72%);border:1px solid #5a7187;box-shadow:inset 2px 0 3px #ffffff14}
+.stage-fixtures i::after{content:'';position:absolute;left:50%;top:5px;width:15px;height:15px;transform:translateX(-50%);transform-origin:50% 17px;border-radius:50%;background:radial-gradient(circle at 38% 35%,#ffb3ab,#f04438 45%,#7a0f0a 82%);opacity:.3;transition:opacity .5s,box-shadow .5s}
+.lights-on .stage-fixtures i::after{opacity:1;box-shadow:0 0 16px 4px #ff4a3daa}
 .motion-ok .lights-on .stage-fixtures i::before,.motion-ok .lights-on .stage-fixtures i::after{animation:mh-tilt-sm 4.6s ease-in-out infinite alternate}
 .motion-ok .lights-on .stage-fixtures i:nth-child(even)::before,.motion-ok .lights-on .stage-fixtures i:nth-child(even)::after{animation-delay:-2.3s;animation-direction:alternate-reverse}
 @keyframes mh-tilt-sm{from{rotate:-14deg}to{rotate:14deg}}
+@media(max-width:760px){.stage-fixtures i{width:20px;height:32px}}
 
 /* Teste mobili BEAM + WASH (aggiunte, fari esistenti invariati) */
 .stage-movers{position:absolute;top:24%;left:29%;right:29%;display:flex;justify-content:space-between;z-index:6;pointer-events:none}
@@ -518,7 +519,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 .led-brand{position:relative;text-align:center;color:#354c60;font:800 clamp(34px,5vw,70px)/1 'Barlow Condensed',sans-serif;letter-spacing:3px;transition:color .6s,text-shadow .6s}
 .led-brand small{display:block;font:600 8px/1.7 'Inter',sans-serif;letter-spacing:1.3px;margin-top:12px}
 .led-on .led-brand{color:#fff;text-shadow:0 0 24px #71e9ff80}
-.stage-speaker{position:absolute;top:19%;bottom:30%;width:8.5%;gap:3px;background:#05070a;padding:4px 5px;background:linear-gradient(90deg,#07090e,#151c25);border:1px solid #394555;border-radius:4px;z-index:4;display:flex;flex-direction:column;justify-content:space-around;align-items:center;padding:8px}
+.stage-speaker{position:absolute;top:23%;bottom:26%;width:8.5%;gap:3px;background:#05070a;padding:4px 5px;background:linear-gradient(90deg,#07090e,#151c25);border:1px solid #394555;border-radius:4px;z-index:4;display:flex;flex-direction:column;justify-content:space-around;align-items:center;padding:8px}
 .speaker-left{left:16%}.speaker-right{right:16%}
 .stage-speaker i{position:relative;display:block;flex:1 1 0;min-height:0;border-radius:2px;
 background:radial-gradient(circle at 50% 50%,#2b3138 0 .8px,transparent 1px) 0 0/4px 4px,linear-gradient(180deg,#a7b0b8,#828b94 60%,#98a1a9);
@@ -529,7 +530,7 @@ background:radial-gradient(circle at 50% 50%,#000 0 1px,#1a2129 1.4px) 0 0/7px 7
 box-shadow:6px 10px 22px #0009,inset 0 0 0 2px #000,inset 0 1px 0 #ffffff14}
 .stage-sub::before{content:'';position:absolute;top:10%;bottom:10%;left:5px;width:16px;border-radius:3px;background:#05080c;border:1px solid #232e39;
 background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 15px,transparent 15px 24px)}
-.stage-sub::after{content:'';position:absolute;top:12%;right:8px;width:26px;height:9px;border-radius:2px;background:linear-gradient(180deg,#c7cfd6,#7d8894);box-shadow:0 0 3px #000}.sub-left{left:15%}.sub-right{right:15%}.sound-on .stage-sub{border-color:#19c2dc80}@media(max-width:760px){.stage-speaker{top:21%;bottom:37%}.stage-sub{top:60%;bottom:16%}.la-rig::before,.la-rig::after{height:14px;top:-14px}}
+.stage-sub::after{content:'';position:absolute;top:12%;right:8px;width:26px;height:9px;border-radius:2px;background:linear-gradient(180deg,#c7cfd6,#7d8894);box-shadow:0 0 3px #000}.sub-left{left:15%}.sub-right{right:15%}.sound-on .stage-sub{border-color:#19c2dc80}@media(max-width:760px){.stage-speaker{top:25%;bottom:33%}.stage-sub{top:60%;bottom:16%}.la-rig::before,.la-rig::after{height:14px;top:-14px}}
 .sound-on .stage-speaker{border-color:#19c2dc80}
 .motion-ok .sound-on .stage-speaker i{animation:speaker-pulse .7s ease-in-out infinite alternate}
 @keyframes speaker-pulse{to{transform:scale(1.07);box-shadow:0 0 12px #19c2dc35}}
