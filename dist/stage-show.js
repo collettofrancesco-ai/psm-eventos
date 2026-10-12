@@ -85,14 +85,32 @@
   var tracks = Array.from(document.querySelectorAll('[data-track]'));
   tracks.forEach(function(tb){
     tb.addEventListener('click', function(){
-      if (music.getAttribute('src') === tb.dataset.track) return;
-      var wasPlaying = !music.paused;
-      music.setAttribute('src', tb.dataset.track);
-      music.load();
-      tracks.forEach(function(x){ x.setAttribute('aria-pressed', String(x === tb)); });
-      if ((wasPlaying || state.sound) && state.sound) { music.currentTime = 0; startMusic(); }
-      else if (wasPlaying) { music.currentTime = 0; music.play().catch(function(){}); }
+      var idx = wallTracks.indexOf(tb.dataset.track);
+      if (idx !== -1) wallTrackIdx = idx;
+      selectTrackFile(tb.dataset.track);
     });
+  });
+  var wallChapters = [0, 30.25, 53.96, 77.04, 95.79, 127.2];
+  var wallTracks = ['assets/stage-track-1.wav','assets/stage-track-2.wav','assets/stage-track-3.wav','assets/stage-track-4.wav','assets/stage-track-5.wav'];
+  var wallTrackIdx = 0;
+  function wallChapter(t){
+    for (var k = 0; k < 5; k++) { if (t < wallChapters[k + 1]) return k; }
+    return 4;
+  }
+  function selectTrackFile(file){
+    tracks.forEach(function(x){ x.setAttribute('aria-pressed', String(x.dataset.track === file)); });
+    if (music.getAttribute('src') === file) return;
+    var wasPlaying = !music.paused;
+    music.setAttribute('src', file);
+    music.load();
+    if (state.sound) { music.currentTime = 0; startMusic(); }
+    else if (wasPlaying) { music.currentTime = 0; music.play().catch(function(){}); }
+  }
+  video.addEventListener('timeupdate', function(){
+    var idx = wallChapter(video.currentTime || 0);
+    if (idx === wallTrackIdx) return;
+    wallTrackIdx = idx;
+    selectTrackFile(wallTracks[idx]);
   });
   buttons.forEach(function(button){
       var key = button.dataset.stage;
