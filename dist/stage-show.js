@@ -256,10 +256,9 @@
     fullButton.firstChild.textContent=expanded?ST('exitFs','Salir de pantalla completa '):ST('enterFs','Pantalla completa ');
     fullButton.setAttribute('aria-label',expanded?ST('exitFsAria','Salir de pantalla completa'):ST('viewFsAria','Ver escenario a pantalla completa'));
   }
-  var fabClose = document.querySelector('.stage-close-fab');
-  if (fabClose) fabClose.addEventListener('click', function(){
+  stage.addEventListener('click', function(){
     if (document.fullscreenElement && document.exitFullscreen) { try { document.exitFullscreen(); } catch(e){} }
-    closeExpanded();
+    if (experience.classList.contains('stage-expanded')) closeExpanded();
   });
   function closeExpanded(){experience.classList.remove('stage-expanded');document.body.classList.remove('stage-fullscreen-open');fullLabel();}
   fullButton.addEventListener('click',function(){

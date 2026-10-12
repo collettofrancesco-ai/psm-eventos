@@ -148,6 +148,7 @@ en: {
 'home.120': 'Track 3',
 'home.121': 'Track 4',
 'home.123': 'Close full screen',
+'home.124': 'Tap the stage to exit',
 
 'serv.1': '<i></i>What we do',
 'serv.2': 'Full <em style="font-style:normal;color:var(--cyan)">production.</em>',
@@ -523,6 +524,7 @@ it: {
 'home.120': 'Traccia 3',
 'home.121': 'Traccia 4',
 'home.123': 'Chiudi schermo intero',
+'home.124': 'Tocca il palco per uscire',
 
 'serv.1': '<i></i>Cosa facciamo',
 'serv.2': 'Produzione <em style="font-style:normal;color:var(--cyan)">integrale.</em>',
@@ -898,6 +900,7 @@ pt: {
 'home.120': 'Faixa 3',
 'home.121': 'Faixa 4',
 'home.123': 'Fechar tela cheia',
+'home.124': 'Toque no palco para sair',
 
 'serv.1': '<i></i>O que fazemos',
 'serv.2': 'Produção <em style="font-style:normal;color:var(--cyan)">integral.</em>',
