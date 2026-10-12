@@ -185,15 +185,15 @@
   effect.addEventListener('change',function(){cancelShow();stage.dataset.lightEffect=effect.value;state.lights=true;render();});
   showButton.addEventListener('click',function(){
     if (showRunning) {cancelShow();state={sound:false,lights:false,led:false};render();return;}
-    cancelShow();state={sound:false,lights:false,led:false};render();
-    showRunning=true;intro=true;music.volume=0;startMusic();render();
-    timers.push(setTimeout(function(){state.led=true;render();},500));
-    timers.push(setTimeout(function(){intro=false;state.sound=true;music.currentTime=0;render();},1400));
+    // Video and its track start once, together, inside the tap: iOS ignores
+    // audio.volume, so a muted warm-up would be heard as repeated restarts.
+    cancelShow();manualTrack=false;showRunning=true;
+    state={sound:true,lights:false,led:true};render();
     timers.push(setTimeout(function(){
       state.lights=true;stage.dataset.lightEffect='cross';effect.value='cross';render();
       var modes=['cross','color','sweep','pulse'], index=0;
       showCycle=setInterval(function(){index=(index+1)%modes.length;stage.dataset.lightEffect=modes[index];effect.value=modes[index];},8000);
-    },2400));
+    },1000));
   });
 
   function scheduleFrame(){
