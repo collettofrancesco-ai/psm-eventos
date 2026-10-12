@@ -467,8 +467,13 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 .lights-on .stage-room-glow{opacity:1}
 .stage-truss{position:absolute;inset:0;width:100%;height:100%;color:#5f7284;opacity:.65;z-index:3;pointer-events:none}
 .stage-fixtures{position:absolute;top:17%;left:20%;right:20%;display:flex;justify-content:space-between;z-index:5}
-.stage-fixtures i{width:22px;height:16px;border:3px solid #253443;border-radius:4px;background:#152029;box-shadow:0 -4px 0 #657581;transition:background .6s,box-shadow .6s}
-.lights-on .stage-fixtures i{background:#b4f5ff;box-shadow:0 0 18px #19c2dca0,0 -4px 0 #657581}
+.stage-fixtures i{position:relative;width:26px;height:34px;background:linear-gradient(180deg,#1b2634,#0a1119);border:1px solid #3a4c60;border-radius:4px}
+.stage-fixtures i::before{content:'';position:absolute;left:50%;bottom:7px;width:21px;height:21px;transform:translateX(-50%);transform-origin:50% 92%;border-radius:6px;background:linear-gradient(180deg,#31455c,#0b121b);border:1px solid #5a7187}
+.stage-fixtures i::after{content:'';position:absolute;left:50%;bottom:11px;width:13px;height:13px;transform:translateX(-50%);transform-origin:50% 15px;border-radius:50%;background:radial-gradient(circle at 38% 35%,#eafcff,#7de6f7 45%,#0e5a6b 82%);opacity:.3;transition:opacity .5s,box-shadow .5s}
+.lights-on .stage-fixtures i::after{opacity:1;box-shadow:0 0 14px 3px #19c2dcaa}
+.motion-ok .lights-on .stage-fixtures i::before,.motion-ok .lights-on .stage-fixtures i::after{animation:mh-tilt-sm 4.6s ease-in-out infinite alternate}
+.motion-ok .lights-on .stage-fixtures i:nth-child(even)::before,.motion-ok .lights-on .stage-fixtures i:nth-child(even)::after{animation-delay:-2.3s;animation-direction:alternate-reverse}
+@keyframes mh-tilt-sm{from{rotate:-14deg}to{rotate:14deg}}
 
 /* Teste mobili BEAM + WASH (aggiunte, fari esistenti invariati) */
 .stage-movers{position:absolute;top:15.5%;left:26%;right:26%;display:flex;justify-content:space-between;z-index:6;pointer-events:none}
@@ -698,7 +703,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 .stage-fullscreen-open{overflow:hidden}
 #escenario{scroll-margin-top:76px}
 @media(max-width:1080px){.stage-interactive{grid-template-columns:minmax(0,1fr) 300px}.stage-preview{min-height:610px}}
-@media(max-width:760px){.stage-interactive{grid-template-columns:1fr}.stage-preview{min-height:0;aspect-ratio:1.25}.stage-fixtures i{width:17px;height:17px;border-width:3px}.stage-speaker i{border-width:1px}.stage-fog i{filter:blur(4px)}.stage-interactive:fullscreen,.stage-interactive.stage-expanded{display:flex;flex-direction:column}.stage-interactive:fullscreen .stage-preview,.stage-expanded .stage-preview{height:auto;min-height:270px;flex:0 0 43vh;aspect-ratio:auto}.stage-interactive:fullscreen .stage-console,.stage-expanded .stage-console{justify-content:flex-start;padding:18px;flex:1}.stage-interactive:fullscreen .stage-switches,.stage-expanded .stage-switches{grid-template-columns:repeat(3,1fr);gap:6px}.stage-interactive:fullscreen .stage-switches button,.stage-expanded .stage-switches button{padding:10px;min-height:48px;gap:6px}.stage-interactive:fullscreen .stage-switches small,.stage-expanded .stage-switches small{display:none}.stage-interactive:fullscreen .stage-control-icon,.stage-expanded .stage-control-icon{display:none}.stage-reflection{filter:blur(.7px)}}
+@media(max-width:760px){.stage-interactive{grid-template-columns:1fr}.stage-preview{min-height:0;aspect-ratio:1.25}.stage-fixtures i{width:18px;height:24px;border-width:1px}.stage-speaker i{border-width:1px}.stage-fog i{filter:blur(4px)}.stage-interactive:fullscreen,.stage-interactive.stage-expanded{display:flex;flex-direction:column}.stage-interactive:fullscreen .stage-preview,.stage-expanded .stage-preview{height:auto;min-height:270px;flex:0 0 43vh;aspect-ratio:auto}.stage-interactive:fullscreen .stage-console,.stage-expanded .stage-console{justify-content:flex-start;padding:18px;flex:1}.stage-interactive:fullscreen .stage-switches,.stage-expanded .stage-switches{grid-template-columns:repeat(3,1fr);gap:6px}.stage-interactive:fullscreen .stage-switches button,.stage-expanded .stage-switches button{padding:10px;min-height:48px;gap:6px}.stage-interactive:fullscreen .stage-switches small,.stage-expanded .stage-switches small{display:none}.stage-interactive:fullscreen .stage-control-icon,.stage-expanded .stage-control-icon{display:none}.stage-reflection{filter:blur(.7px)}}
 @media(prefers-reduced-motion:reduce){.stage-fixtures i,.stage-fog i{animation:none!important}.stage-speaker i{transform:none!important}.stage-reflection{filter:none}}
 
 /* ---------- Selettore lingua (dropdown con bandiere) ---------- */
