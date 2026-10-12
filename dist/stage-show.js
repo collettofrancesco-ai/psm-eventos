@@ -66,6 +66,7 @@
     try { video.src = ledPlaylist[ledIndex]; video.load(); if (state.led) video.play().catch(function(){}); } catch(e){}
   });
   function startVideo(){
+    syncWallMute(wallChapter(video.currentTime || 0));
     if (!video.paused) { scheduleFrame(); return; }
     video.play().catch(function(error){
       if (error.name !== 'AbortError' && state.led) stage.classList.add('led-fallback');
@@ -107,8 +108,12 @@
     if (state.sound) { music.currentTime = 0; startMusic(); }
     else if (wasPlaying) { music.currentTime = 0; music.play().catch(function(){}); }
   }
+  function syncWallMute(idx){
+    try { video.muted = (idx !== 0); } catch(e){}
+  }
   video.addEventListener('timeupdate', function(){
     var idx = wallChapter(video.currentTime || 0);
+    syncWallMute(idx);
     if (idx === wallTrackIdx) return;
     wallTrackIdx = idx;
     selectTrackFile(wallTracks[idx]);
