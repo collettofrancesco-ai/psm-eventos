@@ -752,3 +752,5 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .lang-menu button:hover{background:#eef1f4}
 .lang-menu button.current{color:var(--cyan-dark)}
 @media(max-width:760px){.lang-switch{margin:6px 0 0;align-self:flex-start}.lang-menu{left:0;right:auto}}
+
+.wall-playback{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px;font-size:11px;color:#bdd4e1}.wall-playback button{border:1px solid #466075;background:#0b1522;color:#d5e7f2;border-radius:6px;padding:8px 10px;font:inherit;cursor:pointer}.wall-playback button:hover{border-color:var(--cyan)}

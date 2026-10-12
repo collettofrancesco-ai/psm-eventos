@@ -59,22 +59,7 @@
       status.textContent = ST('musicErr', 'Pulsa Sonido para volver a iniciar la música.');
     });
   }
-  var ledPlaylist = ['assets/videos/video-1.mp4','assets/videos/video-2.mp4','assets/videos/video-3.mp4','assets/videos/video-4.mp4'];
-  var ledIndex = 0;
-  video.addEventListener('ended', function(){
-    ledIndex = (ledIndex + 1) % ledPlaylist.length;
-    try { video.src = ledPlaylist[ledIndex]; video.load(); if (state.led) video.play().catch(function(){}); } catch(e){}
-  });
-  function startVideo(){
-    syncWallMute(wallChapter(video.currentTime || 0));
-    if (!video.paused) { scheduleFrame(); return; }
-    video.play().catch(function(error){
-      if (error.name !== 'AbortError' && state.led) stage.classList.add('led-fallback');
-    });
-  }
-  function render(){
-    var labels = {sound:ST('music','Música'), lights:ST('lights','Luces'), led:ST('led','Video LED')}, active = [];
-    var presets = Array.from(document.querySelectorAll('[data-preset]'));
+  var presets = Array.from(document.querySelectorAll('[data-preset]'));
   function applyPreset(name){
     if (!name) return;
     stage.dataset.preset = name;
@@ -86,39 +71,82 @@
   var tracks = Array.from(document.querySelectorAll('[data-track]'));
   tracks.forEach(function(tb){
     tb.addEventListener('click', function(){
-      var idx = wallTracks.indexOf(tb.dataset.track);
-      if (idx !== -1) wallTrackIdx = idx;
+      manualTrack = true;
       selectTrackFile(tb.dataset.track);
     });
   });
-  var wallChapters = [0, 48.5, 78.75, 102.46, 125.54, 144.4];
-  var wallTracks = [null,'assets/stage-track-1.wav','assets/stage-track-2.wav','assets/stage-track-3.wav','assets/stage-track-4-desire.wav'];
-  var wallTrackIdx = 0;
-  function wallChapter(t){
-    for (var k = 0; k < 5; k++) { if (t < wallChapters[k + 1]) return k; }
-    return 4;
+  var wallTracks = ['assets/wall-mobile/intro.m4a','assets/stage-track-1.m4a','assets/stage-track-2.m4a','assets/stage-track-3.m4a','assets/stage-track-4-desire.m4a'];
+  var ledPlaylist = [1,2,3,4,5].map(function(n){ return 'assets/wall-mobile/clip-' + n + '.mp4'; });
+  var ledIndex = 0, manualTrack = false, videoWaiting = false, stallTimer = null;
+  var wallState = document.getElementById('wall-playback-status');
+  var retryButton = document.getElementById('wall-retry');
+  function alignMusic(){
+    if (!state.led || !Number.isFinite(music.duration) || music.duration <= 0) return;
+    var target = video.currentTime % music.duration;
+    if (Math.abs(music.currentTime - target) > .75) music.currentTime = target;
   }
   function selectTrackFile(file){
-    tracks.forEach(function(x){ x.setAttribute('aria-pressed', String(file && x.dataset.track === file)); });
-    if (!file) { music.pause(); return; }
-    if (music.getAttribute('src') === file) return;
-    var wasPlaying = !music.paused;
-    music.setAttribute('src', file);
-    music.load();
-    if (state.sound) { music.currentTime = 0; startMusic(); }
-    else if (wasPlaying) { music.currentTime = 0; music.play().catch(function(){}); }
+    tracks.forEach(function(x){ x.setAttribute('aria-pressed', String(x.dataset.track === file)); });
+    if (music.getAttribute('src') !== file) { music.pause(); music.setAttribute('src', file); music.load(); }
+    if ((state.sound || intro) && (!state.led || !videoWaiting)) { alignMusic(); startMusic(); }
   }
-  function syncWallMute(idx){
-    try { video.muted = (idx !== 0); } catch(e){}
+  function setClip(index){
+    ledIndex = (index + ledPlaylist.length) % ledPlaylist.length;
+    manualTrack = false;
+    music.pause();
+    videoWaiting = true;
+    clearTimeout(stallTimer);
+    retryButton.hidden = true;
+    stage.classList.remove('led-surfaces-ready','led-fallback','led-playing');
+    wallMessage(ST('loadingVideo','Cargando video…'));
+    video.muted = true;
+    video.src = ledPlaylist[ledIndex];
+    video.load();
+    selectTrackFile(wallTracks[ledIndex]);
+    if (state.led) startVideo();
   }
-  video.addEventListener('timeupdate', function(){
-    var idx = wallChapter(video.currentTime || 0);
-    syncWallMute(idx);
-    if (idx === wallTrackIdx) return;
-    wallTrackIdx = idx;
-    selectTrackFile(wallTracks[idx]);
+  function wallMessage(text){ wallState.textContent = text; }
+  video.addEventListener('ended', function(){ setClip(ledIndex + 1); });
+  video.addEventListener('waiting', function(){
+    stage.classList.remove('led-playing');
+    videoWaiting = true;
+    if (state.led) music.pause();
+    wallMessage(ST('loadingVideo','Cargando video…'));
+    clearTimeout(stallTimer);
+    stallTimer = setTimeout(function(){ if (state.led && videoWaiting) retryButton.hidden = false; },8000);
   });
-  buttons.forEach(function(button){
+  video.addEventListener('error', function(){
+    videoWaiting = true; music.pause(); retryButton.hidden = false;
+    wallMessage(ST('videoErr','No se pudo cargar el video. Pulsa Reintentar.'));
+  });
+  video.addEventListener('playing', function(){
+    videoWaiting = false; clearTimeout(stallTimer); retryButton.hidden = true;
+    wallMessage((ledIndex + 1) + ' / 5');
+    if (state.sound || intro) { if (!manualTrack) selectTrackFile(wallTracks[ledIndex]); else startMusic(); alignMusic(); }
+  });
+  video.addEventListener('timeupdate', alignMusic);
+  video.addEventListener('seeked', alignMusic);
+  music.addEventListener('loadedmetadata', alignMusic);
+  retryButton.addEventListener('click', function(){
+    var position = video.currentTime;
+    video.addEventListener('loadedmetadata', function restore(){ video.currentTime = position; }, {once:true});
+    video.load(); startVideo();
+  });
+  document.getElementById('wall-next').addEventListener('click', function(){
+    state.led = true; setClip(ledIndex + 1); render();
+  });
+  function startVideo(){
+    video.muted = true;
+    if (!video.paused) { scheduleFrame(); return; }
+    video.play().catch(function(error){
+      if (error.name === 'AbortError' || !state.led) return;
+      retryButton.hidden = false;
+      wallMessage(ST('videoErr','Pulsa Reintentar para iniciar el video.'));
+    });
+  }
+  function render(){
+    var labels = {sound:ST('music','Música'), lights:ST('lights','Luces'), led:ST('led','Video LED')}, active = [];
+    buttons.forEach(function(button){
       var key = button.dataset.stage;
       button.setAttribute('aria-pressed', String(state[key]));
       stage.classList.toggle(key + '-on', state[key]);
@@ -128,10 +156,11 @@
     allButton.firstChild.textContent = buttons.every(function(button){return state[button.dataset.stage];}) ? ST('allOff','Apagar todo ') : ST('allOn','Encender todo ');
     showButton.firstChild.textContent = showRunning ? ST('stopShow','Detener show ') : ST('startShow','Iniciar show ');
     stage.classList.toggle('show-running', showRunning);
-    if (state.sound) { music.volume = .45; startMusic(); }
+    if (state.led && !manualTrack) selectTrackFile(wallTracks[ledIndex]);
+    if (state.sound) { music.volume = .45; if (!state.led || !videoWaiting) startMusic(); }
     else if (!intro) { music.pause(); music.currentTime = 0; }
     if (state.led) startVideo();
-    else { video.pause(); stage.classList.remove('led-fallback'); }
+    else { video.pause(); clearTimeout(stallTimer); retryButton.hidden = true; wallMessage(''); stage.classList.remove('led-fallback'); }
     scheduleFrame();
   }
   function cancelShow(){
@@ -167,7 +196,7 @@
   function paint(time){
     frame=0;
     if (!inView || document.hidden) return;
-    if (time-previousFrame>=33) {
+    if (time-previousFrame>=(matchMedia('(pointer: coarse)').matches ? 66 : 33)) {
       previousFrame=time;
       if (analyser && state.sound && !music.paused && !reduced.matches) {
         analyser.getByteFrequencyData(frequencies);
