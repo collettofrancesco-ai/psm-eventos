@@ -76,6 +76,18 @@
   presets.forEach(function(b){
     b.addEventListener('click', function(){ cancelShow(); applyPreset(b.dataset.preset); render(); });
   });
+  var tracks = Array.from(document.querySelectorAll('[data-track]'));
+  tracks.forEach(function(tb){
+    tb.addEventListener('click', function(){
+      if (music.getAttribute('src') === tb.dataset.track) return;
+      var wasPlaying = !music.paused;
+      music.setAttribute('src', tb.dataset.track);
+      music.load();
+      tracks.forEach(function(x){ x.setAttribute('aria-pressed', String(x === tb)); });
+      if ((wasPlaying || state.sound) && state.sound) { music.currentTime = 0; startMusic(); }
+      else if (wasPlaying) { music.currentTime = 0; music.play().catch(function(){}); }
+    });
+  });
   buttons.forEach(function(button){
       var key = button.dataset.stage;
       button.setAttribute('aria-pressed', String(state[key]));

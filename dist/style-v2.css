@@ -545,11 +545,11 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-console{padding:30px 24px;background:#121a24;border-left:1px solid #ffffff15;display:flex;flex-direction:column}
 .stage-console-heading p{font-size:13px;color:#b6c2d0;margin:8px 0 22px}
 .stage-switches{display:grid;gap:10px}
-.stage-presets{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
-.stage-presets .mini-label{width:100%;margin-bottom:2px}
-.stage-presets button{background:transparent;border:1px solid #ffffff25;color:#cfd6dd;font-size:12px;font-weight:700;letter-spacing:.4px;padding:9px 15px;border-radius:100px;cursor:pointer;transition:.2s}
-.stage-presets button:hover{border-color:#19c2dc90;color:#fff}
-.stage-presets button[aria-pressed="true"]{background:#19c2dc;border-color:#19c2dc;color:#061014}
+.stage-tracks,.stage-presets{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+.stage-tracks .mini-label,.stage-presets .mini-label{width:100%;margin-bottom:2px}
+.stage-tracks button,.stage-presets button{background:transparent;border:1px solid #ffffff25;color:#cfd6dd;font-size:12px;font-weight:700;letter-spacing:.4px;padding:9px 15px;border-radius:100px;cursor:pointer;transition:.2s}
+.stage-tracks button:hover,.stage-presets button:hover{border-color:#19c2dc90;color:#fff}
+.stage-tracks button[aria-pressed="true"],.stage-presets button[aria-pressed="true"]{background:#19c2dc;border-color:#19c2dc;color:#061014}
 .stage-preview[data-preset="corporativo"] .stage-beams i{background:linear-gradient(180deg,#ffffff85,#7db8ff1e)}
 .stage-preview[data-preset="corporativo"] .stage-room-glow{background:radial-gradient(ellipse at 50% 20%,#28455f,transparent 70%)}
 .stage-preview[data-preset="boda"] .stage-beams i{background:linear-gradient(180deg,#ffd9a080,#ff7d9c28)}
