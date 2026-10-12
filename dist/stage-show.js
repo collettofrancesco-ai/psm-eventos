@@ -90,7 +90,7 @@
       selectTrackFile(tb.dataset.track);
     });
   });
-  var wallChapters = [0, 31.33, 61.58, 85.29, 108.37, 127.2];
+  var wallChapters = [0, 48.5, 78.75, 102.46, 125.54, 144.4];
   var wallTracks = [null,'assets/stage-track-1.wav','assets/stage-track-2.wav','assets/stage-track-3.wav','assets/stage-track-4-desire.wav'];
   var wallTrackIdx = 0;
   function wallChapter(t){
