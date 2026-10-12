@@ -165,8 +165,8 @@
 
   // Acordeón servicios (solo servicios.html)
   var headlines = ['La energía<br>también se escucha.','La luz cambia<br>todo.','Tu mensaje.<br>A otra escala.','El espacio para<br>tu gran momento.','Aquí empieza<br>el espectáculo.'];
-  var images = ['assets/evento-2.jpg','assets/cliente-2.jpg','assets/stage.jpg','assets/cliente-1.jpg','assets/cliente-5.jpg'];
-  var imageDescriptions = ['Consola de sonido profesional','Focos y haces de luz sobre un escenario','Pantallas LED en un escenario PSM','Tarimas y montaje del escenario','Escenario y estructura al aire libre'];
+  var images = ['assets/sonido-venue.jpg','assets/cliente-2.jpg','assets/stage.jpg','assets/cliente-1.jpg','assets/cliente-5.jpg'];
+  var imageDescriptions = ['Consola Avid Venue','Focos y haces de luz sobre un escenario','Pantallas LED en un escenario PSM','Tarimas y montaje del escenario','Escenario y estructura al aire libre'];
   var toggles = document.querySelectorAll('.service-toggle');
   if (toggles.length) {
     toggles.forEach(function(btn, i){
