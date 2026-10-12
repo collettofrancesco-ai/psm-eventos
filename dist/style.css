@@ -491,6 +491,11 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 .motion-ok .lights-on .stage-fixtures i::before,.motion-ok .lights-on .stage-fixtures i::after{animation:mh-tilt-sm 4.6s ease-in-out infinite alternate}
 .motion-ok .lights-on .stage-fixtures i:nth-child(even)::before,.motion-ok .lights-on .stage-fixtures i:nth-child(even)::after{animation-delay:-2.3s;animation-direction:alternate-reverse}
 @keyframes mh-tilt-sm{from{rotate:-14deg}to{rotate:14deg}}
+.stage-fixtures i s{position:absolute;left:50%;top:26px;width:70px;height:200px;display:block;transform:translateX(-50%);transform-origin:50% 0;clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);background:linear-gradient(180deg,#cdeffb66,#19c2dc08);opacity:0;transition:opacity .6s;pointer-events:none}
+.lights-on .stage-fixtures i s{opacity:.6}
+.motion-ok .lights-on .stage-fixtures i s{animation:mh-tilt-sm 4.6s ease-in-out infinite alternate}
+.motion-ok .lights-on .stage-fixtures i:nth-child(even) s{animation-delay:-2.3s;animation-direction:alternate-reverse}
+@media(max-width:760px){.stage-fixtures i s{width:44px;height:120px}}
 @media(max-width:760px){.stage-fixtures i{width:20px;height:32px}}
 
 /* Teste mobili BEAM + WASH (aggiunte, fari esistenti invariati) */
