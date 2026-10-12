@@ -602,8 +602,8 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .led-on .led-brand{align-self:end;width:100%;font-size:28px;padding:8px;background:linear-gradient(0deg,#000b,transparent);text-shadow:0 1px 6px #000}
 .led-on .led-brand small{display:none}
 .led-on .stage-led{border-color:#5eebff;box-shadow:0 0 25px #19c2dc65}
-.stage-led-wing{position:absolute;top:24%;bottom:26%;width:12%;z-index:3;background:#101c29;border:2px solid #293b4b;border-radius:2px;overflow:hidden}
-.wing-left{left:4%}.wing-right{right:4%}
+.stage-led-wing{position:absolute;top:27%;bottom:31%;width:9%;z-index:3;background:#101c29;border:2px solid #293b4b;border-radius:2px;overflow:hidden}
+.wing-left{left:19%}.wing-right{right:19%}
 .stage-led-wing i{display:block;position:absolute;inset:0;opacity:0;background:repeating-linear-gradient(0deg,#19c2dc 0 12px,#c977ff 13px 25px,#173e65 26px 38px);transition:opacity .5s}
 .led-on .stage-led-wing{border-color:#5eebff;box-shadow:0 0 20px #19c2dc45}
 .led-on .stage-led-wing i{opacity:1}
