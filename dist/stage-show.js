@@ -75,7 +75,7 @@
       selectTrackFile(tb.dataset.track);
     });
   });
-  var wallTracks = ['assets/wall-mobile/intro.m4a','assets/stage-track-1.m4a','assets/stage-track-2.m4a','assets/stage-track-3.m4a','assets/stage-track-4-desire.m4a'];
+  var wallTracks = ['assets/wall-mobile/intro.m4a','assets/stage-track-1.m4a','assets/stage-track-2-thank-you.m4a','assets/stage-track-3.m4a','assets/stage-track-4-desire.m4a'];
   var ledPlaylist = [1,2,3,4,5].map(function(n){ return 'assets/wall-mobile/clip-' + n + '.mp4'; });
   var ledIndex = 0, manualTrack = false, videoWaiting = false, stallTimer = null;
   var wallState = document.getElementById('wall-playback-status');

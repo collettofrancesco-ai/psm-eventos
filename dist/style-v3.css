@@ -512,7 +512,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 .stage-preview[data-preset="corporativo"] .mh-beam::after{background:linear-gradient(180deg,#ffffffe0,#7db8ff14)}
 .stage-preview[data-preset="boda"] .mh-beam::after{background:linear-gradient(180deg,#fff3d6e6,#ffb45e1a)}
 .stage-preview[data-mode="day"] .mh::after{opacity:.3}
-@media(max-width:760px){.stage-movers{left:22%;right:22%;top:26%}.mh::after{height:150px}}
+/* Mobile: the moving heads sit flush on the main LED screen. */
+@media(max-width:760px){.stage-movers{left:29%;right:29%;top:calc(25% - 19px)}.mh::after{height:150px}}
 @media(prefers-reduced-motion:reduce){.mh::after{animation:none!important}}
 .stage-beams{position:absolute;inset:17% 0 15%;z-index:2;opacity:0;transition:opacity .7s;pointer-events:none}
 .lights-on .stage-beams{opacity:.85}
