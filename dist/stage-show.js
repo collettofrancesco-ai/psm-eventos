@@ -59,6 +59,12 @@
       status.textContent = ST('musicErr', 'Pulsa Sonido para volver a iniciar la música.');
     });
   }
+  var ledPlaylist = ['assets/videos/video-1.mp4','assets/videos/video-2.mp4','assets/videos/video-3.mp4','assets/videos/video-4.mp4'];
+  var ledIndex = 0;
+  video.addEventListener('ended', function(){
+    ledIndex = (ledIndex + 1) % ledPlaylist.length;
+    try { video.src = ledPlaylist[ledIndex]; video.load(); if (state.led) video.play().catch(function(){}); } catch(e){}
+  });
   function startVideo(){
     if (!video.paused) { scheduleFrame(); return; }
     video.play().catch(function(error){
