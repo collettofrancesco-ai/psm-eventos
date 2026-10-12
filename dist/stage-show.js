@@ -168,6 +168,7 @@
     if (state.led) startVideo();
     else { video.pause(); clearTimeout(stallTimer); retryButton.hidden = true; wallMessage(''); stage.classList.remove('led-fallback'); }
     scheduleFrame();
+    scheduleBeat();
   }
   function cancelShow(){
     timers.forEach(clearTimeout); timers = [];
@@ -190,7 +191,9 @@
     cancelShow();manualTrack=false;showRunning=true;
     state={sound:true,lights:false,led:true};render();
     timers.push(setTimeout(function(){
-      state.lights=true;stage.dataset.lightEffect='cross';effect.value='cross';render();
+      showMode=0;state.lights=true;stage.dataset.lightEffect='cross';effect.value='cross';render();
+      // Tracks with a beat map change effect on the music (fireBeat); others on a timer.
+      if (trackBeats()) return;
       var modes=['cross','color','sweep','pulse'], index=0;
       showCycle=setInterval(function(){index=(index+1)%modes.length;stage.dataset.lightEffect=modes[index];effect.value=modes[index];},8000);
     },1000));
@@ -243,6 +246,70 @@
   });
   addEventListener('pagehide',function(){cancelShow();music.pause();video.pause();cancelAnimationFrame(frame);});
   window.psmStage={stopSound:function(){cancelShow();state.sound=false;render();}};
+
+  // Beat sync: the lights hit on the beats precomputed by scripts/analyze-beats.py,
+  // timed from music.currentTime so phones stay on the beat at any frame rate.
+  var beatMap = null, beatTimer = 0, lastBeat = -1, beatParity = false, lastEnergy = 0, showMode = 0;
+  var showModes = ['cross','color','sweep','pulse'];
+  var strobes = Array.from(stage.querySelectorAll('.stage-strobes b'));
+  var sideStrobes = Array.from(stage.querySelectorAll('.stage-strobes-side b'));
+  function trackBeats(){ return beatMap && beatMap[music.getAttribute('src')]; }
+  function lit(list, on){
+    list.forEach(function(el, n){
+      el.classList.remove('hit-a','hit-b');
+      if (on(n)) el.classList.add(beatParity ? 'hit-a' : 'hit-b');
+    });
+  }
+  function none(){ return false; }
+  function all(){ return true; }
+  function stopBeats(){
+    clearTimeout(beatTimer); beatTimer = 0;
+    stage.classList.remove('beat-sync');
+    lit(strobes, none); lit(sideStrobes, none);
+  }
+  function scheduleBeat(){
+    clearTimeout(beatTimer); beatTimer = 0;
+    var map = trackBeats();
+    if (!map || !state.lights || music.paused || reduced.matches || document.hidden) { stopBeats(); return; }
+    stage.classList.add('beat-sync');
+    stage.style.setProperty('--beat-len', (60 / map.bpm).toFixed(3) + 's');
+    var now = music.currentTime, beats = map.beats;
+    if (lastBeat >= beats.length || (lastBeat >= 0 && now < beats[lastBeat] - 1)) lastBeat = -1; // looped; small sync nudges keep the count
+    var next = lastBeat + 1;
+    while (next < beats.length && beats[next] < now - .05) next++;
+    if (next >= beats.length) { beatTimer = setTimeout(scheduleBeat, 100); return; } // wait for the loop
+    beatTimer = setTimeout(function(){ lastBeat = next; fireBeat(map, next); scheduleBeat(); }, Math.max(0, (beats[next] - now) * 1000));
+  }
+  function fireBeat(map, i){
+    beatParity = !beatParity;
+    var fromDown = i - map.downbeat, inBar = ((fromDown % 4) + 4) % 4, bar = Math.floor(fromDown / 4);
+    var energy = map.bars[Math.min(map.bars.length - 1, Math.max(0, bar))];
+    stage.style.setProperty('--energy', energy);
+    stage.classList.remove('hit-a','hit-b','flash-a','flash-b');
+    stage.classList.add(beatParity ? 'hit-a' : 'hit-b');
+    if (inBar === 0) {
+      stage.dataset.bar = ((bar % 4) + 4) % 4;
+      // During the show the effect changes with the song: every 8 bars or when it drops.
+      if (showRunning && bar > 0 && (bar % 8 === 0 || (energy > .7 && lastEnergy < .4))) {
+        showMode = (showMode + 1) % showModes.length;
+        stage.dataset.lightEffect = effect.value = showModes[showMode];
+      }
+      lastEnergy = energy;
+    }
+    if (energy < .35) { lit(strobes, none); lit(sideStrobes, none); return; }
+    var peak = energy > .7;
+    if (peak && inBar === 0 && map.strength[i] > .5) {
+      stage.classList.add(beatParity ? 'flash-a' : 'flash-b');
+      lit(strobes, all); lit(sideStrobes, all);
+      return;
+    }
+    lit(strobes, function(n){ return peak ? n % 2 === i % 2 : n % 4 === inBar; });
+    lit(sideStrobes, function(n){ return n % 3 === i % 3; });
+  }
+  if (window.fetch) fetch('assets/beats.json').then(function(r){ return r.ok ? r.json() : null; }).then(function(map){ beatMap = map; scheduleBeat(); }).catch(function(){});
+  music.addEventListener('loadstart', function(){ lastBeat = -1; });
+  ['playing','pause','seeked'].forEach(function(name){ music.addEventListener(name, scheduleBeat); });
+  reduced.addEventListener('change', scheduleBeat);
 
   var dayBtn = document.getElementById('stage-daynight');
   function renderDay(){
