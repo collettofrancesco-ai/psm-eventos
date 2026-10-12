@@ -3,6 +3,12 @@
   'use strict';
   var stage = document.querySelector('.stage-preview');
   if (!stage) return;
+  // Let the light cones reach the deck at every viewport and fullscreen size.
+  function sizeLightCones(){
+    if (stage.clientHeight) stage.style.setProperty('--beam-reach', Math.round(stage.clientHeight * .64) + 'px');
+  }
+  sizeLightCones();
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(sizeLightCones).observe(stage);
   var experience = document.getElementById('stage-experience');
   var music = document.getElementById('stage-music');
   var video = document.getElementById('stage-led-video');

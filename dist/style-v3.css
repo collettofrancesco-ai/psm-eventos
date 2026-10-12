@@ -786,3 +786,69 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
   .stage-interactive:fullscreen .stage-preview,.stage-expanded .stage-preview{border-radius:16px}
   .stage-interactive:fullscreen .stage-console,.stage-expanded .stage-console{justify-content:flex-start;border:1px solid #33404d;border-radius:16px}
 }
+
+/* Optical light: every cone shares its moving head's rotation and origin. */
+.stage-preview{--beam-reach:clamp(210px,32vw,490px);--lamp-color:155,226,255}
+.stage-preview[data-preset="boda"]{--lamp-color:255,218,163}
+.stage-preview[data-preset="corporativo"]{--lamp-color:213,235,255}
+.stage-truss{opacity:.82;filter:drop-shadow(1px 1px 0 #08101c) drop-shadow(0 4px 3px #0009)}
+.lights-on .stage-truss{opacity:1}
+.stage-beams{display:none}
+.stage-fixtures{z-index:5;pointer-events:none}
+.stage-fixtures i{--pan:-18deg;--timing:8s;--delay:-1s;width:30px;height:30px;border:1px solid #617383;border-radius:9px 9px 12px 12px;transform-origin:50% 12px;background:linear-gradient(110deg,#526374 0%,#172331 28%,#0a111b 68%,#2a3a48 100%);box-shadow:inset 2px 1px 2px #ffffff18,0 -8px 0 -5px #778898,0 -11px 0 -7px #1d2b37,2px 5px 7px #000b;transform:rotate(var(--pan))}
+.stage-fixtures i:nth-child(2){--pan:13deg;--delay:-5s;--lamp-color:214,181,255}
+.stage-fixtures i:nth-child(3){--pan:0deg;--delay:-3s;--timing:10s}
+.stage-fixtures i:nth-child(4){--pan:-13deg;--delay:-7s;--lamp-color:214,181,255}
+.stage-fixtures i:nth-child(5){--pan:18deg;--delay:-4s}
+.stage-fixtures i::before{inset:auto;top:7px;left:50%;width:17px;height:17px;transform:translateX(-50%);rotate:0;border:2px solid #08121c;border-radius:50%;background:radial-gradient(circle at 38% 30%,#a5c6d455 0 8%,#244252 24%,#06111c 62%,#476271 70%,#08121a 80%);opacity:1;box-shadow:0 0 0 1px #71889455}
+.stage-fixtures i::after{inset:auto;left:-4px;top:3px;right:auto;width:36px;height:19px;transform:none;rotate:0;border:3px solid #364958;border-top:0;border-radius:0 0 8px 8px;background:transparent;opacity:1;box-shadow:inset 1px -1px 0 #9bb3c433}
+.lights-on .stage-fixtures i{background:linear-gradient(110deg,#526374,#172331 28%,#0a111b 68%,#2a3a48);box-shadow:inset 2px 1px 2px #ffffff18,0 -8px 0 -5px #778898,0 -11px 0 -7px #1d2b37,2px 5px 7px #000b}
+.lights-on .stage-fixtures i::before{background:radial-gradient(circle,#fff 0 9%,rgb(var(--lamp-color)) 25%,#416779 60%,#0b1b29 75%);box-shadow:0 0 6px #fff9,0 0 16px rgba(var(--lamp-color),.65)}
+.lights-on .stage-fixtures i::after{background:transparent;box-shadow:inset 1px -1px 0 #9bb3c433;opacity:1}
+.stage-fixtures i s{top:16px;left:50%;width:clamp(64px,10vw,125px);height:var(--beam-reach);transform:translateX(-50%);rotate:0;clip-path:polygon(47% 0,53% 0,100% 100%,0 100%);background:linear-gradient(180deg,rgba(var(--lamp-color),.62),rgba(var(--lamp-color),.14) 24%,rgba(var(--lamp-color),.05) 65%,transparent),linear-gradient(90deg,transparent 14%,rgba(var(--lamp-color),.12) 48%,rgba(var(--lamp-color),.12) 52%,transparent 86%);mask-image:linear-gradient(90deg,transparent,#000 36% 64%,transparent);filter:none;opacity:0}
+.lights-on .stage-fixtures i s{opacity:.72}
+.motion-ok .lights-on .stage-fixtures i::before,.motion-ok .lights-on .stage-fixtures i::after,.motion-ok .lights-on .stage-fixtures i s{animation:none}
+.motion-ok .lights-on .stage-fixtures i,.motion-ok .lights-on .stage-fixtures i:nth-child(even){animation:optical-pan var(--timing) ease-in-out var(--delay) infinite alternate}
+.motion-ok .lights-on[data-light-effect="cross"] .stage-fixtures i,.motion-ok .lights-on[data-light-effect="cross"] .stage-fixtures i:nth-child(even){animation:optical-cross 6s ease-in-out var(--delay) infinite alternate}
+.motion-ok .lights-on[data-light-effect="pulse"] .stage-fixtures i{animation:optical-blackout 4.8s ease-in-out var(--delay) infinite}
+.motion-ok .lights-on[data-light-effect="color"] .stage-fixtures i{animation:optical-pan var(--timing) ease-in-out var(--delay) infinite alternate,optical-color 12s linear infinite}
+@keyframes optical-pan{from{transform:rotate(calc(var(--pan) - 12deg))}to{transform:rotate(calc(var(--pan) + 12deg))}}
+@keyframes optical-cross{from{transform:rotate(-27deg)}to{transform:rotate(27deg)}}
+@keyframes optical-blackout{0%,30%,100%{opacity:1}43%,74%{opacity:.14}}
+@keyframes optical-color{to{filter:hue-rotate(360deg)}}
+/* Softer auxiliary wash leaves LED footage readable. */
+.mh::before{border-radius:5px 5px 2px 2px;background:radial-gradient(ellipse at 50% 70%,#315262 0 20%,transparent 24%),linear-gradient(115deg,#4b5f70,#0b151f 60%);box-shadow:1px 3px 4px #0008,inset 0 1px 0 #aec7d333}
+.lights-on .mh::before{background:radial-gradient(ellipse at 50% 70%,#ceefff 0 14%,#315262 23%,transparent 29%),linear-gradient(115deg,#4b5f70,#0b151f 60%)}
+.lights-on .mh::after{opacity:.25;mask-image:linear-gradient(90deg,transparent,#000 45% 55%,transparent)}
+.stage-preview:not(.lights-on) .mh::after{opacity:0}
+.stage-floor-spots{position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:0;transition:opacity .7s}
+.lights-on .stage-floor-spots{opacity:.7}
+.stage-floor-spots i{position:absolute;top:4%;left:12%;width:27%;height:72%;border-radius:50%;background:radial-gradient(ellipse,rgba(var(--lamp-color),.26),rgba(var(--lamp-color),.07) 40%,transparent 70%);transform:translateX(0)}
+.stage-floor-spots i:nth-child(2){left:39%;--lamp-color:214,181,255}
+.stage-floor-spots i:nth-child(3){left:65%}
+.motion-ok .lights-on .stage-floor-spots i{animation:floor-light-drift 8s ease-in-out infinite alternate}
+.motion-ok .lights-on .stage-floor-spots i:nth-child(2){animation-delay:-4s;animation-direction:alternate-reverse}
+@keyframes floor-light-drift{to{transform:translateX(-40%) scaleX(.7)}}
+.motion-ok .lights-on[data-light-effect="pulse"] .stage-floor-spots{animation:optical-blackout 4.8s ease-in-out infinite}
+.motion-ok .lights-on[data-light-effect="color"] .stage-floor-spots{animation:optical-color 12s linear infinite}
+.lights-on .stage-fog{opacity:.25}
+.lights-on .stage-room-glow{background:radial-gradient(ellipse at 25% 18%,rgba(var(--lamp-color),.14),transparent 50%),radial-gradient(ellipse at 80% 25%,#a176d51c,transparent 55%)}
+.lights-on .speaker-left{box-shadow:4px 9px 18px #000a,inset 2px 0 3px #99e4ff33}
+.lights-on .speaker-right{box-shadow:4px 9px 18px #000a,inset -2px 0 3px #d6b5ff33}
+@media(max-width:760px){.stage-preview{--beam-reach:clamp(145px,49vw,235px)}.stage-fixtures i{width:19px;height:21px;border-radius:5px 5px 7px 7px}.stage-fixtures i::before{width:12px;height:12px;top:5px;border-width:1px}.stage-fixtures i::after{left:-3px;top:2px;width:23px;height:14px;border-width:2px}.stage-fixtures i s{top:11px;width:65px}.lights-on .mh::after{opacity:.18}}
+@media(prefers-reduced-motion:reduce){.stage-fixtures i,.stage-fixtures i::before,.stage-fixtures i::after,.stage-fixtures i s,.stage-floor-spots,.stage-floor-spots i{animation:none!important}}
+.motion-ok .lights-on[data-light-effect="pulse"] .stage-room-glow,.motion-ok .lights-on[data-light-effect="pulse"] .stage-movers{animation:optical-blackout 4.8s ease-in-out infinite}
+.motion-ok .lights-on[data-light-effect="color"] .stage-movers{animation:optical-color 12s linear infinite}
+.motion-ok .audio-reactive.music-playing.lights-on .stage-fixtures i s{opacity:calc(.6 + var(--bass,0)*.2)}
+/* Blackouts extinguish the lamp and cone while the equipment stays visible. */
+.motion-ok .lights-on[data-light-effect="pulse"] .stage-fixtures i{animation:none}
+.motion-ok .lights-on[data-light-effect="pulse"] .stage-fixtures i::before,.motion-ok .lights-on[data-light-effect="pulse"] .stage-fixtures i s{animation:optical-lamp-off 4.8s ease-in-out var(--delay) infinite}
+@keyframes optical-lamp-off{0%,30%,100%{opacity:1}43%,74%{opacity:0}}
+.stage-preview[data-mode="day"].lights-on .stage-fixtures i s{opacity:.3}
+
+/* Varied crowd silhouettes: overlapping rows, hair, shoulders and raised arms. */
+.stage-audience{height:23%;bottom:-12px;background:url('assets/stage-audience.svg?v=2') 23px bottom/640px 151px repeat-x;filter:none;pointer-events:none}
+.stage-audience::before{left:-20px;right:-20px;bottom:16px;height:142px;background:url('assets/stage-audience-back.svg') -44px bottom/570px 122px repeat-x;opacity:.66;z-index:-1}
+.stage-audience::after{content:'';position:absolute;inset:65% 0 0;background:linear-gradient(transparent,#03070da8);pointer-events:none}
+.lights-on .stage-audience{filter:drop-shadow(0 -1px 1px #9dd5e22e)}
+@media(max-width:760px){.stage-audience{background-size:360px 85px;background-position:5px bottom}.stage-audience::before{height:83px;bottom:10px;background-size:330px 75px}.lights-on .stage-audience{filter:none}}
