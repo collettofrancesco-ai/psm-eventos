@@ -147,7 +147,7 @@ en: {
 'home.119': 'Track 2',
 'home.120': 'Track 3',
 'home.121': 'Track 4',
-'home.122': 'Track 5',
+
 'serv.1': '<i></i>What we do',
 'serv.2': 'Full <em style="font-style:normal;color:var(--cyan)">production.</em>',
 'serv.3': 'Five services, one experience. We design every setup around your space, your audience and your idea — with our own equipment and expert crew.',
@@ -521,7 +521,7 @@ it: {
 'home.119': 'Traccia 2',
 'home.120': 'Traccia 3',
 'home.121': 'Traccia 4',
-'home.122': 'Traccia 5',
+
 'serv.1': '<i></i>Cosa facciamo',
 'serv.2': 'Produzione <em style="font-style:normal;color:var(--cyan)">integrale.</em>',
 'serv.3': 'Cinque servizi, un’unica esperienza. Disegniamo ogni allestimento su misura del tuo spazio, del tuo pubblico e della tua idea — con attrezzatura propria e personale esperto.',
@@ -895,7 +895,7 @@ pt: {
 'home.119': 'Faixa 2',
 'home.120': 'Faixa 3',
 'home.121': 'Faixa 4',
-'home.122': 'Faixa 5',
+
 'serv.1': '<i></i>O que fazemos',
 'serv.2': 'Produção <em style="font-style:normal;color:var(--cyan)">integral.</em>',
 'serv.3': 'Cinco serviços, uma mesma experiência. Desenhamos cada montagem sob medida para seu espaço, seu público e sua ideia — com equipamento próprio e equipe especializada.',

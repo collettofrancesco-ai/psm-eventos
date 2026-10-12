@@ -90,15 +90,16 @@
       selectTrackFile(tb.dataset.track);
     });
   });
-  var wallChapters = [0, 30.25, 53.96, 77.04, 95.79, 127.2];
-  var wallTracks = ['assets/stage-track-1.wav','assets/stage-track-2.wav','assets/stage-track-3.wav','assets/stage-track-4-desire.wav','assets/stage-track-5.wav'];
+  var wallChapters = [0, 31.33, 61.58, 85.29, 108.37, 127.2];
+  var wallTracks = [null,'assets/stage-track-1.wav','assets/stage-track-2.wav','assets/stage-track-3.wav','assets/stage-track-4-desire.wav'];
   var wallTrackIdx = 0;
   function wallChapter(t){
     for (var k = 0; k < 5; k++) { if (t < wallChapters[k + 1]) return k; }
     return 4;
   }
   function selectTrackFile(file){
-    tracks.forEach(function(x){ x.setAttribute('aria-pressed', String(x.dataset.track === file)); });
+    tracks.forEach(function(x){ x.setAttribute('aria-pressed', String(file && x.dataset.track === file)); });
+    if (!file) { music.pause(); return; }
     if (music.getAttribute('src') === file) return;
     var wasPlaying = !music.paused;
     music.setAttribute('src', file);
