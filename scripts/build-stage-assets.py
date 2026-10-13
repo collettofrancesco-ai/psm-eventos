@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Draw the stage's fog texture and the crowd's raised hands.
+"""Draw the stage's fog texture and its crowd.
 
 Run from the repo root:
     python3 scripts/build-stage-assets.py
-Writes dist/assets/stage-fog.webp (a tileable smoke mask) and
-dist/assets/stage-crowd-hands.svg (arms and phones over the front row of
-dist/assets/stage-audience.svg, same 720x170 tile).
+Writes dist/assets/stage-fog.webp (a tileable smoke mask) and the crowd silhouettes
+(three rows, rim-lit, split into groups that move on their own) into dist/index.html.
 """
 from pathlib import Path
 
@@ -32,40 +31,104 @@ def fog(size=256, seed=7):
     Image.fromarray(rgba, 'RGBA').save(ASSETS / 'stage-fog.webp', quality=82, method=6)
 
 
-# Front-row heads of stage-audience.svg: (x, y, arms). Arms: L/R raised, V both, P phone.
-PEOPLE = [(24, 64, 'V'), (78, 49, 'RP'), (136, 68, 'L'), (252, 61, 'V'), (308, 46, 'RP'),
-          (370, 67, 'V'), (433, 41, 'L'), (491, 60, 'RP'), (551, 46, 'L'), (610, 65, 'V'), (677, 52, 'RP')]
+W, H = 820, 161  # .stage-audience box on the 820x700 stage canvas
 
 
-def arm(x, y, side, wide):
-    shoulder = (x + side * 14, y + 31)
-    elbow = (x + side * (26 if wide else 21), y + 4)
-    hand = (x + side * (32 if wide else 17), y - 26)
-    d = f'M{shoulder[0]} {shoulder[1]}L{elbow[0]} {elbow[1]}L{hand[0]} {hand[1]}'
-    return d, hand
+def f(n):
+    return f'{n:.1f}'.rstrip('0').rstrip('.')
 
 
-def hands():
-    arms, fists, phones = [], [], []
-    for x, y, kind in PEOPLE:
-        sides = (-1, 1) if 'V' in kind else ((-1,) if 'L' in kind else (1,))
+def person(rng, x, hy, s):
+    """One silhouette: torso, hair, head, plus optional raised arms. Returns (body, arms)."""
+    w = rng.uniform(17, 24) * s
+    y0 = hy + rng.uniform(17, 20) * s
+    torso = (f'M{f(x - w)} {H + 4}L{f(x - w - s)} {f(y0 + 16 * s)}Q{f(x - w)} {f(y0 + s)} {f(x - w + 10 * s)} {f(y0)}'
+             f'L{f(x - 5 * s)} {f(y0 - 3 * s)}L{f(x + 5 * s)} {f(y0 - 3 * s)}L{f(x + w - 10 * s)} {f(y0)}'
+             f'Q{f(x + w)} {f(y0 + s)} {f(x + w + s)} {f(y0 + 16 * s)}L{f(x + w)} {H + 4}Z')
+    parts = [f'<path d="{torso}"/>', f'<rect x="{f(x - 4.5 * s)}" y="{f(hy + 8 * s)}" width="{f(9 * s)}" height="{f(10 * s)}"/>']
+    style = rng.choice(['short', 'short', 'long', 'long', 'tail', 'bun', 'curly', 'cap'])
+    rx, ry = 10 * s, 12.5 * s
+    if style == 'long':
+        parts.append(f'<path d="M{f(x - 11 * s)} {f(hy - 3 * s)}Q{f(x - 14 * s)} {f(hy + 17 * s)} {f(x - 10 * s)} {f(hy + 25 * s)}'
+                     f'L{f(x + 10 * s)} {f(hy + 25 * s)}Q{f(x + 14 * s)} {f(hy + 17 * s)} {f(x + 11 * s)} {f(hy - 3 * s)}Z"/>')
+    elif style == 'tail':
+        side = rng.choice([-1, 1])
+        parts.append(f'<ellipse cx="{f(x + side * 10 * s)}" cy="{f(hy + 7 * s)}" rx="{f(4 * s)}" ry="{f(9 * s)}" transform="rotate({side * -18} {f(x + side * 10 * s)} {f(hy + 7 * s)})"/>')
+    elif style == 'bun':
+        parts.append(f'<circle cx="{f(x)}" cy="{f(hy - 12 * s)}" r="{f(5 * s)}"/>')
+    elif style == 'curly':
+        rx, ry = 13 * s, 14 * s
+    tilt = rng.uniform(-9, 9)
+    parts.append(f'<ellipse cx="{f(x)}" cy="{f(hy)}" rx="{f(rx)}" ry="{f(ry)}" transform="rotate({f(tilt)} {f(x)} {f(hy)})"/>')
+    if style == 'cap':
+        side = rng.choice([-1, 1])
+        parts.append(f'<path d="M{f(x - 10.5 * s)} {f(hy - 2 * s)}Q{f(x)} {f(hy - 17 * s)} {f(x + 10.5 * s)} {f(hy - 2 * s)}Z"/>'
+                     f'<rect x="{f(x if side > 0 else x - 19 * s)}" y="{f(hy - 4 * s)}" width="{f(19 * s)}" height="{f(3.2 * s)}" rx="{f(1.6 * s)}"/>')
+    arms = ''
+    kind = rng.choice(['', '', 'V', 'L', 'R', 'RP', 'LP'])
+    if kind:
+        strokes, extra = [], []
+        sides = (-1, 1) if kind == 'V' else ((-1,) if 'L' in kind else (1,))
         for side in sides:
-            d, (hx, hy) = arm(x, y, side, 'V' in kind)
-            arms.append(d)
-            fists.append(f'<circle cx="{hx}" cy="{hy - 3}" r="5"/>')
+            sx, sy = x + side * (w - 6 * s), y0 + 4 * s
+            ex, ey = x + side * (w + (5 if kind == 'V' else 1) * s), hy - 2 * s
+            hx, hy2 = x + side * ((w + 2 * s) if kind == 'V' else (w - 6 * s)), hy - 30 * s
+            strokes.append(f'M{f(sx)} {f(sy)}L{f(ex)} {f(ey)}L{f(hx)} {f(hy2)}')
+            extra.append(f'<circle cx="{f(hx)}" cy="{f(hy2 - 3 * s)}" r="{f(5 * s)}"/>')
             if 'P' in kind:
-                phones.append(f'<rect x="{hx - 4}" y="{hy - 15}" width="8" height="12" rx="1.5"/>')
-    path = ''.join(arms)
-    svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="720" height="170" viewBox="0 0 720 170">'
-           f'<path d="{path}" fill="none" stroke="#779bad" stroke-opacity=".12" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>'
-           f'<path d="{path}" fill="none" stroke="#08101a" stroke-width="8.4" stroke-linecap="round" stroke-linejoin="round"/>'
-           f'<g fill="#08101a">{"".join(fists)}</g>'
-           f'<g fill="#9fdcff" opacity=".35" transform="translate(0 0)">{"".join(p.replace("width=\"8\"", "width=\"8\" stroke=\"#9fdcff\" stroke-width=\"6\"") for p in phones)}</g>'
-           f'<g fill="#e6f8ff">{"".join(phones)}</g></svg>')
-    (ASSETS / 'stage-crowd-hands.svg').write_text(svg)
+                extra.append(f'<rect class="phone" x="{f(hx - 4 * s)}" y="{f(hy2 - 16 * s)}" width="{f(8 * s)}" height="{f(12 * s)}" rx="{f(1.5 * s)}"/>')
+        arms = (f'<path d="{"".join(strokes)}" fill="none" stroke-width="{f(8.5 * s)}" stroke-linecap="round" stroke-linejoin="round"/>'
+                + ''.join(extra))
+    return ''.join(parts), arms
+
+
+ROWS = [  # name, scale, head y range, people, layers (groups that move with their own phase)
+    ('back', .5, (44, 54), 34, 1),
+    ('mid', .72, (58, 70), 22, 2),
+    ('front', 1.0, (74, 94), 14, 3),
+]
+
+
+def crowd(seed=11):
+    """Inline SVG crowd for .stage-audience: one <svg> per layer so each group bobs on its own
+    composited layer. Rim light gradients read --rim / --rim-o, set in CSS from the lights."""
+    rng = np.random.default_rng(seed)
+    layers = []
+    for name, scale, (top, bottom), count, groups in ROWS:
+        step = (W + 40) / count
+        bodies = [[] for _ in range(groups)]
+        arms = [[] for _ in range(groups)]
+        for n in range(count):
+            x = -20 + step * (n + .5) + rng.uniform(-.3, .3) * step
+            body, arm = person(rng, x, rng.uniform(top, bottom), scale * rng.uniform(.92, 1.08))
+            bodies[n % groups].append(body)
+            if arm and name != 'back':
+                arms[n % groups].append(arm)
+        for g in range(groups):
+            gid = f'{name}-{g}'
+            layers.append(
+                f'<svg class="crowd-layer {name} g{g}" viewBox="0 0 {W} {H}" preserveAspectRatio="none" aria-hidden="true">'
+                f'<defs><linearGradient id="rim-{gid}" x1="0" y1="0" x2="0" y2="1">'
+                '<stop offset="0" style="stop-color:var(--rim);stop-opacity:var(--rim-o)"/>'
+                '<stop offset=".3" style="stop-color:var(--rim);stop-opacity:calc(var(--rim-o) * .25)"/>'
+                '<stop offset=".55" style="stop-color:var(--rim);stop-opacity:0"/></linearGradient></defs>'
+                f'<g class="arms" stroke="url(#rim-{gid})">{"".join(arms[g])}</g>'
+                f'<g class="bodies" stroke="url(#rim-{gid})">{"".join(bodies[g])}</g></svg>')
+    return ''.join(layers)
+
+
+def write_crowd():
+    import re
+    index = ROOT / 'dist' / 'index.html'
+    html = index.read_text()
+    html, count = re.subn(r'(<div class="stage-audience" aria-hidden="true">).*?(</div>)',
+                          lambda m: m.group(1) + crowd() + m.group(2), html, count=1, flags=re.S)
+    if count != 1:
+        raise SystemExit('stage-audience not found in dist/index.html')
+    index.write_text(html)
 
 
 if __name__ == '__main__':
     fog()
-    hands()
-    print('Wrote dist/assets/stage-fog.webp and dist/assets/stage-crowd-hands.svg')
+    write_crowd()
+    print('Wrote dist/assets/stage-fog.webp and the crowd into dist/index.html')

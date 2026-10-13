@@ -976,22 +976,10 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .lights-on .stage-fog{opacity:.3}
 
 /* Crowd: bobs on the beat, hands up when the song is up, jumps on the drop. */
-.crowd-hands{position:absolute;inset:0;background:url('assets/stage-crowd-hands.svg') 23px bottom/640px 151px repeat-x;opacity:0;transform:translateY(16px);transition:opacity .45s,transform .45s;pointer-events:none}
-.crowd-hype .crowd-hands{opacity:1;transform:none}
-.motion-ok .beat-sync.music-playing.hit-a .stage-audience{animation:crowd-bob-a var(--beat-len) ease-out}
-.motion-ok .beat-sync.music-playing.hit-b .stage-audience{animation:crowd-bob-b var(--beat-len) ease-out}
-.motion-ok .beat-sync.music-playing.crowd-jump.hit-a .stage-audience{animation:crowd-jump-a var(--beat-len) cubic-bezier(.3,.7,.4,1)}
-.motion-ok .beat-sync.music-playing.crowd-jump.hit-b .stage-audience{animation:crowd-jump-b var(--beat-len) cubic-bezier(.3,.7,.4,1)}
-.motion-ok .beat-sync.music-playing.hit-a .stage-audience::before{animation:crowd-bob-a var(--beat-len) ease-out calc(var(--beat-len)*-.5)}
-.motion-ok .beat-sync.music-playing.hit-b .stage-audience::before{animation:crowd-bob-b var(--beat-len) ease-out calc(var(--beat-len)*-.5)}
-.motion-ok .beat-sync.crowd-hype.hit-a .crowd-hands{animation:hands-a var(--beat-len) ease-out}
-.motion-ok .beat-sync.crowd-hype.hit-b .crowd-hands{animation:hands-b var(--beat-len) ease-out}
-@keyframes crowd-bob-a{0%{transform:none}25%{transform:translateY(calc(3px + var(--energy)*6px))}100%{transform:none}}
-@keyframes crowd-bob-b{0%{transform:none}25%{transform:translateY(calc(3px + var(--energy)*6px))}100%{transform:none}}
-@keyframes crowd-jump-a{0%{transform:translateY(6px)}40%{transform:translateY(-20px)}100%{transform:none}}
-@keyframes crowd-jump-b{0%{transform:translateY(6px)}40%{transform:translateY(-20px)}100%{transform:none}}
-@keyframes hands-a{0%{transform:none}30%{transform:translateY(12px) rotate(.4deg)}100%{transform:none}}
-@keyframes hands-b{0%{transform:none}30%{transform:translateY(12px) rotate(-.4deg)}100%{transform:none}}
+@keyframes crowd-bob-a{0%{transform:none}25%{transform:translateY(calc((3px + var(--energy)*6px)*var(--amp)))}100%{transform:none}}
+@keyframes crowd-bob-b{0%{transform:none}25%{transform:translateY(calc((3px + var(--energy)*6px)*var(--amp)))}100%{transform:none}}
+@keyframes crowd-jump-a{0%{transform:translateY(calc(6px*var(--amp)))}40%{transform:translateY(calc(-20px*var(--amp)))}100%{transform:none}}
+@keyframes crowd-jump-b{0%{transform:translateY(calc(6px*var(--amp)))}40%{transform:translateY(calc(-20px*var(--amp)))}100%{transform:none}}
 
 /* Finale: once per show (stage-show.js), flame jets on the deck and confetti from the truss. */
 .stage-flames{position:absolute;inset:0;z-index:4;pointer-events:none}
@@ -1006,7 +994,7 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-confetti i{position:absolute;top:12%;left:var(--x);width:7px;height:11px;border-radius:1px;background:var(--c);opacity:0;animation:confetti-fall var(--s) cubic-bezier(.2,.6,.45,1) var(--d) both}
 .stage-confetti i:nth-child(3n){width:5px;height:5px;border-radius:50%}
 @keyframes confetti-fall{0%{transform:translate(0,-30px) rotate(0) rotateY(0);opacity:1}85%{opacity:1}100%{transform:translate(var(--dx),88cqh) rotate(var(--r)) rotateY(900deg);opacity:0}}
-@media(prefers-reduced-motion:reduce){.stage-fixtures i s::after,.stage-audience,.crowd-hands{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.stage-fixtures i s::after,.crowd-layer{animation:none!important}}
 /* Event name on the LED surfaces (stage-show.js): big on the wall, a ticker on the wings. */
 .led-title{position:absolute;inset:0;z-index:5;display:grid;place-items:center;padding:6%;opacity:0;pointer-events:none;transition:opacity .4s}
 .has-title .led-title{opacity:1}
@@ -1078,6 +1066,33 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .motion-ok .stage-preview:not(.sound-on):not(.lights-on):not(.led-on):not(.show-running):not(.stage-intro) .stage-play{animation:play-in .6s ease-out both,play-glow 2.4s ease-in-out .6s infinite}
 @keyframes play-in{from{opacity:0;transform:translate(-50%,-30%)}to{opacity:1;transform:translate(-50%,-50%)}}
 @keyframes play-glow{50%{box-shadow:0 0 calc(40px / var(--play-scale)) #19c2dcaa}}
+/* Crowd: inline SVG silhouettes from scripts/build-stage-assets.py, three rows deep and
+   rim-lit by the stage. Each layer is a group of people that bobs with its own phase. */
+.stage-audience,.lights-on .stage-audience{background:none;filter:none}
+.stage-audience::before{content:none}
+.crowd-layer{--amp:1;--phase:0s;--rim:#86a9bd;--rim-o:.28;position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.crowd-layer .bodies{fill:var(--crowd);stroke-width:1.5}
+.crowd-layer .arms path{stroke:var(--crowd)}
+.crowd-layer .arms circle,.crowd-layer .arms rect{fill:var(--crowd)}
+.crowd-layer .arms .phone{fill:#e6f8ff;filter:drop-shadow(0 0 3px #9fdcff)}
+.crowd-layer.back{--crowd:#142131;--amp:.3}
+.crowd-layer.back .bodies{stroke-width:1}
+.crowd-layer.mid{--crowd:#0b1522;--amp:.65}
+.crowd-layer.mid .bodies{stroke-width:1.2}
+.crowd-layer.front{--crowd:#04080e}
+.crowd-layer.g1{--phase:calc(var(--beat-len) * -.12)}
+.crowd-layer.g2{--phase:calc(var(--beat-len) * -.24)}
+.lights-on .crowd-layer{--rim:#7fe9ff;--rim-o:.85}
+.lights-on .crowd-layer.g1{--rim:#c9a2ff}
+.lights-on .crowd-layer.back{--rim-o:.5}
+.stage-preview[data-preset="boda"].lights-on .crowd-layer{--rim:#ffd08a}
+.stage-preview[data-preset="corporativo"].lights-on .crowd-layer{--rim:#e3edff}
+.crowd-layer .arms{opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s}
+.crowd-hype .crowd-layer .arms{opacity:1;transform:none}
+.motion-ok .beat-sync.music-playing.hit-a .crowd-layer{animation:crowd-bob-a var(--beat-len) ease-out var(--phase)}
+.motion-ok .beat-sync.music-playing.hit-b .crowd-layer{animation:crowd-bob-b var(--beat-len) ease-out var(--phase)}
+.motion-ok .beat-sync.music-playing.crowd-jump.hit-a .crowd-layer{animation:crowd-jump-a var(--beat-len) cubic-bezier(.3,.7,.4,1) var(--phase)}
+.motion-ok .beat-sync.music-playing.crowd-jump.hit-b .crowd-layer{animation:crowd-jump-b var(--beat-len) cubic-bezier(.3,.7,.4,1) var(--phase)}
 .stage-canvas{position:absolute;inset:0;container-type:size}
 @media(max-width:760px){
   .stage-preview{aspect-ratio:820/700}
