@@ -287,3 +287,48 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 .motion-ok .show-running .stage-deck-svg{animation-duration:4.5s}
 @media(prefers-reduced-motion:reduce){.stage-deck-svg{animation:none!important}}
 .stage-preview .stage-sub{top:77.2%;bottom:7.6%}
+/* Upper moving heads: one slow circle instead of jumps. The head swings left-right while its
+   beam lengthens and shortens a quarter turn later, so the beam tip traces an ellipse.
+   Replaces the per-bar jumps of beat sync; the finale fan-out (!important) still wins. */
+@property --reach{syntax:'<number>';inherits:true;initial-value:1}
+@keyframes head-circle{
+  0%,100%{transform:rotate(0deg);--reach:1.15}
+  12.5%{transform:rotate(15.5deg);--reach:1.09}
+  25%{transform:rotate(22deg);--reach:.95}
+  37.5%{transform:rotate(15.5deg);--reach:.81}
+  50%{transform:rotate(0deg);--reach:.75}
+  62.5%{transform:rotate(-15.5deg);--reach:.81}
+  75%{transform:rotate(-22deg);--reach:.95}
+  87.5%{transform:rotate(-15.5deg);--reach:1.09}
+}
+.stage-fixtures i s{scale:1 var(--reach)}
+.motion-ok .lights-on .stage-fixtures i,.motion-ok .lights-on .stage-fixtures i:nth-child(even),.motion-ok .lights-on[data-light-effect] .stage-fixtures i{animation:head-circle 16s linear var(--delay,0s) infinite!important;transition:none!important}
+.motion-ok .lights-on[data-light-effect="color"] .stage-fixtures i{animation:head-circle 16s linear var(--delay,0s) infinite,optical-color 12s linear infinite!important}
+@media(prefers-reduced-motion:reduce){.stage-fixtures i{animation:none!important}}
+
+/* LED wash heads, take two: a real pan/tilt turn in perspective (no scaling, so they no longer
+   seem to come closer and move away). Head and beam follow the same slow circle. */
+@keyframes wash-head-circle{
+  0.0%{transform:perspective(160px) rotateY(0.0deg) rotateX(16.0deg)}
+  12.5%{transform:perspective(160px) rotateY(19.8deg) rotateX(11.3deg)}
+  25.0%{transform:perspective(160px) rotateY(28.0deg) rotateX(0.0deg)}
+  37.5%{transform:perspective(160px) rotateY(19.8deg) rotateX(-11.3deg)}
+  50.0%{transform:perspective(160px) rotateY(0.0deg) rotateX(-16.0deg)}
+  62.5%{transform:perspective(160px) rotateY(-19.8deg) rotateX(-11.3deg)}
+  75.0%{transform:perspective(160px) rotateY(-28.0deg) rotateX(-0.0deg)}
+  87.5%{transform:perspective(160px) rotateY(-19.8deg) rotateX(11.3deg)}
+  100.0%{transform:perspective(160px) rotateY(-0.0deg) rotateX(16.0deg)}
+}
+@keyframes wash-beam-circle{
+  0.0%{transform:translateX(-50%) rotate(0.0deg) scaleY(0.72)}
+  12.5%{transform:translateX(-50%) rotate(17.0deg) scaleY(0.80)}
+  25.0%{transform:translateX(-50%) rotate(24.0deg) scaleY(1.00)}
+  37.5%{transform:translateX(-50%) rotate(17.0deg) scaleY(1.20)}
+  50.0%{transform:translateX(-50%) rotate(0.0deg) scaleY(1.28)}
+  62.5%{transform:translateX(-50%) rotate(-17.0deg) scaleY(1.20)}
+  75.0%{transform:translateX(-50%) rotate(-24.0deg) scaleY(1.00)}
+  87.5%{transform:translateX(-50%) rotate(-17.0deg) scaleY(0.80)}
+  100.0%{transform:translateX(-50%) rotate(-0.0deg) scaleY(0.72)}
+}
+.motion-ok .lights-on .mh-ledwash .wash-head{animation:wash-lens-colours 10s linear var(--wash-phase) infinite,wash-head-circle 12s linear var(--wash-phase) infinite}
+.motion-ok .lights-on .stage-movers .mh-ledwash::after{animation:wash-beam-circle 12s linear var(--wash-phase) infinite,wash-beam-colours 10s linear var(--wash-phase) infinite}
