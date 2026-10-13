@@ -1072,8 +1072,8 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-audience::before{content:none}
 .crowd-layer{--amp:1;--phase:0s;--rim:#86a9bd;--rim-o:.28;position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .crowd-layer .bodies{fill:var(--crowd);stroke-width:1.5}
-.crowd-layer .arms path{stroke:var(--crowd)}
-.crowd-layer .arms circle,.crowd-layer .arms rect{fill:var(--crowd)}
+.crowd-layer .arms{fill:var(--crowd);stroke-width:1.4}
+.crowd-layer .arms .fingers{fill:none;stroke:var(--crowd)}
 .crowd-layer .arms .phone{fill:#e6f8ff;filter:drop-shadow(0 0 3px #9fdcff)}
 .crowd-layer.back{--crowd:#142131;--amp:.3}
 .crowd-layer.back .bodies{stroke-width:1}
@@ -1088,7 +1088,7 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-preview[data-preset="boda"].lights-on .crowd-layer{--rim:#ffd08a}
 .stage-preview[data-preset="corporativo"].lights-on .crowd-layer{--rim:#e3edff}
 .crowd-layer .arms{opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s}
-.crowd-hype .crowd-layer .arms{opacity:1;transform:none}
+.crowd-hype .crowd-layer .arms,.music-playing .crowd-layer .arms.always{opacity:1;transform:none}
 .motion-ok .beat-sync.music-playing.hit-a .crowd-layer{animation:crowd-bob-a var(--beat-len) ease-out var(--phase)}
 .motion-ok .beat-sync.music-playing.hit-b .crowd-layer{animation:crowd-bob-b var(--beat-len) ease-out var(--phase)}
 .motion-ok .beat-sync.music-playing.crowd-jump.hit-a .crowd-layer{animation:crowd-jump-a var(--beat-len) cubic-bezier(.3,.7,.4,1) var(--phase)}

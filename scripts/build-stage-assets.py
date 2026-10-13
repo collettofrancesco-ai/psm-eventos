@@ -38,54 +38,156 @@ def f(n):
     return f'{n:.1f}'.rstrip('0').rstrip('.')
 
 
-def person(rng, x, hy, s):
-    """One silhouette: torso, hair, head, plus optional raised arms. Returns (body, arms)."""
-    w = rng.uniform(17, 24) * s
-    y0 = hy + rng.uniform(17, 20) * s
-    torso = (f'M{f(x - w)} {H + 4}L{f(x - w - s)} {f(y0 + 16 * s)}Q{f(x - w)} {f(y0 + s)} {f(x - w + 10 * s)} {f(y0)}'
-             f'L{f(x - 5 * s)} {f(y0 - 3 * s)}L{f(x + 5 * s)} {f(y0 - 3 * s)}L{f(x + w - 10 * s)} {f(y0)}'
-             f'Q{f(x + w)} {f(y0 + s)} {f(x + w + s)} {f(y0 + 16 * s)}L{f(x + w)} {H + 4}Z')
-    parts = [f'<path d="{torso}"/>', f'<rect x="{f(x - 4.5 * s)}" y="{f(hy + 8 * s)}" width="{f(9 * s)}" height="{f(10 * s)}"/>']
-    style = rng.choice(['short', 'short', 'long', 'long', 'tail', 'bun', 'curly', 'cap'])
-    rx, ry = 10 * s, 12.5 * s
+# Bust outline seen from behind (head radius ~8.5px at front-row scale): crown, ear, jaw,
+# neck, trapezius, shoulder and arm, as cubic segments of the right half; mirrored for the left.
+BUST_HEAD = [((4.6, -11), (8.1, -8.2), (8.4, -3.6)), ((8.7, -1.6), (9.7, -1.3), (9.6, 1)),
+             ((9.5, 3), (8.7, 4.1), (8.1, 4.6)), ((7.4, 8), (5.2, 10.4), (3.7, 11.2))]
+BUST_BODY = [((3.8, 12.5), (3.9, 13.6), (4, 14.6)), ((6.5, 16.6), (11, 17.6), (15, 18.6)),
+             ((19.6, 19.6), (22.6, 21.7), (23.4, 26)), ((23.9, 30), (24.1, 36), (24.3, 60))]
+
+
+def cubic_path(start, segments):
+    out = f'M{f(start[0])} {f(start[1])}'
+    for c1, c2, end in segments:
+        out += f'C{f(c1[0])} {f(c1[1])} {f(c2[0])} {f(c2[1])} {f(end[0])} {f(end[1])}'
+    return out
+
+
+def bust(x, hy, s, shoulders, head_shift, bottom):
+    """Closed outline of one person: (head, neck, shoulders) with asymmetric shoulder widths
+    (a body turned three-quarters) and the head shifted on the neck."""
+    def place(pt, side, head):
+        px, py = pt
+        if head:
+            px = side * px + head_shift
+        else:
+            px = side * (px if abs(px) < 4.5 else 4.5 + (px - 4.5) * shoulders[side > 0])
+        if py >= 59:
+            py = (bottom - hy) / s
+        return (x + s * px, hy + s * py)
+
+    right = [(place(c1, 1, k < 4), place(c2, 1, k < 4), place(e, 1, k < 4))
+             for k, (c1, c2, e) in enumerate(BUST_HEAD + BUST_BODY)]
+    segments = BUST_HEAD + BUST_BODY
+    starts = [(0, -11)] + [seg[2] for seg in segments[:-1]]
+    left = []
+    for k in range(len(segments) - 1, -1, -1):
+        c1, c2, _ = segments[k]
+        head = k < 4
+        left.append((place(c2, -1, head), place(c1, -1, head), place(starts[k], -1, head)))
+    top = place((0, -11), 1, True)
+    path = cubic_path(top, right)
+    path += f'L{f(place(segments[-1][2], -1, False)[0])} {f(place(segments[-1][2], -1, False)[1])}'
+    for c1, c2, e in left:
+        path += f'C{f(c1[0])} {f(c1[1])} {f(c2[0])} {f(c2[1])} {f(e[0])} {f(e[1])}'
+    return path + 'Z'
+
+
+def hair(rng, x, hy, s, head_shift):
+    """Hair in the same fill as the body; ragged ends so it does not read as a cut-out."""
+    cx = x + s * head_shift
+    def P(px, py):
+        return f'{f(cx + s * px)} {f(hy + s * py)}'
+    style = rng.choice(['short', 'short', 'short', 'long', 'long', 'tail', 'bun', 'curly', 'cap', 'beanie', 'none'])
+    if style == 'short':
+        return f'<path d="M{P(-8.6, -2)}C{P(-9.4, -10.5)} {P(-4, -12.6)} {P(0, -12.4)}C{P(4.5, -12.6)} {P(9.3, -10)} {P(8.6, -2)}Z"/>'
     if style == 'long':
-        parts.append(f'<path d="M{f(x - 11 * s)} {f(hy - 3 * s)}Q{f(x - 14 * s)} {f(hy + 17 * s)} {f(x - 10 * s)} {f(hy + 25 * s)}'
-                     f'L{f(x + 10 * s)} {f(hy + 25 * s)}Q{f(x + 14 * s)} {f(hy + 17 * s)} {f(x + 11 * s)} {f(hy - 3 * s)}Z"/>')
-    elif style == 'tail':
+        length = rng.uniform(17, 26)
+        ends = ''.join(f'L{P(-9.5 + k * 2.375, length + (1.8 if k % 2 else 0) + rng.uniform(-1, 1))}' for k in range(9))
+        return (f'<path d="M{P(-8.7, -4)}C{P(-10.5, 4)} {P(-10.8, 11)} {P(-9.5, length)}{ends}'
+                f'C{P(10.8, 11)} {P(10.5, 4)} {P(8.7, -4)}C{P(8, -12)} {P(-8, -12)} {P(-8.7, -4)}Z"/>')
+    if style == 'tail':
         side = rng.choice([-1, 1])
-        parts.append(f'<ellipse cx="{f(x + side * 10 * s)}" cy="{f(hy + 7 * s)}" rx="{f(4 * s)}" ry="{f(9 * s)}" transform="rotate({side * -18} {f(x + side * 10 * s)} {f(hy + 7 * s)})"/>')
-    elif style == 'bun':
-        parts.append(f'<circle cx="{f(x)}" cy="{f(hy - 12 * s)}" r="{f(5 * s)}"/>')
-    elif style == 'curly':
-        rx, ry = 13 * s, 14 * s
-    tilt = rng.uniform(-9, 9)
-    parts.append(f'<ellipse cx="{f(x)}" cy="{f(hy)}" rx="{f(rx)}" ry="{f(ry)}" transform="rotate({f(tilt)} {f(x)} {f(hy)})"/>')
+        return (f'<path d="M{P(-8.6, -2)}C{P(-9.4, -10.5)} {P(9.4, -10.5)} {P(8.6, -2)}Z'
+                f'M{P(side * 5, -7)}C{P(side * 13, -6)} {P(side * 14.5, 6)} {P(side * 10.5, 16)}C{P(side * 10, 10)} {P(side * 8.5, 3)} {P(side * 5, 0)}Z"/>')
+    if style == 'bun':
+        return f'<circle cx="{f(cx + s * rng.uniform(-2, 2))}" cy="{f(hy - 12.3 * s)}" r="{f(4.3 * s)}"/>'
+    if style == 'curly':
+        pts = []
+        for k in range(40):
+            a = np.pi * (1.05 + .9 * k / 39)
+            r = 11.4 + .55 * np.sin(k * 2.1)
+            pts.append(P(r * np.cos(a) * 1.05, r * np.sin(a) * .95 + 1.5))
+        return f'<path d="M{P(-11, 4)}L' + 'L'.join(pts) + f'L{P(11, 4)}L{P(0, 6)}Z"/>'
     if style == 'cap':
-        side = rng.choice([-1, 1])
-        parts.append(f'<path d="M{f(x - 10.5 * s)} {f(hy - 2 * s)}Q{f(x)} {f(hy - 17 * s)} {f(x + 10.5 * s)} {f(hy - 2 * s)}Z"/>'
-                     f'<rect x="{f(x if side > 0 else x - 19 * s)}" y="{f(hy - 4 * s)}" width="{f(19 * s)}" height="{f(3.2 * s)}" rx="{f(1.6 * s)}"/>')
-    arms = ''
-    kind = rng.choice(['', '', 'V', 'L', 'R', 'RP', 'LP'])
-    if kind:
-        strokes, extra = [], []
-        sides = (-1, 1) if kind == 'V' else ((-1,) if 'L' in kind else (1,))
-        for side in sides:
-            sx, sy = x + side * (w - 6 * s), y0 + 4 * s
-            ex, ey = x + side * (w + (5 if kind == 'V' else 1) * s), hy - 2 * s
-            hx, hy2 = x + side * ((w + 2 * s) if kind == 'V' else (w - 6 * s)), hy - 30 * s
-            strokes.append(f'M{f(sx)} {f(sy)}L{f(ex)} {f(ey)}L{f(hx)} {f(hy2)}')
-            extra.append(f'<circle cx="{f(hx)}" cy="{f(hy2 - 3 * s)}" r="{f(5 * s)}"/>')
-            if 'P' in kind:
-                extra.append(f'<rect class="phone" x="{f(hx - 4 * s)}" y="{f(hy2 - 16 * s)}" width="{f(8 * s)}" height="{f(12 * s)}" rx="{f(1.5 * s)}"/>')
-        arms = (f'<path d="{"".join(strokes)}" fill="none" stroke-width="{f(8.5 * s)}" stroke-linecap="round" stroke-linejoin="round"/>'
-                + ''.join(extra))
-    return ''.join(parts), arms
+        return f'<path d="M{P(-9, -1.5)}C{P(-9.5, -9)} {P(-6, -12.2)} {P(0, -12.2)}C{P(6, -12.2)} {P(9.5, -9)} {P(9, -1.5)}L{P(9.6, -.6)}L{P(-9.6, -.6)}Z"/>'
+    if style == 'beanie':
+        return f'<path d="M{P(-9.2, -1)}C{P(-9.4, -11)} {P(-4, -14.5)} {P(0, -14.6)}C{P(4, -14.5)} {P(9.4, -11)} {P(9.2, -1)}Z"/>'
+    return ''
 
 
-ROWS = [  # name, scale, head y range, people, layers (groups that move with their own phase)
-    ('back', .5, (44, 54), 34, 1),
-    ('mid', .72, (58, 70), 22, 2),
-    ('front', 1.0, (74, 94), 14, 3),
+def limb(points, widths):
+    """Tapered arm along shoulder-elbow-wrist as one closed path with a round wrist."""
+    pts = [np.array(p, float) for p in points]
+    dirs = [pts[1] - pts[0], pts[2] - pts[1]]
+    norms = [np.array([-d[1], d[0]]) / np.linalg.norm(d) for d in dirs]
+    joint = [norms[0], (norms[0] + norms[1]) / np.linalg.norm(norms[0] + norms[1]), norms[1]]
+    left = [pts[k] + joint[k] * widths[k] / 2 for k in range(3)]
+    right = [pts[k] - joint[k] * widths[k] / 2 for k in range(3)]
+    r = widths[2] / 2
+    d = f'M{f(left[0][0])} {f(left[0][1])}L{f(left[1][0])} {f(left[1][1])}L{f(left[2][0])} {f(left[2][1])}'
+    d += f'A{f(r)} {f(r)} 0 0 1 {f(right[2][0])} {f(right[2][1])}'
+    d += f'L{f(right[1][0])} {f(right[1][1])}L{f(right[0][0])} {f(right[0][1])}Z'
+    return d
+
+
+def hand(rng, kind, wx, wy, angle, s):
+    """Fist, open hand, peace sign, rock horns or a lit phone at the wrist."""
+    def finger(dx, length, tilt=0):
+        a = np.radians(angle + tilt)
+        bx, by = wx + dx * s * np.cos(np.radians(angle)), wy + dx * s * np.sin(np.radians(angle))
+        ex, ey = bx + np.sin(a) * length * s, by - np.cos(a) * length * s
+        return f'M{f(bx)} {f(by)}L{f(ex)} {f(ey)}'
+    palm = f'<ellipse cx="{f(wx)}" cy="{f(wy - 3 * s)}" rx="{f(4.1 * s)}" ry="{f(4.7 * s)}" transform="rotate({f(angle)} {f(wx)} {f(wy)})"/>'
+    lines = ''
+    if kind == 'open':
+        lines = ''.join(finger(dx, 7.4 - abs(dx) * .6, dx * 6) for dx in (-2.8, -.95, .95, 2.8))
+    elif kind == 'peace':
+        lines = finger(-1.1, 8, -12) + finger(1.1, 8, 12)
+    elif kind == 'horns':
+        lines = finger(-2.6, 7.4, -10) + finger(2.6, 7.4, 10)
+    out = palm
+    if lines:
+        out += f'<path class="fingers" d="{lines}" stroke-width="{f(2.1 * s)}" stroke-linecap="round"/>'
+    if kind == 'phone':
+        out += (f'<rect class="phone" x="{f(wx - 3.4 * s)}" y="{f(wy - 13 * s)}" width="{f(6.8 * s)}" height="{f(11 * s)}" rx="{f(1.3 * s)}"'
+                f' transform="rotate({f(angle)} {f(wx)} {f(wy)})"/>')
+    return out
+
+
+def raised_arms(rng, x, hy, s, shoulders, head_shift):
+    choice = rng.choice(['V', 'V', 'L', 'R', 'L', 'R'])
+    sides = (-1, 1) if choice == 'V' else ((-1,) if choice == 'L' else (1,))
+    out = ''
+    for side in sides:
+        sw = shoulders[side > 0]
+        sx, sy = x + side * s * (4.5 + 13.5 * sw), hy + 23 * s
+        spread = rng.uniform(.2, 1) if choice == 'V' else rng.uniform(-.2, .6)
+        ex, ey = sx + side * s * (6 + 7 * spread), hy + s * rng.uniform(-9, -1)
+        wx, wy = ex + side * s * rng.uniform(-5, 6 * spread + 2), hy - s * rng.uniform(32, 42)
+        angle = np.degrees(np.arctan2(wx - ex, ey - wy))
+        out += f'<path d="{limb([(sx, sy), (ex, ey), (wx, wy)], [9.6 * s, 7.6 * s, 5.8 * s])}"/>'
+        out += hand(rng, rng.choice(['fist', 'fist', 'open', 'open', 'peace', 'horns', 'phone']), wx, wy, angle, s)
+    return out
+
+
+def person(rng, x, hy, s, bottom, arm_chance):
+    """One rim-lit silhouette. Returns (body, arms, arms_always)."""
+    shoulders = {False: rng.uniform(.8, 1.18), True: rng.uniform(.8, 1.18)}
+    head_shift = rng.uniform(-1.6, 1.6)
+    hs = s * rng.uniform(.94, 1.06)
+    body = f'<path d="{bust(x, hy, hs, shoulders, head_shift, bottom)}"/>' + hair(rng, x, hy, hs, head_shift)
+    arms = raised_arms(rng, x, hy, hs, shoulders, head_shift) if rng.random() < arm_chance else ''
+    always = ''
+    if not arms and rng.random() < arm_chance * .4:
+        always = raised_arms(rng, x, hy, hs, shoulders, head_shift)
+    return body, arms, always
+
+
+ROWS = [  # name, scale, head y range, people, layers (groups that move with their own phase), arm chance
+    ('back', .5, (44, 54), 40, 1, .35),
+    ('mid', .72, (58, 70), 26, 2, .6),
+    ('front', 1.0, (74, 94), 16, 3, .75),
 ]
 
 
@@ -94,16 +196,15 @@ def crowd(seed=11):
     composited layer. Rim light gradients read --rim / --rim-o, set in CSS from the lights."""
     rng = np.random.default_rng(seed)
     layers = []
-    for name, scale, (top, bottom), count, groups in ROWS:
+    for name, scale, (top, bottom), count, groups, arm_chance in ROWS:
         step = (W + 40) / count
-        bodies = [[] for _ in range(groups)]
-        arms = [[] for _ in range(groups)]
+        bodies, arms, always = ([[] for _ in range(groups)] for _ in range(3))
         for n in range(count):
             x = -20 + step * (n + .5) + rng.uniform(-.3, .3) * step
-            body, arm = person(rng, x, rng.uniform(top, bottom), scale * rng.uniform(.92, 1.08))
+            body, arm, calm = person(rng, x, rng.uniform(top, bottom), scale * rng.uniform(.92, 1.08), H + 4, arm_chance)
             bodies[n % groups].append(body)
-            if arm and name != 'back':
-                arms[n % groups].append(arm)
+            arms[n % groups].append(arm)
+            always[n % groups].append(calm)
         for g in range(groups):
             gid = f'{name}-{g}'
             layers.append(
@@ -112,6 +213,7 @@ def crowd(seed=11):
                 '<stop offset="0" style="stop-color:var(--rim);stop-opacity:var(--rim-o)"/>'
                 '<stop offset=".3" style="stop-color:var(--rim);stop-opacity:calc(var(--rim-o) * .25)"/>'
                 '<stop offset=".55" style="stop-color:var(--rim);stop-opacity:0"/></linearGradient></defs>'
+                f'<g class="arms always" stroke="url(#rim-{gid})">{"".join(always[g])}</g>'
                 f'<g class="arms" stroke="url(#rim-{gid})">{"".join(arms[g])}</g>'
                 f'<g class="bodies" stroke="url(#rim-{gid})">{"".join(bodies[g])}</g></svg>')
     return ''.join(layers)
