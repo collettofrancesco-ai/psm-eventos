@@ -199,6 +199,26 @@ ROWS = [  # name, scale, head y range, people, layers (groups that move with the
 ]
 
 
+def foh():
+    """Front-of-house tent in the middle of the crowd, between the back and mid rows: canopy,
+    poles, mixing desk with lit screens and two engineers. Hovering it shows the consoles."""
+    cx, roof, eave, w = 560, 20, 33, 118
+    desk = 60
+    return (f'<svg class="crowd-layer foh-layer" viewBox="0 0 {W} {H}" preserveAspectRatio="none" aria-hidden="true">'
+            '<g class="foh" data-gear="mixer">'
+            f'<rect class="foh-hit" x="{cx - w / 2}" y="{roof}" width="{w}" height="{H - roof}"/>'
+            f'<path class="foh-roof" d="M{cx - w / 2 - 8} {eave}L{cx - w / 2 + 14} {roof}H{cx + w / 2 - 14}L{cx + w / 2 + 8} {eave}Z"/>'
+            f'<rect class="foh-valance" x="{cx - w / 2 - 8}" y="{eave}" width="{w + 16}" height="7"/>'
+            f'<text class="foh-label" x="{cx}" y="{eave + 5.6}" text-anchor="middle">PSM · FOH</text>'
+            f'<path class="foh-poles" d="M{cx - w / 2 - 4} {eave + 7}V{H}M{cx + w / 2 + 4} {eave + 7}V{H}"/>'
+            f'<ellipse class="foh-head" cx="{cx - 22}" cy="{desk - 9}" rx="5" ry="6"/><ellipse class="foh-head" cx="{cx + 20}" cy="{desk - 10}" rx="5" ry="6.2"/>'
+            f'<path class="foh-desk" d="M{cx - 48} {desk + 12}L{cx - 42} {desk}H{cx + 42}L{cx + 48} {desk + 12}Z"/>'
+            f'<rect class="foh-screen" x="{cx - 34}" y="{desk - 9}" width="20" height="9" rx="1"/>'
+            f'<rect class="foh-screen" x="{cx + 6}" y="{desk - 9}" width="20" height="9" rx="1"/>'
+            + ''.join(f'<circle class="foh-led" cx="{cx - 38 + k * 7.5}" cy="{desk + 6}" r="1"/>' for k in range(11))
+            + '</g></svg>')
+
+
 def crowd(seed=11):
     """Inline SVG crowd for .stage-audience: one <svg> per layer so each group bobs on its own
     composited layer. Rim light gradients read --rim / --rim-o, set in CSS from the lights."""
@@ -213,12 +233,14 @@ def crowd(seed=11):
             bodies[n % groups].append(f'<g class="t{n % 4}">{body}</g>')  # tone class: daylight clothing
             arms[n % groups].append(arm)
             always[n % groups].append(calm)
+        if name == 'mid':
+            layers.append(foh())  # behind the mid and front rows, in front of the back row
         for g in range(groups):
             gid = f'{name}-{g}'
             layers.append(
                 f'<svg class="crowd-layer {name} g{g}" viewBox="0 0 {W} {H}" preserveAspectRatio="none" aria-hidden="true">'
                 f'<defs><linearGradient id="rim-{gid}" x1="0" y1="0" x2="0" y2="1">'
-                '<stop offset="0" style="stop-color:var(--rim);stop-opacity:var(--rim-o)"/>'
+                '<stop offset="0" style="stop-color:var(--rim);stop-opacity:min(1,calc(var(--rim-o) + var(--flash,0) * .9))"/>'
                 '<stop offset=".3" style="stop-color:var(--rim);stop-opacity:calc(var(--rim-o) * .25)"/>'
                 '<stop offset=".55" style="stop-color:var(--rim);stop-opacity:0"/></linearGradient></defs>'
                 f'<g class="arms always" stroke="url(#rim-{gid})">{"".join(always[g])}</g>'
@@ -252,7 +274,7 @@ def write_crowd():
     index = ROOT / 'dist' / 'index.html'
     html = index.read_text()
     html, count = re.subn(r'(<div class="stage-audience" aria-hidden="true">).*?(</div>)',
-                          lambda m: m.group(1) + crowd() + m.group(2), html, count=1, flags=re.S)
+                          lambda m: m.group(1) + crowd() + '<i class="crowd-spots"></i>' + m.group(2), html, count=1, flags=re.S)
     if count != 1:
         raise SystemExit('stage-audience not found in dist/index.html')
     index.write_text(html)

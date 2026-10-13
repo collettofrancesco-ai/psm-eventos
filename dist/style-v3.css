@@ -1127,6 +1127,103 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-preview[data-mode="day"] .crowd-layer .arms .phone{filter:none;fill:#c9d6de}
 .stage-preview[data-mode="day"] .stage-audience::after{background:linear-gradient(transparent,#1e262e80)}
 .stage-preview .stage-truss,.stage-preview .stage-deck-svg{transition:filter 1.2s ease}
+/* Stage dressing (scripts/build-truss.py): one set per scene, performers rim-lit by the LED
+   wall and only on stage while there is music; soft contact shadows ground everything. */
+.stage-props{--rim:#86a9bd;--rim-o:.3;position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:visible}
+.lights-on .stage-props,.led-on .stage-props{--rim:#9feeff;--rim-o:.9}
+.stage-preview[data-preset="boda"].lights-on .stage-props{--rim:#ffd9a0}
+.stage-props .set{display:none}
+.stage-preview[data-preset="concierto"] .set-concierto,.stage-preview[data-preset="corporativo"] .set-corporativo,.stage-preview[data-preset="boda"] .set-boda{display:inline}
+.stage-props .booth,.stage-props .lectern,.stage-props .case,.stage-props .wedge,.stage-props .performer{fill:#070b11;stroke:url(#prop-rim);stroke-width:1.4;vector-effect:non-scaling-stroke}
+.stage-props .performer .arm{fill:none;stroke:#070b11}
+.stage-props .headphones{fill:none;stroke:#070b11;stroke-width:2.6}
+.stage-props .booth-top{fill:#1b2633}
+.stage-props .booth-led{fill:none;stroke:#1d3646;stroke-width:1.6;transition:stroke .5s}
+.lights-on .stage-props .booth-led{stroke:#56d5ee;filter:drop-shadow(0 0 3px #19c2dc)}
+.stage-props .booth-logo{fill:#9fb3c2;stroke:none;font:800 15px 'Barlow Condensed',sans-serif;letter-spacing:2px}
+.lights-on .stage-props .booth-logo{fill:#e6fbff}
+.stage-props .deck-dot{fill:#2d4152;stroke:none}
+.sound-on .stage-props .deck-dot{fill:#5eebff}
+.stage-props .case{fill:#10171f}
+.stage-props .case-trim{fill:none;stroke:#7d8d9a;stroke-width:1.2;vector-effect:non-scaling-stroke}
+.stage-props .case-latch{fill:#a9b8c4;stroke:none}
+.stage-props .wedge-grille{fill:#1a232d;stroke:none}
+.stage-props .lectern-plate{fill:#d7e2ea;stroke:none}
+.stage-props .mic-stand{fill:none;stroke:#2a3642;stroke-width:1.6;vector-effect:non-scaling-stroke}
+.stage-props .mic-head{fill:#3a4652;stroke:none}
+.stage-props .cables{fill:none;stroke:#020406;stroke-width:1.1;stroke-opacity:.45;vector-effect:non-scaling-stroke}
+.stage-props .prop-shadow{fill:url(#soft-shadow)}
+.stage-props .floor-shadow{fill:url(#soft-shadow);opacity:.9}
+.stage-props .deck-floor-shadow{fill:url(#deck-floor-fade)}
+.stage-props .performer{opacity:0;transition:opacity .8s}
+.sound-on .stage-props .performer,.show-running .stage-props .performer{opacity:1}
+.stage-props .bop,.stage-props .sway,.stage-props .dj-hand-up{transform-box:fill-box;transform-origin:50% 100%}
+.stage-props .dj-hand-up{opacity:0;transition:opacity .3s}
+.crowd-hype .stage-props .dj-hand-up{opacity:1}
+.motion-ok .beat-sync.music-playing.hit-a .stage-props .bop{animation:dj-bop-a var(--beat-len) ease-out}
+.motion-ok .beat-sync.music-playing.hit-b .stage-props .bop{animation:dj-bop-b var(--beat-len) ease-out}
+@keyframes dj-bop-a{30%{transform:translateY(1.5%)}}
+@keyframes dj-bop-b{30%{transform:translateY(1.5%)}}
+.motion-ok .music-playing .stage-props .sway{animation:singer-sway 4s ease-in-out infinite alternate}
+@keyframes singer-sway{from{transform:rotate(-1.5deg)}to{transform:rotate(1.5deg)}}
+/* Shadows follow the sun in day mode: shorter, sharper and cast away from it (sun top right). */
+.stage-preview[data-mode="day"] .stage-props .floor-shadow,.stage-preview[data-mode="day"] .stage-props .prop-shadow{transform:translateX(-1.2%) scaleY(.8);opacity:1}
+/* Light that touches things: every beat lifts the rim light on crowd and performers, the big
+   strobe hits flash the truss, and coloured spots from the movers sweep across the heads. */
+@property --flash{syntax:'<number>';inherits:true;initial-value:0}
+.motion-ok .beat-sync.lights-on.hit-a :is(.stage-audience,.stage-props){animation:light-touch-a var(--beat-len) ease-out}
+.motion-ok .beat-sync.lights-on.hit-b :is(.stage-audience,.stage-props){animation:light-touch-b var(--beat-len) ease-out}
+.motion-ok .beat-sync.lights-on.flash-a :is(.stage-audience,.stage-props){animation:light-flash-a .45s ease-out}
+.motion-ok .beat-sync.lights-on.flash-b :is(.stage-audience,.stage-props){animation:light-flash-b .45s ease-out}
+.motion-ok .beat-sync.lights-on.flash-a .stage-truss{animation:truss-flash-a .4s ease-out}
+.motion-ok .beat-sync.lights-on.flash-b .stage-truss{animation:truss-flash-b .4s ease-out}
+@keyframes light-touch-a{from{--flash:calc(.15 + var(--energy) * .3)}to{--flash:0}}
+@keyframes light-touch-b{from{--flash:calc(.15 + var(--energy) * .3)}to{--flash:0}}
+@keyframes light-flash-a{from{--flash:1}to{--flash:0}}
+@keyframes light-flash-b{from{--flash:1}to{--flash:0}}
+@keyframes truss-flash-a{from{filter:brightness(2.1)}to{filter:none}}
+@keyframes truss-flash-b{from{filter:brightness(2.1)}to{filter:none}}
+.crowd-spots{position:absolute;inset:-10% -20% 0;z-index:3;pointer-events:none;opacity:0;transition:opacity .8s;mix-blend-mode:screen;
+  background:radial-gradient(ellipse 9% 30% at 22% 38%,rgba(var(--lamp-color),.42),transparent 70%),radial-gradient(ellipse 8% 28% at 52% 34%,#c79cff66,transparent 70%),radial-gradient(ellipse 9% 30% at 80% 40%,rgba(var(--lamp-color),.38),transparent 70%);
+  -webkit-mask-image:linear-gradient(#000 0 55%,transparent 85%);mask-image:linear-gradient(#000 0 55%,transparent 85%)}
+.lights-on .crowd-spots{opacity:calc(.75 + var(--flash,0) * .5)}
+.motion-ok .lights-on .crowd-spots{animation:spots-sweep 7s ease-in-out infinite alternate}
+@keyframes spots-sweep{from{transform:translateX(-14%)}to{transform:translateX(14%)}}
+.stage-preview[data-mode="day"] .crowd-spots{display:none}
+
+/* Camera feel: bloom around the lit movers, a lens vignette, and a slow live-camera drift. */
+.stage-bloom{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0;transition:opacity .6s;mix-blend-mode:screen;
+  background:radial-gradient(circle 46px at 27.7% 19.3%,rgba(var(--lamp-color),.5),transparent),radial-gradient(circle 46px at 38.9% 19.3%,#d3b3ff80,transparent),
+  radial-gradient(circle 46px at 50% 19.3%,rgba(var(--lamp-color),.5),transparent),radial-gradient(circle 46px at 61.1% 19.3%,#d3b3ff80,transparent),
+  radial-gradient(circle 46px at 72.3% 19.3%,rgba(var(--lamp-color),.5),transparent),radial-gradient(ellipse 60% 10% at 50% 7.5%,#dff8ff30,transparent)}
+.lights-on .stage-bloom{opacity:calc(.85 + var(--flash,0) * .4)}
+.stage-preview[data-mode="day"] .stage-bloom{opacity:.15}
+.motion-ok .beat-sync.lights-on.hit-a .stage-bloom{animation:light-touch-a var(--beat-len) ease-out}
+.motion-ok .beat-sync.lights-on.hit-b .stage-bloom{animation:light-touch-b var(--beat-len) ease-out}
+.stage-vignette{position:absolute;inset:0;z-index:11;pointer-events:none;background:radial-gradient(ellipse 75% 70% at 50% 45%,transparent 55%,#00000070 100%)}
+.stage-preview[data-mode="day"] .stage-vignette{background:radial-gradient(ellipse 75% 70% at 50% 45%,transparent 60%,#00000028 100%)}
+.motion-ok .show-running .stage-canvas{animation:camera-drift 22s ease-in-out infinite alternate}
+@keyframes camera-drift{0%{scale:1;translate:0 0}50%{scale:1.035;translate:-1.6% -1.2%}100%{scale:1.02;translate:.4% -.9%}}
+
+/* FOH tent in the crowd (scripts/build-stage-assets.py): static, hoverable for the consoles. */
+.crowd-layer.foh-layer{animation:none!important;--crowd:#0d1620}
+.foh .foh-hit{fill:transparent;stroke:none}
+.foh{pointer-events:visiblePainted;cursor:pointer}
+.foh .foh-hit{pointer-events:all}
+.foh .foh-roof{fill:#111b26;stroke:url(#prop-rim);stroke-width:1.2}
+.foh .foh-valance{fill:#0a1119}
+.foh .foh-label{fill:#9fdcff;font:800 5.6px 'Inter',sans-serif;letter-spacing:.8px}
+.foh .foh-poles{fill:none;stroke:#3c4b58;stroke-width:1.4}
+.foh .foh-head,.foh .foh-desk{fill:#070b11}
+.foh .foh-screen{fill:#1d3a4a}
+.foh .foh-led{fill:#2b4052}
+.sound-on .foh .foh-screen{fill:#5eebff;filter:drop-shadow(0 0 3px #19c2dc)}
+.sound-on .foh .foh-led{fill:#7dff9a}
+.stage-preview[data-mode="day"] .foh .foh-roof{fill:#e8edf0}
+.stage-preview[data-mode="day"] .foh .foh-valance{fill:#cfd8de}
+.stage-preview[data-mode="day"] .foh .foh-label{fill:#0b5d73}
+.stage-preview[data-mode="day"] .stage-props{--rim:#fff8e6;--rim-o:.5}
+@media(prefers-reduced-motion:reduce){.stage-canvas,.crowd-spots,.stage-props .bop,.stage-props .sway{animation:none!important}}
 .stage-canvas{position:absolute;inset:0;container-type:size}
 @media(max-width:760px){
   .stage-preview{aspect-ratio:820/700}

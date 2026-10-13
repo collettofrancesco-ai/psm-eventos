@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draw the ground-support truss and the deck of the home stage into dist/index.html.
+"""Draw the ground-support truss, the deck and the stage dressing of the home stage into dist/index.html.
 
 Run from the repo root after changing the geometry:
     python3 scripts/build-truss.py
@@ -235,6 +235,130 @@ def deck():
             f'</g></svg>')
 
 
+DECK_REAR = VANISH[1] + REAR * (DECK_TOP - VANISH[1])
+M_Y, M_X = 72, 61  # viewBox units per metre at the deck front (vertical, horizontal); deck about 1 m high
+
+
+def on_deck(x, t):
+    """Point on the deck surface: x in front-edge units, t from 0 (front edge) to 1 (rear)."""
+    k = 1 - (1 - REAR) * t
+    return VANISH[0] + k * (x - VANISH[0]), DECK_TOP - t * (DECK_TOP - DECK_REAR), k
+
+
+def shadow(cx, cy, rx, ry, cls='prop-shadow'):
+    return f'<ellipse class="{cls}" cx="{f(cx)}" cy="{f(cy)}" rx="{f(rx)}" ry="{f(ry)}"/>'
+
+
+def figure(cx, base, k, height=1.75, arms='down', extra=''):
+    """A performer seen from the front, rim-lit by the LED wall: head, neck, torso and arms."""
+    my, mx = M_Y * k, M_X * k
+    top = base - height * my
+    hr_x, hr_y = .095 * mx, .12 * my
+    hy = top + hr_y
+    sy = hy + .2 * my           # shoulder line
+    sw = .22 * mx               # half shoulder width
+    hip = sy + .55 * my
+    torso = (f'M{f(cx - sw)} {f(sy + .05 * my)}Q{f(cx - sw)} {f(sy - .02 * my)} {f(cx - sw * .55)} {f(sy - .03 * my)}'
+             f'L{f(cx - .05 * mx)} {f(hy + hr_y * .9)}L{f(cx + .05 * mx)} {f(hy + hr_y * .9)}L{f(cx + sw * .55)} {f(sy - .03 * my)}'
+             f'Q{f(cx + sw)} {f(sy - .02 * my)} {f(cx + sw)} {f(sy + .05 * my)}L{f(cx + sw * .82)} {f(hip)}L{f(cx + sw * .7)} {f(base)}'
+             f'L{f(cx - sw * .7)} {f(base)}L{f(cx - sw * .82)} {f(hip)}Z')
+    head = f'<ellipse cx="{f(cx)}" cy="{f(hy)}" rx="{f(hr_x)}" ry="{f(hr_y)}"/>'
+    w = .085 * mx
+    def arm(side, ex, ey, hx, hy2):
+        sx = cx + side * (sw - w * .4)
+        return (f'<path class="arm" d="M{f(sx)} {f(sy + .03 * my)}L{f(ex)} {f(ey)}L{f(hx)} {f(hy2)}" fill="none" '
+                f'stroke-width="{f(w)}" stroke-linecap="round" stroke-linejoin="round"/>')
+    if arms == 'decks':      # both hands on the decks
+        limbs = arm(-1, cx - sw * 1.05, sy + .32 * my, cx - sw * .55, sy + .5 * my) + arm(1, cx + sw * 1.05, sy + .32 * my, cx + sw * .6, sy + .5 * my)
+        limbs += f'<g class="dj-hand-up">{arm(1, cx + sw * 1.25, sy - .25 * my, cx + sw * 1.1, sy - .62 * my)}</g>'
+    elif arms == 'mic':      # right hand holds the mic at the mouth
+        limbs = arm(-1, cx - sw * 1.05, sy + .3 * my, cx - sw * .95, sy + .58 * my) + arm(1, cx + sw * 1.1, sy + .28 * my, cx + .05 * mx, hy + hr_y * .7)
+    else:                    # hands on the lectern
+        limbs = arm(-1, cx - sw * 1.05, sy + .3 * my, cx - sw * .5, sy + .48 * my) + arm(1, cx + sw * 1.05, sy + .3 * my, cx + sw * .5, sy + .48 * my)
+    return f'<path d="{torso}"/>{head}{extra}{limbs}'
+
+
+def props():
+    """Stage dressing on the deck, in the deck perspective: DJ booth and DJ (concert), lectern and
+    speaker (corporate), mic stand and singer (wedding), monitor wedges, flight cases and cables,
+    plus soft contact shadows on the deck and on the floor."""
+    out = []
+    # Floor shadows: deck front, subwoofers and tower feet (the subs and towers are drawn elsewhere).
+    out.append(f'<g class="floor-shadows"><rect class="deck-floor-shadow" x="{DECK_LEFT}" y="{FLOOR}" width="{DECK_RIGHT - DECK_LEFT}" height="14"/>'
+               + shadow(200, 912, 78, 9, 'floor-shadow') + shadow(800, 912, 78, 9, 'floor-shadow')
+               + shadow(88, 902, 105, 10, 'floor-shadow') + shadow(912, 902, 105, 10, 'floor-shadow') + '</g>')
+    # Flight cases at the back corners and monitor wedges near the front edge.
+    for x, stack in ((215, 2), (785, 1)):
+        cx, base, k = on_deck(x, .86)
+        w, h = .7 * M_X * k, .45 * M_Y * k
+        out.append(shadow(cx, base, w * .62, 3.5 * k))
+        for n in range(stack):
+            y = base - h * (n + 1)
+            ww = w * (1 - .08 * n)
+            out.append(f'<g class="case"><rect x="{f(cx - ww / 2)}" y="{f(y)}" width="{f(ww)}" height="{f(h)}" rx="1.5"/>'
+                       f'<path class="case-trim" d="M{f(cx - ww / 2)} {f(y + 2)}H{f(cx + ww / 2)}M{f(cx - ww / 2)} {f(y + h - 2)}H{f(cx + ww / 2)}'
+                       f'M{f(cx - ww / 2 + 2)} {f(y)}V{f(y + h)}M{f(cx + ww / 2 - 2)} {f(y)}V{f(y + h)}"/>'
+                       f'<rect class="case-latch" x="{f(cx - 3)}" y="{f(y + h * .35)}" width="6" height="{f(h * .25)}" rx="1"/></g>')
+    for x in (372, 628):
+        cx, base, k = on_deck(x, .1)
+        w, h = .6 * M_X * k, .34 * M_Y * k
+        out.append(shadow(cx, base, w * .6, 3))
+        out.append(f'<g class="wedge"><path d="M{f(cx - w / 2)} {f(base)}V{f(base - h * .55)}L{f(cx - w * .42)} {f(base - h)}H{f(cx + w * .42)}'
+                   f'L{f(cx + w / 2)} {f(base - h * .55)}V{f(base)}Z"/><path class="wedge-grille" d="M{f(cx - w * .4)} {f(base - h * .62)}'
+                   f'L{f(cx - w * .36)} {f(base - h * .92)}H{f(cx + w * .36)}L{f(cx + w * .4)} {f(base - h * .62)}Z"/></g>')
+    # Cables from the centre to the cases and wedges.
+    bx, by, _ = on_deck(500, .42)
+    cables = ''
+    for tx, tt in ((215, .86), (785, .86)):
+        ex, ey, _ = on_deck(tx, tt)
+        mx, my, _ = on_deck((500 + tx) / 2, .7)
+        cables += f'M{f(bx)} {f(by)}Q{f(mx)} {f(my + 3)} {f(ex)} {f(ey)}'
+    out.append(f'<path class="cables" d="{cables}"/>')
+
+    # Concert: DJ booth with the DJ behind it.
+    cx, base, k = on_deck(500, .45)
+    w, h = 1.5 * M_X * k, .95 * M_Y * k
+    dj_x, dj_base, dj_k = on_deck(500, .56)
+    dj = figure(dj_x, dj_base, dj_k, 1.78, 'decks',
+                extra=(f'<path class="headphones" d="M{f(dj_x - .1 * M_X * dj_k)} {f(dj_base - 1.66 * M_Y * dj_k)}'
+                       f'Q{f(dj_x)} {f(dj_base - 1.86 * M_Y * dj_k)} {f(dj_x + .1 * M_X * dj_k)} {f(dj_base - 1.66 * M_Y * dj_k)}"/>'))
+    out.append(f'<g class="set set-concierto">{shadow(cx, base, w * .58, 4 * k)}'
+               f'<g class="performer dj"><g class="bop">{dj}</g></g>'
+               f'<g class="booth"><path d="M{f(cx - w / 2)} {f(base)}V{f(base - h)}H{f(cx + w / 2)}V{f(base)}Z"/>'
+               f'<path class="booth-top" d="M{f(cx - w / 2 - 2)} {f(base - h)}L{f(cx - w / 2 + 3)} {f(base - h - 5)}H{f(cx + w / 2 - 3)}L{f(cx + w / 2 + 2)} {f(base - h)}Z"/>'
+               f'<path class="booth-led" d="M{f(cx - w / 2 + 3)} {f(base - h + 6)}H{f(cx + w / 2 - 3)}M{f(cx - w / 2 + 3)} {f(base - 5)}H{f(cx + w / 2 - 3)}"/>'
+               f'<text class="booth-logo" x="{f(cx)}" y="{f(base - h * .38)}" text-anchor="middle">PSM</text>'
+               + ''.join(f'<circle class="deck-dot" cx="{f(cx + dx * w)}" cy="{f(base - h - 2.5)}" r="1.6"/>' for dx in (-.36, -.18, 0, .18, .36))
+               + '</g></g>')
+    # Corporate: lectern with the speaker behind it.
+    cx, base, k = on_deck(640, .38)
+    w, h = .62 * M_X * k, 1.15 * M_Y * k
+    sp_x, sp_base, sp_k = on_deck(640, .46)
+    out.append(f'<g class="set set-corporativo">{shadow(cx, base, w * .7, 3.5 * k)}'
+               f'<g class="performer speaker">{figure(sp_x, sp_base, sp_k, 1.74, "lectern")}</g>'
+               f'<g class="lectern"><path d="M{f(cx - w * .42)} {f(base)}L{f(cx - w / 2)} {f(base - h)}H{f(cx + w / 2)}L{f(cx + w * .42)} {f(base)}Z"/>'
+               f'<path class="booth-top" d="M{f(cx - w / 2 - 2)} {f(base - h)}L{f(cx - w / 2 + 2)} {f(base - h - 5)}H{f(cx + w / 2 - 2)}L{f(cx + w / 2 + 2)} {f(base - h)}Z"/>'
+               f'<rect class="lectern-plate" x="{f(cx - w * .3)}" y="{f(base - h * .72)}" width="{f(w * .6)}" height="{f(h * .2)}" rx="1"/>'
+               f'<path class="mic-stand" d="M{f(cx + w * .2)} {f(base - h - 4)}Q{f(cx + w * .25)} {f(base - h - 18)} {f(cx + w * .05)} {f(base - h - 24)}"/></g></g>')
+    # Wedding: singer at a mic stand.
+    cx, base, k = on_deck(500, .4)
+    sx, sbase, sk = on_deck(500, .47)
+    stand_h = 1.5 * M_Y * k
+    out.append(f'<g class="set set-boda">{shadow(cx, base, 16 * k, 3 * k)}'
+               f'<g class="performer singer"><g class="sway">{figure(sx, sbase, sk, 1.7, "mic")}</g></g>'
+               f'<g class="mic-stand-full"><path class="mic-stand" d="M{f(cx)} {f(base)}V{f(base - stand_h)}'
+               f'M{f(cx - 9 * k)} {f(base)}L{f(cx)} {f(base - 6 * k)}L{f(cx + 9 * k)} {f(base)}"/>'
+               f'<ellipse class="mic-head" cx="{f(cx)}" cy="{f(base - stand_h - 3)}" rx="2.4" ry="3.4"/></g></g>')
+    return ('<svg class="stage-props" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">'
+            '<defs><linearGradient id="prop-rim" x1="0" y1="0" x2="0" y2="1">'
+            '<stop offset="0" style="stop-color:var(--rim);stop-opacity:min(1,calc(var(--rim-o) + var(--flash,0) * .9))"/>'
+            '<stop offset=".35" style="stop-color:var(--rim);stop-opacity:calc(var(--rim-o) * .2)"/>'
+            '<stop offset=".6" style="stop-color:var(--rim);stop-opacity:0"/></linearGradient>'
+            '<radialGradient id="soft-shadow"><stop offset="0" stop-color="#000" stop-opacity=".75"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>'
+            '<linearGradient id="deck-floor-fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".7"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient></defs>'
+            + ''.join(out) + '</svg>')
+
+
 def replace(html, pattern, svg, name):
     updated, count = re.subn(pattern, lambda _: svg, html, count=1, flags=re.S)
     if count != 1:
@@ -246,6 +370,7 @@ def main():
     html = INDEX.read_text()
     html = replace(html, r'<svg class="stage-truss".*?</svg>', build(), 'stage-truss SVG')
     html = replace(html, r'<svg class="stage-deck-svg".*?</svg>|(?<=<div class="stage-deck">)(?=<div class="stage-floor-spots")', deck(), 'stage-deck')
+    html = replace(html, r'<svg class="stage-props".*?</svg>|(?<=</div>)(?=<canvas class="stage-reflection")', props(), 'stage-props')
     INDEX.write_text(html)
     print(f'Truss and deck written to {INDEX.relative_to(ROOT)}')
 

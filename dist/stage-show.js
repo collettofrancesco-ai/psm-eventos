@@ -470,26 +470,29 @@
   // a click (or a tap on phones, which have no hover) opens the full card.
   var gearCard = document.getElementById('gear-card');
   var gearPeek = stage.querySelector ? stage.querySelector('.gear-peek') : null;
-  var gearPhotos = {beam:'beam', strobe:'strobe', truss:'truss', speakers:'line-array'};
+  var gearPhotos = {beam:['beam'], strobe:['strobe'], truss:['truss'], speakers:['line-array'], mixer:['digico','venue-sc48']};
   var gearOnSite = {speakers:true}; // photos taken at a PSM event fill the frame instead of a white cut-out
   var gearText = {
     beam: ['Cabezas móviles Beam', 'Haces nítidos que cortan el humo y se mueven al ritmo del show.'],
     strobe: ['Strobos RGB', 'Destellos y color para los momentos de máxima energía.'],
     truss: ['Estructura ground support', 'La estructura que sostiene con seguridad luces, sonido y pantallas.'],
-    speakers: ['Sistema line array', 'Line arrays colgados de la estructura: el sonido llega claro y parejo a todo el público. Foto de un montaje PSM.']
+    speakers: ['Sistema line array', 'Line arrays colgados de la estructura: el sonido llega claro y parejo a todo el público. Foto de un montaje PSM.'],
+    mixer: ['Consolas de mezcla', 'Consolas digitales DiGiCo y Avid VENUE SC48: el sonido en vivo bajo control desde la regía FOH, en medio del público.']
   };
   function gearInfo(key){
     var dyn = window.PSM_DYN && window.PSM_DYN.gear && window.PSM_DYN.gear[psmLang()];
     return (dyn && dyn[key]) || gearText[key];
   }
-  function gearSrc(key){ return 'assets/gear/' + gearPhotos[key] + '.webp'; }
+  function gearSrc(name){ return 'assets/gear/' + name + '.webp'; }
   function openGear(key){
     var text = gearInfo(key), media = gearCard.querySelector('.gear-media');
     media.innerHTML = '';
     media.classList.toggle('on-site', !!gearOnSite[key]);
-    var img = document.createElement('img');
-    img.src = gearSrc(key); img.alt = text[0];
-    media.appendChild(img);
+    gearPhotos[key].forEach(function(name){
+      var img = document.createElement('img');
+      img.src = gearSrc(name); img.alt = text[0];
+      media.appendChild(img);
+    });
     gearCard.querySelector('h3').textContent = text[0];
     gearCard.querySelector('p').textContent = text[1];
     if (gearCard.showModal) gearCard.showModal(); else gearCard.setAttribute('open', '');
@@ -507,7 +510,7 @@
       if (key !== peekKey) {
         peekKey = key;
         gearPeek.classList.toggle('on-site', !!gearOnSite[key]);
-        gearPeek.querySelector('img').src = gearSrc(key);
+        gearPeek.querySelector('img').src = gearSrc(gearPhotos[key][0]);
         gearPeek.querySelector('b').textContent = gearInfo(key)[0];
       }
       // Beside the pointer, flipped to the other side near the right or bottom edge.
