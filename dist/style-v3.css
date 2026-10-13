@@ -1048,13 +1048,13 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 
 /* Gear hotspots on the stage and the card they open. Size compensates the phone scale. */
 .stage-hotspots{position:absolute;inset:0;z-index:8;pointer-events:none}
-.gear-spot{--spot:calc(26px / var(--stage-scale,1));position:absolute;width:var(--spot);height:var(--spot);margin:calc(var(--spot) / -2) 0 0 calc(var(--spot) / -2);display:grid;place-items:center;padding:0;border:calc(1.5px / var(--stage-scale,1)) solid #ffffffcc;border-radius:50%;background:#0a1a26cc;color:#fff;font:700 calc(17px / var(--stage-scale,1))/1 'Inter',sans-serif;cursor:pointer;pointer-events:auto;box-shadow:0 0 0 0 #19c2dc80;transition:transform .2s,opacity .4s,background .2s}
-.gear-spot b{position:absolute;top:100%;margin-top:calc(4px / var(--stage-scale,1));font:800 calc(10px / var(--stage-scale,1))/1 'Inter',sans-serif;letter-spacing:.12em;color:#cfeef7;text-shadow:0 1px 3px #000}
+.gear-spot{--spot:calc(18px / var(--stage-scale,1));position:absolute;width:var(--spot);height:var(--spot);margin:calc(var(--spot) / -2) 0 0 calc(var(--spot) / -2);display:grid;place-items:center;padding:0;border:calc(1.2px / var(--stage-scale,1)) solid #ffffffb3;border-radius:50%;background:#0a1a26b3;color:#fff;font:600 calc(13px / var(--stage-scale,1))/1 'Inter',sans-serif;cursor:pointer;pointer-events:auto;box-shadow:0 0 0 0 #19c2dc80;transition:transform .2s,opacity .4s,background .2s}
+.gear-spot b{position:absolute;top:100%;margin-top:calc(3px / var(--stage-scale,1));font:800 calc(8px / var(--stage-scale,1))/1 'Inter',sans-serif;letter-spacing:.12em;color:#cfeef7;text-shadow:0 1px 3px #000}
 .gear-spot:hover,.gear-spot:focus-visible{background:#19c2dc;color:#061014;transform:scale(1.12)}
 .gear-spot:focus-visible{outline:calc(3px / var(--stage-scale,1)) solid #fff;outline-offset:2px}
 .motion-ok .gear-spot{animation:spot-ping 2.6s ease-out infinite}
 .motion-ok .gear-spot:nth-child(2){animation-delay:.65s}.motion-ok .gear-spot:nth-child(3){animation-delay:1.3s}.motion-ok .gear-spot:nth-child(4){animation-delay:1.95s}
-@keyframes spot-ping{0%{box-shadow:0 0 0 0 #19c2dc90}70%,100%{box-shadow:0 0 0 calc(14px / var(--stage-scale,1)) #19c2dc00}}
+@keyframes spot-ping{0%{box-shadow:0 0 0 0 #19c2dc90}70%,100%{box-shadow:0 0 0 calc(9px / var(--stage-scale,1)) #19c2dc00}}
 .stage-intro .gear-spot,.countdown .gear-spot{opacity:0;pointer-events:none}
 .show-running .gear-spot{opacity:.6}
 .gear-card{width:min(440px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:1px solid #ffffff22;border-radius:16px;background:#0c131c;color:#fff;overflow:auto}
@@ -1062,6 +1062,8 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .gear-card .close{position:absolute;top:10px;right:10px;z-index:1;width:36px;height:36px;border:0;border-radius:50%;background:#0c131ccc;color:#fff;font-size:16px;cursor:pointer}
 .gear-media{display:flex;gap:2px;background:#fff}
 .gear-media img{flex:1;min-width:0;height:min(260px,40dvh);object-fit:contain;padding:18px}
+.gear-media.on-site{background:#000}.gear-media.on-site img{object-fit:cover;padding:0;height:min(300px,45dvh)}
+.gear-spot::before{content:'';position:absolute;inset:calc(-9px / var(--stage-scale,1));border-radius:50%}
 .gear-body{padding:18px 22px 22px}
 .gear-body h3{margin:8px 0 6px;font:800 30px/1 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.02em}
 .gear-body p{margin:0 0 18px;color:#c4d0d9;font-size:15px;line-height:1.55}

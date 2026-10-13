@@ -155,6 +155,7 @@ en: {
 'home.135': 'See truss structure',
 'home.136': 'See mixing consoles',
 'home.137': 'PSM EQUIPMENT',
+'home.138': 'See line array system',
 'home.123': 'Close full screen',
 'home.124': 'Tap the stage to exit',
 
@@ -539,6 +540,7 @@ it: {
 'home.135': 'Vedi struttura in truss',
 'home.136': 'Vedi mixer audio',
 'home.137': 'ATTREZZATURA PSM',
+'home.138': 'Vedi impianto line array',
 'home.123': 'Chiudi schermo intero',
 'home.124': 'Tocca il palco per uscire',
 
@@ -923,6 +925,7 @@ pt: {
 'home.135': 'Ver estrutura de treliça',
 'home.136': 'Ver mesas de som',
 'home.137': 'EQUIPAMENTOS PSM',
+'home.138': 'Ver sistema line array',
 'home.123': 'Fechar tela cheia',
 'home.124': 'Toque no palco para sair',
 
@@ -1176,9 +1179,9 @@ it: { music: 'Musica', lights: 'Luci', led: 'Video LED', dayBtn: 'Vedi di giorno
 pt: { music: 'Música', lights: 'Luzes', led: 'Vídeo LED', dayBtn: 'Ver de dia ', nightBtn: 'Ver de noite ', live: 'Show ao vivo.', action: 'Palco em ação.', preparing: 'Preparando seu show…', off: 'Tudo desligado. Ligue seu palco.', allOff: 'Desligar tudo ', allOn: 'Ligar tudo ', stopShow: 'Parar show ', startShow: 'Iniciar show ', enterFs: 'Tela cheia ', exitFs: 'Sair da tela cheia ', enterFsAria: 'Ver palco em tela cheia', exitFsAria: 'Sair da tela cheia', musicErr: 'Pressione Som para reiniciar a música.', waIntro: 'Olá, PSM. Quero este palco para o meu evento', waScene: 'Cena', waLights: 'Luzes' }
 },
 gear: {
-en: { beam: ['Beam moving heads', 'Sharp beams that cut through the haze and move with the show.'], strobe: ['RGB strobes', 'Flashes and colour for the moments of highest energy.'], truss: ['Ground-support truss', 'The structure that safely carries lights, sound and screens.'], mixer: ['Mixing consoles', 'DiGiCo and Avid VENUE SC48 digital consoles: live sound under control from the mix position.'] },
-it: { beam: ['Teste mobili Beam', 'Fasci netti che tagliano il fumo e si muovono con lo show.'], strobe: ['Strobo RGB', 'Lampi e colori per i momenti di massima energia.'], truss: ['Struttura ground support', 'La struttura che regge in sicurezza luci, audio e schermi.'], mixer: ['Mixer audio', 'Mixer digitali DiGiCo e Avid VENUE SC48: il suono dal vivo sotto controllo dalla regia.'] },
-pt: { beam: ['Moving heads Beam', 'Feixes nítidos que cortam a fumaça e se movem com o show.'], strobe: ['Strobos RGB', 'Flashes e cores para os momentos de maior energia.'], truss: ['Treliça ground support', 'A estrutura que sustenta com segurança luzes, som e telas.'], mixer: ['Mesas de som', 'Mesas digitais DiGiCo e Avid VENUE SC48: o som ao vivo sob controle desde a posição de mixagem.'] }
+en: { beam: ['Beam moving heads', 'Sharp beams that cut through the haze and move with the show.'], strobe: ['RGB strobes', 'Flashes and colour for the moments of highest energy.'], truss: ['Ground-support truss', 'The structure that safely carries lights, sound and screens.'], mixer: ['Mixing consoles', 'DiGiCo and Avid VENUE SC48 digital consoles: live sound under control from the mix position.'], speakers: ['Line array system', 'Line arrays flown from the structure: clear, even sound for the whole audience. Photo from a PSM setup.'] },
+it: { beam: ['Teste mobili Beam', 'Fasci netti che tagliano il fumo e si muovono con lo show.'], strobe: ['Strobo RGB', 'Lampi e colori per i momenti di massima energia.'], truss: ['Struttura ground support', 'La struttura che regge in sicurezza luci, audio e schermi.'], mixer: ['Mixer audio', 'Mixer digitali DiGiCo e Avid VENUE SC48: il suono dal vivo sotto controllo dalla regia.'], speakers: ['Impianto line array', 'Line array appesi alla struttura: un suono chiaro e uniforme per tutto il pubblico. Foto di un allestimento PSM.'] },
+pt: { beam: ['Moving heads Beam', 'Feixes nítidos que cortam a fumaça e se movem com o show.'], strobe: ['Strobos RGB', 'Flashes e cores para os momentos de maior energia.'], truss: ['Treliça ground support', 'A estrutura que sustenta com segurança luzes, som e telas.'], mixer: ['Mesas de som', 'Mesas digitais DiGiCo e Avid VENUE SC48: o som ao vivo sob controle desde a posição de mixagem.'], speakers: ['Sistema line array', 'Line arrays suspensos na estrutura: som claro e uniforme para todo o público. Foto de uma montagem PSM.'] }
 },
 cinema: {
 en: { live: 'PSM LIVE', close: 'Close video', photo: 'PSM photo' },

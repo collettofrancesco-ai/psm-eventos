@@ -444,18 +444,21 @@
 
   // Gear cards: the hotspots on the stage open the real equipment PSM brings.
   var gearCard = document.getElementById('gear-card');
-  var gearPhotos = {beam:['beam'], strobe:['strobe'], truss:['truss'], mixer:['digico','venue-sc48']};
+  var gearPhotos = {beam:['beam'], strobe:['strobe'], truss:['truss'], mixer:['digico','venue-sc48'], speakers:['line-array']};
+  var gearOnSite = {speakers:true}; // photos taken at a PSM event fill the frame instead of a white cut-out
   var gearText = {
     beam: ['Cabezas móviles Beam', 'Haces nítidos que cortan el humo y se mueven al ritmo del show.'],
     strobe: ['Strobos RGB', 'Destellos y color para los momentos de máxima energía.'],
     truss: ['Estructura ground support', 'La estructura que sostiene con seguridad luces, sonido y pantallas.'],
-    mixer: ['Consolas de mezcla', 'Consolas digitales DiGiCo y Avid VENUE SC48: el sonido en vivo bajo control desde la posición de mezcla.']
+    mixer: ['Consolas de mezcla', 'Consolas digitales DiGiCo y Avid VENUE SC48: el sonido en vivo bajo control desde la posición de mezcla.'],
+    speakers: ['Sistema line array', 'Line arrays colgados de la estructura: el sonido llega claro y parejo a todo el público. Foto de un montaje PSM.']
   };
   function openGear(key){
     var dyn = window.PSM_DYN && window.PSM_DYN.gear && window.PSM_DYN.gear[psmLang()];
     var text = (dyn && dyn[key]) || gearText[key];
     var media = gearCard.querySelector('.gear-media');
     media.innerHTML = '';
+    media.classList.toggle('on-site', !!gearOnSite[key]);
     gearPhotos[key].forEach(function(name){
       var img = document.createElement('img');
       img.src = 'assets/gear/' + name + '.webp'; img.alt = text[0];
