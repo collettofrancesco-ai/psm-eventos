@@ -210,13 +210,6 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 @media(prefers-reduced-motion:reduce){.mh-ledwash img,.mh-ledwash::after{animation:none!important}}
 /* Pan and tilt: heads pivot above their bases, beams sweep and change reach. */
 .mh-ledwash img{transform-origin:50% 85%}
-@keyframes wash-head-scan{
-  0%,100%{transform:rotate(-18deg) scaleY(.86)}
-  20%{transform:rotate(15deg) scaleY(1)}
-  40%{transform:rotate(4deg) scaleY(.72)}
-  60%{transform:rotate(-12deg) scaleY(1)}
-  80%{transform:rotate(20deg) scaleY(.82)}
-}
 @keyframes wash-beam-scan{
   0%,100%{transform:translateX(-50%) rotate(-26deg) scaleY(.7)}
   20%{transform:translateX(-50%) rotate(24deg) scaleY(1.35)}
@@ -224,5 +217,15 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
   60%{transform:translateX(-50%) rotate(-20deg) scaleY(1.2)}
   80%{transform:translateX(-50%) rotate(30deg) scaleY(.82)}
 }
-.motion-ok .lights-on .mh-ledwash img{animation:wash-lens-colours 10s linear var(--wash-phase) infinite,wash-head-scan 8s ease-in-out var(--wash-phase) infinite}
+.motion-ok .lights-on .mh-ledwash img{animation:wash-lens-colours 10s linear var(--wash-phase) infinite}
 .motion-ok .lights-on .stage-movers .mh-ledwash::after{animation:wash-beam-scan 8s ease-in-out var(--wash-phase) infinite,wash-beam-colours 10s linear var(--wash-phase) infinite}
+.editing-lights .stage-fixtures i,.editing-lights .stage-movers b,.editing-lights .stage-strobes b,.editing-lights .stage-strobes-side b{pointer-events:auto;cursor:move;touch-action:none;outline:1px dashed #75d8e8;outline-offset:4px}
+.editing-lights .position-selected{outline:2px solid #ffdc72!important;outline-offset:5px}
+.editing-lights .gear-peek{display:none!important}
+.light-position-panel{position:fixed;z-index:999;bottom:16px;left:16px;width:min(380px,calc(100vw - 32px));padding:16px;background:#fff;color:#172632;border:1px solid #bacbd2;border-radius:12px;box-shadow:0 8px 32px #0004;font:13px/1.5 Inter,sans-serif;display:grid;gap:8px}
+.light-position-panel strong{font-size:16px}
+.light-position-panel output{font-variant-numeric:tabular-nums;color:#076577}
+.light-position-panel>div{display:flex;gap:8px}
+.light-position-panel button{padding:9px 12px;border:1px solid #b6c6ce;border-radius:6px;background:#edf3f5;color:#172632;cursor:pointer}
+.light-position-panel button[data-action="save"]{background:#102e3b;color:#fff}
+.light-position-panel small{color:#4c5962}
