@@ -1247,6 +1247,12 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-preview .stage-fog{top:9%;bottom:14%}
 .stage-preview .stage-fog i{background:linear-gradient(180deg,#a6dcec85 0%,#a6dcec66 22%,#a6dcec33 60%,#a6dcec14 100%)}
 .stage-preview .stage-fixtures i s::after{background:linear-gradient(180deg,rgba(var(--lamp-color),.85),rgba(var(--lamp-color),.35) 30%,rgba(var(--lamp-color),.1) 70%,transparent)}
+/* Line arrays in black, like the real PSM rig (assets/gear/line-array.webp): matte cabinets,
+   a barely visible grille, a thin highlight on the top edge and dark rigging hardware. */
+.stage-preview .stage-speaker i{background:radial-gradient(circle at 50% 50%,#20272f 0 .7px,transparent .9px) 0 0/3px 3px,linear-gradient(180deg,#1b2026,#0b0e12 55%,#121619);border:1px solid #262d35;border-left:3px solid #040608;border-right:3px solid #040608;box-shadow:inset 0 1px 0 #ffffff22,0 3px 5px #000a}
+.stage-preview .stage-speaker i::before,.stage-preview .stage-speaker i::after{width:4px;height:4px;background:radial-gradient(circle at 35% 30%,#8d98a2,#3c444c 70%)}
+.stage-preview.lights-on .stage-speaker i{box-shadow:inset 0 1px 0 #9feeff3a,0 3px 5px #000a}
+.stage-preview .stage-speaker i:nth-of-type(n+4){border-bottom-color:#030405}
 .stage-canvas{position:absolute;inset:0;container-type:size}
 @media(max-width:760px){
   .stage-preview{aspect-ratio:820/700}
