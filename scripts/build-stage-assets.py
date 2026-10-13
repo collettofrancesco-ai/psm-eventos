@@ -132,27 +132,35 @@ def limb(points, widths):
 
 
 def hand(rng, kind, wx, wy, angle, s):
-    """Fist, open hand, peace sign, rock horns or a lit phone at the wrist."""
-    def finger(dx, length, tilt=0):
-        a = np.radians(angle + tilt)
-        bx, by = wx + dx * s * np.cos(np.radians(angle)), wy + dx * s * np.sin(np.radians(angle))
-        ex, ey = bx + np.sin(a) * length * s, by - np.cos(a) * length * s
-        return f'M{f(bx)} {f(by)}L{f(ex)} {f(ey)}'
-    palm = f'<ellipse cx="{f(wx)}" cy="{f(wy - 3 * s)}" rx="{f(4.1 * s)}" ry="{f(4.7 * s)}" transform="rotate({f(angle)} {f(wx)} {f(wy)})"/>'
-    lines = ''
+    """A hand drawn at the wrist, pointing along the forearm: open hand, fist, peace sign,
+    rock horns or a lit phone. Palm and fingers are solid (no rim) so they read as a hand
+    against the lights instead of a ring."""
+    # Local coordinates: wrist at 0,0, fingers towards -y; rotated to the arm angle.
+    palm_w = 1.0 if kind == 'open' else .92
+    palm = (f'M-2.9 0.6C-3.4 -2 -4.4 -4.6 -4.2 -6.6C-4 -7.8 4 -7.8 4.2 -6.6'
+            f'C4.4 -4.6 3.4 -2 2.9 0.6Z')
+    fingers = []
     if kind == 'open':
-        lines = ''.join(finger(dx, 7.4 - abs(dx) * .6, dx * 6) for dx in (-2.8, -.95, .95, 2.8))
+        for dx, length, tilt in ((-3.1, 5.2, -14), (-1.05, 6.4, -4), (1.05, 6.8, 4), (3.1, 5.6, 13)):
+            a = np.radians(tilt)
+            fingers.append(f'M{f(dx)} -6.6L{f(dx + np.sin(a) * length)} {f(-6.6 - np.cos(a) * length)}')
+        fingers.append('M-3.6 -2.6L-7 -6.4')  # thumb
     elif kind == 'peace':
-        lines = finger(-1.1, 8, -12) + finger(1.1, 8, 12)
+        fingers += ['M-1.1 -6.6L-2.9 -13.4', 'M1.1 -6.6L2.9 -13.4', 'M-3.8 -3.4L-1 -5.6']
     elif kind == 'horns':
-        lines = finger(-2.6, 7.4, -10) + finger(2.6, 7.4, 10)
-    out = palm
-    if lines:
-        out += f'<path class="fingers" d="{lines}" stroke-width="{f(2.1 * s)}" stroke-linecap="round"/>'
+        fingers += ['M-3 -6.6L-4.4 -12.6', 'M3 -6.6L4.3 -12.4', 'M-3.6 -3.2L-.4 -5.4']
+    elif kind == 'fist':
+        palm = ('M-3 0.6C-3.5 -2 -4.4 -4.4 -4.3 -6.8C-4.2 -8.6 -3 -9.2 -2.1 -8.8C-1.4 -9.6 -.5 -9.6 0 -9'
+                'C.6 -9.6 1.6 -9.6 2.1 -8.8C3 -9.3 4.3 -8.6 4.3 -6.8C4.4 -4.4 3.5 -2 3 0.6Z')
+    elif kind == 'phone':
+        fingers.append('M-3.6 -2.6L-6.2 -5.6')
+    rot = f'translate({f(wx)} {f(wy)}) rotate({f(angle)}) scale({f(s)} {f(s * palm_w)})'
+    out = f'<g class="hand" transform="{rot}"><path d="{palm}"/>'
+    if fingers:
+        out += f'<path class="fingers" d="{"".join(fingers)}" stroke-width="2.3" stroke-linecap="round"/>'
     if kind == 'phone':
-        out += (f'<rect class="phone" x="{f(wx - 3.4 * s)}" y="{f(wy - 13 * s)}" width="{f(6.8 * s)}" height="{f(11 * s)}" rx="{f(1.3 * s)}"'
-                f' transform="rotate({f(angle)} {f(wx)} {f(wy)})"/>')
-    return out
+        out += '<rect class="phone" x="-3.8" y="-17.5" width="7.6" height="12" rx="1.4"/>'
+    return out + '</g>'
 
 
 def raised_arms(rng, x, hy, s, shoulders, head_shift):

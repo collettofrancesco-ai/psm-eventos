@@ -1073,6 +1073,7 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .crowd-layer{--amp:1;--phase:0s;--rim:#86a9bd;--rim-o:.28;position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .crowd-layer .bodies{fill:var(--crowd);stroke-width:1.5}
 .crowd-layer .arms{fill:var(--crowd);stroke-width:1.4}
+.crowd-layer .arms .hand{stroke:none}
 .crowd-layer .arms .fingers{fill:none;stroke:var(--crowd)}
 .crowd-layer .arms .phone{fill:#e6f8ff;filter:drop-shadow(0 0 3px #9fdcff)}
 .crowd-layer.back{--crowd:#142131;--amp:.3}
