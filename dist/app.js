@@ -237,9 +237,34 @@
     if (guests && guests.value && guests.validity.valid) lines.push(L.guests + ': ' + guests.value);
     var services = Array.prototype.map.call(document.querySelectorAll('.quote-services input:checked'), function(input){ return (L.names && L.names[input.value]) || input.value; });
     if (services.length) lines.push(L.services + ': ' + services.join(', '));
-    var message = lines.join('\n');
-    prev.textContent = message;
-    wbtn.href = waLink(message);
+    // The visitor can edit the message: text added after the generated lines is kept when
+    // the form changes; if they rewrote the generated part itself, the form leaves it alone.
+    var auto = lines.join('\n');
+    if (!messageEdited) prev.value = auto;
+    else if (prev.value.indexOf(lastAuto) === 0) prev.value = auto + prev.value.slice(lastAuto.length);
+    lastAuto = auto;
+    fitMessage();
+    wbtn.href = waLink(prev.value);
+  }
+  var messageEdited = false, lastAuto = '';
+  var messageReset = document.getElementById('message-reset');
+  function fitMessage(){
+    var prev = document.getElementById('message-preview');
+    prev.style.height = 'auto';
+    prev.style.height = prev.scrollHeight + 2 + 'px';
+  }
+  var messageBox = document.getElementById('message-preview');
+  if (messageBox && messageBox.tagName === 'TEXTAREA') {
+    messageBox.addEventListener('input', function(event){
+      event.stopPropagation();
+      messageEdited = true;
+      if (messageReset) messageReset.hidden = false;
+      fitMessage();
+      updateQuote();
+    });
+    if (messageReset) messageReset.addEventListener('click', function(){
+      messageEdited = false; messageReset.hidden = true; updateQuote(); messageBox.focus();
+    });
   }
   var quoteDetails = document.getElementById('quote-details');
   if (quoteDetails) {
@@ -251,7 +276,7 @@
   var copyBtn = document.getElementById('copy-message');
   if (copyBtn) {
     copyBtn.addEventListener('click', async function(){
-      var text = document.getElementById('message-preview').textContent;
+      var text = document.getElementById('message-preview').value;
       var st = document.getElementById('copy-status');
       try { await navigator.clipboard.writeText(text); st.textContent = 'Mensaje copiado. Pégalo en la conversación de Facebook.'; }
       catch(e){ st.textContent = 'Selecciona el mensaje de arriba y cópialo para enviarlo por Facebook.'; }
