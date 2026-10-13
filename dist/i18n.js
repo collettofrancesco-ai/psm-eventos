@@ -152,6 +152,7 @@ en: {
 'home.132': 'I want this stage <span aria-hidden="true">↗</span>',
 'home.137': 'PSM EQUIPMENT',
 'home.139': 'Watch the show',
+'home.140': 'PSM finale ✦',
 'home.123': 'Close full screen',
 'home.124': 'Tap the stage to exit',
 
@@ -535,6 +536,7 @@ it: {
 'home.132': 'Voglio questo palco <span aria-hidden="true">↗</span>',
 'home.137': 'ATTREZZATURA PSM',
 'home.139': 'Guarda lo show',
+'home.140': 'Finale PSM ✦',
 'home.123': 'Chiudi schermo intero',
 'home.124': 'Tocca il palco per uscire',
 
@@ -918,6 +920,7 @@ pt: {
 'home.132': 'Quero este palco <span aria-hidden="true">↗</span>',
 'home.137': 'EQUIPAMENTOS PSM',
 'home.139': 'Assista ao show',
+'home.140': 'Final PSM ✦',
 'home.123': 'Fechar tela cheia',
 'home.124': 'Toque no palco para sair',
 

@@ -204,7 +204,7 @@
     clearInterval(showCycle); showCycle = null;
     showRunning = false; intro = false;
     music.volume = .45; music.muted = false;
-    stage.classList.remove('finale','countdown','show-go');
+    stage.classList.remove('finale','countdown','show-go','backstage');
     delete stage.dataset.direction;
     if (confetti) confetti.innerHTML = '';
     if (ledCount) ledCount.innerHTML = '';
@@ -229,6 +229,8 @@
     var warm=video.play();
     if (warm && warm.then) warm.then(function(){ if (!state.led) { video.pause(); video.currentTime=0; } }).catch(function(){});
     stage.dataset.direction = 'quiet';
+    if (!reduced.matches) stage.classList.add('backstage');
+    timers.push(setTimeout(function(){ stage.classList.remove('backstage'); }, entryDelay()));
     countdown();
     timers.push(setTimeout(function(){
       music.pause();music.currentTime=0;music.muted=false;
@@ -239,7 +241,9 @@
       if (trackBeats()) return;
       var modes=['cross','color','sweep','pulse'], index=0;
       showCycle=setInterval(function(){index=(index+1)%modes.length;stage.dataset.lightEffect=modes[index];effect.value=modes[index];stage.dataset.direction=['build','open','quiet','open'][index];},8000);
-    },COUNT_STEP*3));
+    },COUNT_STEP*3 + entryDelay()));
+    // A finale also reaches tracks without an analyzed beat map.
+    timers.push(setTimeout(function(){ if (showRunning && !finaleDone) finale(); }, 60000 + entryDelay()));
   });
   // Big play button on the dark LED wall: most visitors never reach the console below the
   // stage on phones. It runs the same show start inside the tap, so iOS lets the music play.
@@ -247,6 +251,7 @@
   if (playButton) playButton.addEventListener('click', function(event){ event.stopPropagation(); if (!showRunning) showButton.click(); });
   // Countdown on the blacked-out LED wall, then music, video and every light hit at once.
   var COUNT_STEP = 800;
+  function entryDelay(){ return reduced.matches ? 0 : 1400; }
   var ledCount = stage.querySelector ? stage.querySelector('.led-count') : null;
   function countdown(){
     if (!ledCount) return;
@@ -256,10 +261,10 @@
       timers.push(setTimeout(function(){
         ledCount.innerHTML = '<b>' + n + '</b><small></small>';
         ledCount.lastChild.textContent = name;
-      }, k * COUNT_STEP));
+      }, entryDelay() + k * COUNT_STEP));
     });
-    timers.push(setTimeout(function(){ stage.classList.remove('countdown'); ledCount.innerHTML = ''; stage.classList.add('show-go'); }, COUNT_STEP * 3));
-    timers.push(setTimeout(function(){ stage.classList.remove('show-go'); }, COUNT_STEP * 3 + 1200));
+    timers.push(setTimeout(function(){ stage.classList.remove('countdown'); ledCount.innerHTML = ''; stage.classList.add('show-go'); }, entryDelay() + COUNT_STEP * 3));
+    timers.push(setTimeout(function(){ stage.classList.remove('show-go'); }, entryDelay() + COUNT_STEP * 3 + 1200));
   }
 
   function scheduleFrame(){
@@ -333,15 +338,22 @@
   var confettiColors = ['#5eebff','#c79cff','#ffffff','#ffd66b','#ff7db8'];
   function finale(){
     finaleDone = true;
+    var title = nameInput ? eventName() : '';
+    var sceneLabel = stage.querySelector('.stage-scene-label');
+    Array.from(stage.querySelectorAll('.finale-title:not(.finale-wing) small')).forEach(function(el){ el.textContent = (sceneLabel ? sceneLabel.textContent.trim() : 'Tu evento, en escena') + ' · PSM'; });
+    Array.from(stage.querySelectorAll('.finale-title b')).forEach(function(el){ el.textContent = title || 'PSM'; });
+    stage.classList.add('finale');
+    timers.push(setTimeout(function(){ stage.classList.remove('finale'); if (confetti) confetti.innerHTML = ''; }, 5600));
     if (!confetti || reduced.matches) return;
     var pieces = '';
     for (var n = 0; n < 80; n++) {
       pieces += '<i style="--x:' + (Math.random() * 100).toFixed(1) + '%;--dx:' + Math.round(Math.random() * 120 - 60) + 'px;--r:' + Math.round(Math.random() * 900 - 450) + 'deg;--s:' + (2.6 + Math.random() * 1.8).toFixed(2) + 's;--d:' + (Math.random() * .7).toFixed(2) + 's;--c:' + confettiColors[n % confettiColors.length] + '"></i>';
     }
     confetti.innerHTML = pieces;
-    stage.classList.add('finale');
-    timers.push(setTimeout(function(){ stage.classList.remove('finale'); confetti.innerHTML = ''; }, 5600));
   }
+
+  var finaleButton = document.getElementById('stage-finale');
+  if (finaleButton) finaleButton.addEventListener('click', function(){ if (!stage.classList.contains('finale')) finale(); });
 
   // Beat sync: the lights hit on the beats precomputed by scripts/analyze-beats.py,
   // timed from music.currentTime so phones stay on the beat at any frame rate.

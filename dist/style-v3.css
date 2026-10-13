@@ -1118,3 +1118,47 @@ textarea.message-preview:focus-visible{outline:3px solid var(--cyan);outline-off
 .show-running[data-direction="open"] .stage-room-glow{opacity:1}
 .stage-fixtures i s,.stage-room-glow,.stage-strobes,.stage-strobes-side{transition:opacity 1s ease}
 @media(prefers-reduced-motion:reduce){.stage-gobos i::before{animation:none!important}}
+
+/* PSM identity: distinct surroundings and the logo's five cyan light bars. */
+.stage-environment{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.stage-environment>div{position:absolute;inset:0;opacity:0;transition:opacity 1.2s}
+.venue-night{background:radial-gradient(circle at 9% 6%,#e5f7ff99 0 1px,transparent 2px),radial-gradient(circle at 70% 4%,#d8eaff88 0 1px,transparent 2px),radial-gradient(circle at 34% 10%,#d8eaff55 0 1px,transparent 2px),radial-gradient(ellipse at 80% -10%,#27445b88,transparent 60%),linear-gradient(#060b19,#0a182a 75%,#040914);background-size:137px 109px,199px 163px,271px 137px,100% 100%,100% 100%}
+.venue-room{background:linear-gradient(90deg,#50616c22,transparent 12% 88%,#50616c22),repeating-linear-gradient(90deg,transparent 0 16%,#b7c9da20 16.2% 16.5%,transparent 16.7% 33.3%),linear-gradient(180deg,#27323e,#101a26 40%,#172636 79%,#081019)}
+.venue-room::before{content:'';position:absolute;inset:0 0 65%;background:repeating-linear-gradient(0deg,transparent 0 29px,#bed6e614 30px 31px);transform:perspective(250px) rotateX(-30deg);transform-origin:top}
+.venue-wedding{background:radial-gradient(ellipse at 50% 28%,#a881432b,transparent 60%),repeating-linear-gradient(90deg,#cdb88c09 0 1%,transparent 1.2% 12%),linear-gradient(#1d201c,#16231e 65%,#111810)}
+.venue-wedding::before{content:'';position:absolute;left:1%;right:1%;top:3%;height:15%;border-bottom:1px solid #ccb88c50;border-radius:0 0 50% 50%;background:radial-gradient(circle,#fff1bccc 0 2px,#f9cb5522 3px,transparent 7px) 0 bottom/35px 20px repeat-x}
+.venue-wedding::after{content:'';position:absolute;left:18%;right:18%;top:4%;bottom:15%;border:2px solid #d3ba8420;border-radius:45% 45% 0 0;box-shadow:0 0 0 16px #d3ba8405,inset 0 0 25px #ffeac607}
+[data-preset="concierto"] .venue-night,[data-preset="corporativo"] .venue-room,[data-preset="boda"] .venue-wedding{opacity:1}
+.psm-signature{position:absolute;top:38%;height:22%;width:3.2%;display:flex;align-items:center;justify-content:space-between;gap:2px;z-index:4;pointer-events:none;opacity:.25;transition:opacity .7s}
+.signature-left{left:1.8%}.signature-right{right:1.8%;transform:scaleX(-1)}
+.psm-signature i{width:15%;height:42%;border-radius:999px;background:linear-gradient(#a2f3ff,#19c2dc 55%,#076c89);box-shadow:0 0 8px #19c2dc44;transform-origin:center}
+.psm-signature i:nth-child(2),.psm-signature i:nth-child(4){height:70%}.psm-signature i:nth-child(3){height:100%}
+.lights-on .psm-signature,.sound-on .psm-signature{opacity:.9}
+.motion-ok .music-playing .psm-signature i{animation:signature-wave 2.4s ease-in-out infinite alternate}
+.motion-ok .music-playing .psm-signature i:nth-child(even){animation-delay:-1.2s}.motion-ok .music-playing .psm-signature i:nth-child(3){animation-delay:-.6s}
+@keyframes signature-wave{from{transform:scaleY(.55);filter:brightness(.8)}to{transform:scaleY(1);filter:brightness(1.3)}}
+.motion-ok .beat-sync.hit-a .psm-signature,.motion-ok .beat-sync.hit-b .psm-signature{filter:brightness(calc(1 + var(--energy,0)*.5))}
+/* Backstage reveal precedes the existing countdown, leaving media unlocked by the tap. */
+.stage-curtains{position:absolute;inset:0;z-index:9;pointer-events:none;display:none;overflow:hidden}
+.backstage .stage-curtains{display:block}
+.stage-curtains i{position:absolute;top:0;bottom:0;left:0;width:51%;background:repeating-linear-gradient(90deg,#02050a,#121b26 6%,#03080f 12%);box-shadow:6px 0 25px #000b;animation:curtain-open 1.4s cubic-bezier(.4,0,.2,1) forwards}
+.stage-curtains i:nth-child(2){left:auto;right:0;animation-name:curtain-open-right}
+@keyframes curtain-open{0%,15%{transform:none}100%{transform:translateX(-103%)}}
+@keyframes curtain-open-right{0%,15%{transform:none}100%{transform:translateX(103%)}}
+.backstage .stage-truss{filter:drop-shadow(0 0 5px #c3e9ff80)}
+.backstage .stage-led{box-shadow:0 0 0 4px #060b13,0 0 22px #19c2dc50}
+/* The finale takes over every LED surface, then restores the ongoing show. */
+.finale-title{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:8%;background:radial-gradient(ellipse,#183b59,#071423 75%);opacity:0;visibility:hidden;transition:opacity .35s;pointer-events:none;text-align:center}
+.finale-title b{font:800 calc(var(--title-fit,6)*1cqw)/1 'Barlow Condensed',sans-serif;color:#efffff;text-transform:uppercase;overflow-wrap:anywhere;text-wrap:balance;max-width:100%;text-shadow:0 0 18px #19c2dc88}
+.finale-title small{font:600 clamp(7px,1.15cqw,14px)/1.5 'Inter',sans-serif;color:#8deafa;letter-spacing:.08em}
+.finale-wing b{font-size:2.5cqw}.finale-wing small{font-size:1.2cqw}
+.finale .finale-title{opacity:1;visibility:visible}
+.finale.lights-on .stage-fixtures i{transform:rotate(-26deg)!important;transition:transform .6s}
+.finale.lights-on .stage-fixtures i:nth-child(2){transform:rotate(-14deg)!important}.finale.lights-on .stage-fixtures i:nth-child(3){transform:rotate(0deg)!important}.finale.lights-on .stage-fixtures i:nth-child(4){transform:rotate(14deg)!important}.finale.lights-on .stage-fixtures i:nth-child(5){transform:rotate(26deg)!important}
+.finale .psm-signature{opacity:1;filter:brightness(1.5)}
+@media(prefers-reduced-motion:reduce){.psm-signature i,.stage-curtains i{animation:none!important}.stage-environment>div,.finale-title{transition:none}}
+.stage-preview[data-preset="boda"] .stage-fixtures i{--lamp-color:255,218,163}
+.stage-preview[data-preset="corporativo"] .stage-fixtures i{--lamp-color:213,235,255}
+.stage-show-actions #stage-finale{grid-column:1/-1;justify-content:center;border-color:#19c2dc66;color:#8deafa}
+.finale.lights-on .stage-fixtures i s{opacity:.85!important}
+.finale.lights-on .stage-fixtures i::before{opacity:1!important;filter:brightness(1.2)}
