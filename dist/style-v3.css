@@ -1094,6 +1094,39 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .motion-ok .beat-sync.music-playing.hit-b .crowd-layer{animation:crowd-bob-b var(--beat-len) ease-out var(--phase)}
 .motion-ok .beat-sync.music-playing.crowd-jump.hit-a .crowd-layer{animation:crowd-jump-a var(--beat-len) cubic-bezier(.3,.7,.4,1) var(--phase)}
 .motion-ok .beat-sync.music-playing.crowd-jump.hit-b .crowd-layer{animation:crowd-jump-b var(--beat-len) cubic-bezier(.3,.7,.4,1) var(--phase)}
+/* Day mode: an outdoor show in daylight. Sky, sun and tree line fade in behind the stage;
+   metal and deck catch the sun, beams and haze almost vanish, the crowd is sunlit, not rim-lit. */
+.stage-preview::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.2s ease;
+  background:radial-gradient(circle at 84% 9%,#fffef6 0 2.2%,#fff5d0b0 3.5%,#ffe9a540 9%,transparent 22%),
+  radial-gradient(ellipse 16% 4.5% at 22% 15%,#ffffffd0,transparent 70%),radial-gradient(ellipse 11% 3.2% at 30% 13%,#ffffffb0,transparent 70%),
+  radial-gradient(ellipse 18% 4% at 63% 24%,#ffffffa0,transparent 70%),radial-gradient(ellipse 9% 2.6% at 70% 22%,#ffffff90,transparent 70%),
+  url('assets/stage-treeline.svg') 0 66%/100% 12% no-repeat,
+  linear-gradient(180deg,#3d8fd8 0%,#7dbdf0 38%,#c4e3f8 62%,#e6efe9 70%,#b9c7a8 80%,#8f9f80 100%)}
+.stage-preview[data-mode="day"]::after{opacity:1}
+.stage-preview[data-mode="day"]::before{opacity:0}
+/* The scene surroundings (.stage-environment): the outdoor concert trades its night sky for the
+   daytime one; the indoor room and wedding hall are simply lit as by day. */
+.stage-preview[data-mode="day"] .venue-night{opacity:0!important}
+.stage-preview[data-mode="day"] .venue-room,.stage-preview[data-mode="day"] .venue-wedding{filter:brightness(2.4) saturate(.85)}
+.stage-environment>div{transition:opacity 1.2s,filter 1.2s}
+.stage-preview[data-mode="day"] .stage-room-glow,.stage-preview[data-mode="day"] .stage-fog,.stage-preview[data-mode="day"] .stage-floor-spots{opacity:0!important}
+.stage-preview[data-mode="day"] .stage-truss{filter:brightness(1.75) saturate(.55)}
+.stage-preview[data-mode="day"] .stage-deck-svg{filter:brightness(1.5)}
+.stage-preview[data-mode="day"] .deck-glare{display:none}
+.stage-preview[data-mode="day"].lights-on .stage-fixtures i s{opacity:.16}
+.stage-preview[data-mode="day"] .stage-fixtures i s::after{opacity:.2}
+.stage-preview[data-mode="day"] .mh::after{opacity:.12}
+.stage-preview[data-mode="day"] .stage-led,.stage-preview[data-mode="day"] .stage-led-wing{box-shadow:0 0 0 3px #1d2833,0 6px 14px #0004}
+.stage-preview[data-mode="day"] .stage-strobes b::after,.stage-preview[data-mode="day"] .stage-strobes-side b::after{box-shadow:none}
+.stage-preview[data-mode="day"] .crowd-layer{--rim:#fff8e6;--rim-o:.55}
+.stage-preview[data-mode="day"] .crowd-layer.front{--crowd:#2c3540}
+.stage-preview[data-mode="day"] .crowd-layer.front .t1{fill:#3a3029}.stage-preview[data-mode="day"] .crowd-layer.front .t2{fill:#24303d}.stage-preview[data-mode="day"] .crowd-layer.front .t3{fill:#403a44}
+.stage-preview[data-mode="day"] .crowd-layer.mid{--crowd:#4d5a68}
+.stage-preview[data-mode="day"] .crowd-layer.mid .t1{fill:#5b4f47}.stage-preview[data-mode="day"] .crowd-layer.mid .t3{fill:#5a5560}
+.stage-preview[data-mode="day"] .crowd-layer.back{--crowd:#7f8d99;--rim-o:.3}
+.stage-preview[data-mode="day"] .crowd-layer .arms .phone{filter:none;fill:#c9d6de}
+.stage-preview[data-mode="day"] .stage-audience::after{background:linear-gradient(transparent,#1e262e80)}
+.stage-preview .stage-truss,.stage-preview .stage-deck-svg{transition:filter 1.2s ease}
 .stage-canvas{position:absolute;inset:0;container-type:size}
 @media(max-width:760px){
   .stage-preview{aspect-ratio:820/700}

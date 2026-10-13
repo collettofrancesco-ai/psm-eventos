@@ -210,7 +210,7 @@ def crowd(seed=11):
         for n in range(count):
             x = -20 + step * (n + .5) + rng.uniform(-.3, .3) * step
             body, arm, calm = person(rng, x, rng.uniform(top, bottom), scale * rng.uniform(.92, 1.08), H + 4, arm_chance)
-            bodies[n % groups].append(body)
+            bodies[n % groups].append(f'<g class="t{n % 4}">{body}</g>')  # tone class: daylight clothing
             arms[n % groups].append(arm)
             always[n % groups].append(calm)
         for g in range(groups):
@@ -227,6 +227,26 @@ def crowd(seed=11):
     return ''.join(layers)
 
 
+def treeline(seed=5):
+    """Distant trees for the daytime sky, drawn behind the stage (dist/assets/stage-treeline.svg)."""
+    rng = np.random.default_rng(seed)
+    far, near = [], []
+    x = -10
+    while x < 830:
+        r = rng.uniform(10, 22)
+        far.append(f'<ellipse cx="{f(x)}" cy="{f(58 - rng.uniform(0, 16))}" rx="{f(r * 1.3)}" ry="{f(r)}"/>')
+        x += r * rng.uniform(1.1, 1.7)
+    x = -10
+    while x < 830:
+        r = rng.uniform(8, 16)
+        near.append(f'<ellipse cx="{f(x)}" cy="{f(68 - rng.uniform(0, 10))}" rx="{f(r * 1.2)}" ry="{f(r)}"/>')
+        x += r * rng.uniform(1.4, 2.4)
+    svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="820" height="80" viewBox="0 0 820 80" preserveAspectRatio="none">'
+           f'<g fill="#8fae9f">{"".join(far)}<rect y="52" width="820" height="28"/></g>'
+           f'<g fill="#6f9480">{"".join(near)}<rect y="64" width="820" height="16"/></g></svg>')
+    (ASSETS / 'stage-treeline.svg').write_text(svg)
+
+
 def write_crowd():
     import re
     index = ROOT / 'dist' / 'index.html'
@@ -240,5 +260,6 @@ def write_crowd():
 
 if __name__ == '__main__':
     fog()
+    treeline()
     write_crowd()
     print('Wrote dist/assets/stage-fog.webp and the crowd into dist/index.html')
