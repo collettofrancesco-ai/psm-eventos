@@ -205,6 +205,7 @@
     showRunning = false; intro = false;
     music.volume = .45; music.muted = false;
     stage.classList.remove('finale','countdown','show-go');
+    delete stage.dataset.direction;
     if (confetti) confetti.innerHTML = '';
     if (ledCount) ledCount.innerHTML = '';
   }
@@ -227,15 +228,17 @@
     video.muted=true;video.currentTime=0;
     var warm=video.play();
     if (warm && warm.then) warm.then(function(){ if (!state.led) { video.pause(); video.currentTime=0; } }).catch(function(){});
+    stage.dataset.direction = 'quiet';
     countdown();
     timers.push(setTimeout(function(){
       music.pause();music.currentTime=0;music.muted=false;
       video.currentTime=0; // buffered by the warm-up, so music and video start in the same render
+      stage.dataset.direction='build';
       showMode=0;state.lights=true;state.led=true;stage.dataset.lightEffect='cross';effect.value='cross';render();
       // Tracks with a beat map change effect on the music (fireBeat); others on a timer.
       if (trackBeats()) return;
       var modes=['cross','color','sweep','pulse'], index=0;
-      showCycle=setInterval(function(){index=(index+1)%modes.length;stage.dataset.lightEffect=modes[index];effect.value=modes[index];},8000);
+      showCycle=setInterval(function(){index=(index+1)%modes.length;stage.dataset.lightEffect=modes[index];effect.value=modes[index];stage.dataset.direction=['build','open','quiet','open'][index];},8000);
     },COUNT_STEP*3));
   });
   // Big play button on the dark LED wall: most visitors never reach the console below the
@@ -388,6 +391,8 @@
     stage.classList.toggle('crowd-jump', jumpBeats > 0);
     if (inBar === 0) {
       stage.dataset.bar = ((bar % 4) + 4) % 4;
+      // Musical dynamics: restrained verses, growing builds, full light on peaks.
+      if (showRunning) stage.dataset.direction = energy < .4 ? 'quiet' : energy < .72 ? 'build' : 'open';
       if (energy > .7 && lastEnergy < .4) { jumpBeats = 8; stage.classList.add('crowd-jump'); }
       if (showRunning && !finaleDone && bar >= 8 && (energy >= .9 || (Date.now() - showStart > 45000 && energy > .6))) finale();
       // During the show the effect changes with the song: every 8 bars or when it drops.
