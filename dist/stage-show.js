@@ -446,35 +446,63 @@
     showName();
   }
 
-  // Gear cards: the hotspots on the stage open the real equipment PSM brings.
+  // Gear cards: hovering an instrument with the mouse shows its real photo next to the pointer;
+  // a click (or a tap on phones, which have no hover) opens the full card.
   var gearCard = document.getElementById('gear-card');
-  var gearPhotos = {beam:['beam'], strobe:['strobe'], truss:['truss'], mixer:['digico','venue-sc48'], speakers:['line-array']};
+  var gearPeek = stage.querySelector ? stage.querySelector('.gear-peek') : null;
+  var gearPhotos = {beam:'beam', strobe:'strobe', truss:'truss', speakers:'line-array'};
   var gearOnSite = {speakers:true}; // photos taken at a PSM event fill the frame instead of a white cut-out
   var gearText = {
     beam: ['Cabezas móviles Beam', 'Haces nítidos que cortan el humo y se mueven al ritmo del show.'],
     strobe: ['Strobos RGB', 'Destellos y color para los momentos de máxima energía.'],
     truss: ['Estructura ground support', 'La estructura que sostiene con seguridad luces, sonido y pantallas.'],
-    mixer: ['Consolas de mezcla', 'Consolas digitales DiGiCo y Avid VENUE SC48: el sonido en vivo bajo control desde la posición de mezcla.'],
     speakers: ['Sistema line array', 'Line arrays colgados de la estructura: el sonido llega claro y parejo a todo el público. Foto de un montaje PSM.']
   };
-  function openGear(key){
+  function gearInfo(key){
     var dyn = window.PSM_DYN && window.PSM_DYN.gear && window.PSM_DYN.gear[psmLang()];
-    var text = (dyn && dyn[key]) || gearText[key];
-    var media = gearCard.querySelector('.gear-media');
+    return (dyn && dyn[key]) || gearText[key];
+  }
+  function gearSrc(key){ return 'assets/gear/' + gearPhotos[key] + '.webp'; }
+  function openGear(key){
+    var text = gearInfo(key), media = gearCard.querySelector('.gear-media');
     media.innerHTML = '';
     media.classList.toggle('on-site', !!gearOnSite[key]);
-    gearPhotos[key].forEach(function(name){
-      var img = document.createElement('img');
-      img.src = 'assets/gear/' + name + '.webp'; img.alt = text[0];
-      media.appendChild(img);
-    });
+    var img = document.createElement('img');
+    img.src = gearSrc(key); img.alt = text[0];
+    media.appendChild(img);
     gearCard.querySelector('h3').textContent = text[0];
     gearCard.querySelector('p').textContent = text[1];
     if (gearCard.showModal) gearCard.showModal(); else gearCard.setAttribute('open', '');
   }
-  if (gearCard) {
-    Array.from(stage.querySelectorAll('.gear-spot')).forEach(function(spot){
-      spot.addEventListener('click', function(event){ event.stopPropagation(); openGear(spot.dataset.gear); });
+  function hidePeek(){ if (gearPeek) gearPeek.classList.remove('show'); }
+  if (gearCard && gearPeek) {
+    [['.stage-fixtures i','beam'], ['.stage-strobes b, .stage-strobes-side b','strobe'], ['.stage-speaker','speakers']].forEach(function(pair){
+      Array.from(stage.querySelectorAll(pair[0])).forEach(function(el){ el.dataset.gear = pair[1]; });
+    });
+    var peekKey = '';
+    stage.addEventListener('pointermove', function(event){
+      var target = event.pointerType === 'mouse' && event.target.closest ? event.target.closest('[data-gear]') : null;
+      if (!target || stage.classList.contains('countdown')) { hidePeek(); peekKey = ''; return; }
+      var key = target.dataset ? target.dataset.gear : target.getAttribute('data-gear');
+      if (key !== peekKey) {
+        peekKey = key;
+        gearPeek.classList.toggle('on-site', !!gearOnSite[key]);
+        gearPeek.querySelector('img').src = gearSrc(key);
+        gearPeek.querySelector('b').textContent = gearInfo(key)[0];
+      }
+      // Beside the pointer, flipped to the other side near the right or bottom edge.
+      var box = stage.getBoundingClientRect(), x = event.clientX - box.left, y = event.clientY - box.top;
+      var w = gearPeek.offsetWidth, h = gearPeek.offsetHeight;
+      gearPeek.style.left = (x + 18 + w > box.width ? x - 18 - w : x + 18) + 'px';
+      gearPeek.style.top = Math.max(8, Math.min(box.height - h - 8, y - h / 2)) + 'px';
+      gearPeek.classList.add('show');
+    });
+    stage.addEventListener('pointerleave', hidePeek);
+    stage.addEventListener('click', function(event){
+      var target = event.target.closest ? event.target.closest('[data-gear]') : null;
+      if (!target || stage.classList.contains('countdown')) return;
+      event.stopPropagation(); hidePeek();
+      openGear(target.dataset ? target.dataset.gear : target.getAttribute('data-gear'));
     });
     gearCard.addEventListener('click', function(event){
       if (event.target === gearCard || event.target.classList.contains('close')) gearCard.close ? gearCard.close() : gearCard.removeAttribute('open');

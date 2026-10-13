@@ -169,6 +169,12 @@ def build():
         details.append(f'<rect class="truss-motor" x="{x - 8}" y="{TRUSS_BOTTOM + 6}" width="16" height="20" rx="3"/>')
         front_paths.append(line((x, TRUSS_BOTTOM), (x, TRUSS_BOTTOM + 6)))
 
+    # Invisible hover targets (front truss and towers) that open the truss gear card.
+    hit = ('<g class="truss-hit" data-gear="truss">'
+           f'<rect x="60" y="{TRUSS_TOP}" width="880" height="{TRUSS_BOTTOM - TRUSS_TOP}"/>'
+           + ''.join(f'<rect x="{x0}" y="{HEADER}" width="{x1 - x0}" height="{FLOOR - 50 - HEADER}"/>' for x0, x1 in (LEFT_TOWER, RIGHT_TOWER))
+           + '</g>')
+
     def path(cls, parts):
         return f'<path class="{cls}" d="{"".join(parts)}"/>'
 
@@ -178,7 +184,7 @@ def build():
             '<g class="truss-rear">' + path('truss-chord', rear_paths) + path('truss-web', rear_web) + '</g>'
             '<g class="truss-side">' + path('truss-chord', side_paths) + path('truss-web', side_web) + '</g>'
             '<g class="truss-front">' + path('truss-shade', front_shade) + path('truss-chord', front_paths) + path('truss-web', front_web) +
-            '<g class="truss-hardware">' + ''.join(details) + '</g></g></svg>')
+            '<g class="truss-hardware">' + ''.join(details) + '</g></g>' + hit + '</svg>')
 
 
 DECK_LEFT, DECK_RIGHT = 118, 882   # front edge, between the towers
