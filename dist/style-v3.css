@@ -1007,6 +1007,30 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-confetti i:nth-child(3n){width:5px;height:5px;border-radius:50%}
 @keyframes confetti-fall{0%{transform:translate(0,-30px) rotate(0) rotateY(0);opacity:1}85%{opacity:1}100%{transform:translate(var(--dx),88cqh) rotate(var(--r)) rotateY(900deg);opacity:0}}
 @media(prefers-reduced-motion:reduce){.stage-fixtures i s::after,.stage-audience,.crowd-hands{animation:none!important}}
+/* Event name on the LED surfaces (stage-show.js): big on the wall, a ticker on the wings. */
+.led-title{position:absolute;inset:0;z-index:5;display:grid;place-items:center;padding:6%;opacity:0;pointer-events:none;transition:opacity .4s}
+.has-title .led-title{opacity:1}
+.led-on.has-title .led-title{background:radial-gradient(ellipse 90% 60% at 50% 50%,#000d,#0006 70%,transparent 90%)}
+.led-title span{max-width:100%;font:800 calc(var(--title-fit,6)*1cqw)/.95 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.04em;text-align:center;text-wrap:balance;overflow-wrap:anywhere;color:#effdff;text-shadow:0 0 6px #5eebff,0 0 22px #19c2dcaa,0 0 52px #19c2dc66}
+.stage-preview[data-preset="boda"] .led-title span,.stage-preview[data-preset="boda"] .wing-title span{color:#fff6e3;text-shadow:0 0 6px #ffd38a,0 0 22px #ffb45eaa,0 0 52px #ff9e5e55}
+.stage-preview[data-preset="corporativo"] .led-title span,.stage-preview[data-preset="corporativo"] .wing-title span{color:#fff;text-shadow:0 0 6px #b9d8ff,0 0 22px #7db8ffaa,0 0 52px #7db8ff55}
+.has-title:not(.led-on) .led-brand{opacity:0}
+.motion-ok .beat-sync.has-title.hit-a .led-title span{animation:title-beat-a var(--beat-len) ease-out}
+.motion-ok .beat-sync.has-title.hit-b .led-title span{animation:title-beat-b var(--beat-len) ease-out}
+@keyframes title-beat-a{from{filter:brightness(calc(1.15 + var(--energy)*.5));transform:scale(1.035)}to{filter:none;transform:none}}
+@keyframes title-beat-b{from{filter:brightness(calc(1.15 + var(--energy)*.5));transform:scale(1.035)}to{filter:none;transform:none}}
+.wing-title{position:absolute;left:0;right:0;bottom:3%;height:15%;z-index:2;display:none;align-items:center;overflow:hidden;background:#02060be6;border-block:1px solid #19c2dc55}
+.has-title .wing-title{display:flex}
+.wing-title span{white-space:nowrap;font:800 26px/1 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#c4f7ff;text-shadow:0 0 8px #19c2dc}
+.motion-ok .has-title .wing-title span{animation:wing-ticker 16s linear infinite}
+.motion-ok .has-title .wing-right .wing-title span{animation-direction:reverse}
+@keyframes wing-ticker{to{transform:translateX(-50%)}}
+.stage-name{display:grid;gap:8px;margin-top:14px}
+.stage-name input{width:100%;padding:11px 13px;border:1px solid #536879;border-radius:8px;background:#0c121b;color:#fff;font:600 16px/1.2 inherit;font-family:inherit}
+.stage-name input::placeholder{color:#7d8d9a;font-weight:500}
+.stage-name input:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.stage-name-send{justify-self:start;padding:9px 15px;border-radius:100px;background:#25d366;color:#061008;font-size:12px;font-weight:800;letter-spacing:.3px;text-decoration:none}
+.stage-name-send[hidden]{display:none}
 .stage-canvas{position:absolute;inset:0;container-type:size}
 @media(max-width:760px){
   .stage-preview{aspect-ratio:820/700}

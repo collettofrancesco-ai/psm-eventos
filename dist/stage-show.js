@@ -363,6 +363,40 @@
   ['playing','pause','seeked'].forEach(function(name){ music.addEventListener(name, scheduleBeat); });
   reduced.addEventListener('change', scheduleBeat);
 
+  // Event name: typed in the console, lit on the LED wall and scrolling on the LED wings,
+  // then sent with the chosen scene in the WhatsApp request.
+  var nameInput = document.getElementById('stage-event-name');
+  var nameSend = document.getElementById('stage-name-send');
+  var ledTitle = stage.querySelector ? stage.querySelector('.led-title span') : null;
+  var wingTitles = Array.from(stage.querySelectorAll('.wing-title span'));
+  function eventName(){ return nameInput.value.replace(/\s+/g, ' ').trim(); }
+  function updateSend(){
+    var preset = document.querySelector('[data-preset][aria-pressed="true"]');
+    var text = ST('waIntro', 'Hola, PSM. Quiero este escenario para mi evento') + ': "' + eventName() + '". ' +
+      ST('waScene', 'Escena') + ': ' + (preset ? preset.textContent.trim() : '') + '. ' +
+      ST('waLights', 'Luces') + ': ' + effect.options[effect.selectedIndex].text + '.';
+    nameSend.href = 'https://wa.me/59170067767?text=' + encodeURIComponent(text);
+  }
+  function showName(){
+    var name = eventName(), length = Math.max(name.length, 4);
+    stage.classList.toggle('has-title', !!name);
+    ledTitle.textContent = name;
+    // One line up to 12 letters, then two balanced lines; size in canvas widths (cqw).
+    stage.style.setProperty('--title-fit', (length <= 12 ? Math.min(8, 76 / length) : Math.max(3.4, Math.min(6, 140 / length))).toFixed(2));
+    var loop = name ? Array(5).join(name + '   ·   ') : '';
+    wingTitles.forEach(function(el){ el.textContent = loop + loop; });
+    nameSend.hidden = !name;
+    if (name) updateSend();
+    try { localStorage.setItem('psm-event-name', name); } catch(e){}
+  }
+  if (nameInput && nameSend && ledTitle) {
+    try { nameInput.value = localStorage.getItem('psm-event-name') || ''; } catch(e){}
+    nameInput.addEventListener('input', showName);
+    nameInput.addEventListener('keydown', function(event){ if (event.key === 'Enter') nameInput.blur(); });
+    nameSend.addEventListener('click', updateSend);
+    showName();
+  }
+
   var dayBtn = document.getElementById('stage-daynight');
   function renderDay(){
     if (!dayBtn) return;

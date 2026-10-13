@@ -147,6 +147,9 @@ en: {
 'home.119': 'Track 2',
 'home.120': 'Track 3',
 'home.121': 'Track 4',
+'home.122': 'Your event on the LED screens',
+'home.123': 'E.g.: Ana & Luis wedding',
+'home.124': 'I want this stage <span aria-hidden="true">↗</span>',
 'home.123': 'Close full screen',
 'home.124': 'Tap the stage to exit',
 
@@ -523,6 +526,9 @@ it: {
 'home.119': 'Traccia 2',
 'home.120': 'Traccia 3',
 'home.121': 'Traccia 4',
+'home.122': 'Il tuo evento sui LED',
+'home.123': 'Es.: Matrimonio Anna e Luca',
+'home.124': 'Voglio questo palco <span aria-hidden="true">↗</span>',
 'home.123': 'Chiudi schermo intero',
 'home.124': 'Tocca il palco per uscire',
 
@@ -899,6 +905,9 @@ pt: {
 'home.119': 'Faixa 2',
 'home.120': 'Faixa 3',
 'home.121': 'Faixa 4',
+'home.122': 'Seu evento nas telas de LED',
+'home.123': 'Ex.: Casamento Ana e Luís',
+'home.124': 'Quero este palco <span aria-hidden="true">↗</span>',
 'home.123': 'Fechar tela cheia',
 'home.124': 'Toque no palco para sair',
 
@@ -1147,9 +1156,9 @@ it: { greet: { 'Evento corporativo': 'Ciao, PSM. Vorrei un preventivo per un eve
 pt: { greet: { 'Evento corporativo': 'Olá, PSM. Quero um orçamento para um evento corporativo na Bolívia.', 'Concierto': 'Olá, PSM. Quero um orçamento para um show na Bolívia.', 'Evento social': 'Olá, PSM. Quero um orçamento para um evento social na Bolívia.', 'Otro evento': 'Olá, PSM. Quero um orçamento para um evento na Bolívia.' }, date: 'Data', city: 'Cidade ou local', guests: 'Participantes', services: 'Serviços', names: { 'Sonido': 'Som', 'Iluminación': 'Iluminação', 'Pantallas LED': 'Telas de LED', 'Tarimas': 'Praticáveis', 'Escenarios': 'Palcos' } }
 },
 stage: {
-en: { music: 'Music', lights: 'Lights', led: 'LED video', dayBtn: 'See it by day ', nightBtn: 'See it by night ', live: 'Live show.', action: 'Stage in action.', preparing: 'Setting up your show…', off: 'Everything is off. Switch on your stage.', allOff: 'Switch everything off ', allOn: 'Switch everything on ', stopShow: 'Stop show ', startShow: 'Start show ', enterFs: 'Full screen ', exitFs: 'Exit full screen ', enterFsAria: 'View stage full screen', exitFsAria: 'Exit full screen', musicErr: 'Press Sound to restart the music.' },
-it: { music: 'Musica', lights: 'Luci', led: 'Video LED', dayBtn: 'Vedi di giorno ', nightBtn: 'Vedi di notte ', live: 'Show dal vivo.', action: 'Palco in azione.', preparing: 'Preparo il tuo show…', off: 'Tutto spento. Accendi il tuo palco.', allOff: 'Spegni tutto ', allOn: 'Accendi tutto ', stopShow: 'Ferma lo show ', startShow: 'Avvia lo show ', enterFs: 'Schermo intero ', exitFs: 'Esci da schermo intero ', enterFsAria: 'Vedi il palco a schermo intero', exitFsAria: 'Esci da schermo intero', musicErr: 'Premi Audio per riavviare la musica.' },
-pt: { music: 'Música', lights: 'Luzes', led: 'Vídeo LED', dayBtn: 'Ver de dia ', nightBtn: 'Ver de noite ', live: 'Show ao vivo.', action: 'Palco em ação.', preparing: 'Preparando seu show…', off: 'Tudo desligado. Ligue seu palco.', allOff: 'Desligar tudo ', allOn: 'Ligar tudo ', stopShow: 'Parar show ', startShow: 'Iniciar show ', enterFs: 'Tela cheia ', exitFs: 'Sair da tela cheia ', enterFsAria: 'Ver palco em tela cheia', exitFsAria: 'Sair da tela cheia', musicErr: 'Pressione Som para reiniciar a música.' }
+en: { music: 'Music', lights: 'Lights', led: 'LED video', dayBtn: 'See it by day ', nightBtn: 'See it by night ', live: 'Live show.', action: 'Stage in action.', preparing: 'Setting up your show…', off: 'Everything is off. Switch on your stage.', allOff: 'Switch everything off ', allOn: 'Switch everything on ', stopShow: 'Stop show ', startShow: 'Start show ', enterFs: 'Full screen ', exitFs: 'Exit full screen ', enterFsAria: 'View stage full screen', exitFsAria: 'Exit full screen', musicErr: 'Press Sound to restart the music.', waIntro: 'Hi, PSM. I want this stage for my event', waScene: 'Scene', waLights: 'Lights' },
+it: { music: 'Musica', lights: 'Luci', led: 'Video LED', dayBtn: 'Vedi di giorno ', nightBtn: 'Vedi di notte ', live: 'Show dal vivo.', action: 'Palco in azione.', preparing: 'Preparo il tuo show…', off: 'Tutto spento. Accendi il tuo palco.', allOff: 'Spegni tutto ', allOn: 'Accendi tutto ', stopShow: 'Ferma lo show ', startShow: 'Avvia lo show ', enterFs: 'Schermo intero ', exitFs: 'Esci da schermo intero ', enterFsAria: 'Vedi il palco a schermo intero', exitFsAria: 'Esci da schermo intero', musicErr: 'Premi Audio per riavviare la musica.', waIntro: 'Ciao, PSM. Voglio questo palco per il mio evento', waScene: 'Scena', waLights: 'Luci' },
+pt: { music: 'Música', lights: 'Luzes', led: 'Vídeo LED', dayBtn: 'Ver de dia ', nightBtn: 'Ver de noite ', live: 'Show ao vivo.', action: 'Palco em ação.', preparing: 'Preparando seu show…', off: 'Tudo desligado. Ligue seu palco.', allOff: 'Desligar tudo ', allOn: 'Ligar tudo ', stopShow: 'Parar show ', startShow: 'Iniciar show ', enterFs: 'Tela cheia ', exitFs: 'Sair da tela cheia ', enterFsAria: 'Ver palco em tela cheia', exitFsAria: 'Sair da tela cheia', musicErr: 'Pressione Som para reiniciar a música.', waIntro: 'Olá, PSM. Quero este palco para o meu evento', waScene: 'Cena', waLights: 'Luzes' }
 },
 cinema: {
 en: { live: 'PSM LIVE', close: 'Close video', photo: 'PSM photo' },
