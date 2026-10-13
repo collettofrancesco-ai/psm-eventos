@@ -893,7 +893,19 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-speaker i:nth-of-type(4){rotate:x 16deg;scale:1.02 1;border-bottom:2px solid #0b1118}
 .stage-speaker i:nth-of-type(5){rotate:x 28deg;scale:1.04 1;border-bottom:3px solid #0b1118}
 .stage-speaker i:nth-of-type(6){rotate:x 40deg;scale:1.07 1;border-bottom:4px solid #0b1118}
-@media(max-width:760px){.stage-speaker{bottom:42%}} /* flown arrays clear the ground-stacked subs */
+/* Phone: the array is half as wide as on desktop, so its fixed-pixel details shrink with it
+   to keep the desktop proportions; heads move in so the chains read as rigging, not light cables. */
+@media(max-width:760px){
+  .stage-speaker{bottom:42%;padding:3px 3px 4px;gap:2px}
+  .la-rig{height:6px;width:calc(6.1cqw + 5.4px)}
+  .la-rig::before,.la-rig::after{width:3px;height:max(0px,calc(var(--spk-top) + 3px - 20.2cqh));background:repeating-linear-gradient(180deg,#8d9cab 0 2px,#27313d 2px 4px)}
+  .stage-speaker i{border-left-width:2px;border-right-width:2px}
+  .stage-speaker i::before,.stage-speaker i::after{width:3px;height:3px}
+  .stage-speaker i:nth-of-type(4){rotate:x 12deg}
+  .stage-speaker i:nth-of-type(5){rotate:x 20deg}
+  .stage-speaker i:nth-of-type(6){rotate:x 28deg}
+  .stage-fixtures{left:26%;right:26%}
+}
 /* Beat sync: stage-show.js toggles hit-a/hit-b on each beat of assets/beats.json and data-bar on each bar.
    Alternating a/b names restarts the animation without forcing a reflow. */
 .stage-preview{--beat-len:.5s;--energy:.6}
