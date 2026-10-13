@@ -194,3 +194,17 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 .stage-movers .wash-edge-right{right:-38px}
 .motion-ok .lights-on .wash-edge-left::after{animation-delay:-1s}
 .motion-ok .lights-on .wash-edge-right::after{animation-delay:-3s;animation-direction:alternate-reverse}
+/* LED wash colours run continuously while the lights are on. */
+.mh-ledwash{--wash-phase:0s}
+.mh-ledwash:nth-child(4){--wash-phase:-2s}
+.mh-ledwash:nth-child(6){--wash-phase:-4s}
+.mh-ledwash.wash-edge-left{--wash-phase:-6s}
+.mh-ledwash.wash-edge-right{--wash-phase:-8s}
+@keyframes wash-lens-colours{
+  from{filter:hue-rotate(0deg) saturate(1.65) brightness(1.35) drop-shadow(0 0 4px #668cff90)}
+  to{filter:hue-rotate(360deg) saturate(1.65) brightness(1.35) drop-shadow(0 0 4px #668cff90)}
+}
+@keyframes wash-beam-colours{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(360deg)}}
+.motion-ok .lights-on .mh-ledwash img{animation:wash-lens-colours 10s linear var(--wash-phase) infinite}
+.motion-ok .lights-on .stage-movers .mh-ledwash::after{animation:mh-pan 6s ease-in-out var(--wash-phase) infinite alternate,wash-beam-colours 10s linear var(--wash-phase) infinite;opacity:.45}
+@media(prefers-reduced-motion:reduce){.mh-ledwash img,.mh-ledwash::after{animation:none!important}}
