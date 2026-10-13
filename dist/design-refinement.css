@@ -332,3 +332,5 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 }
 .motion-ok .lights-on .mh-ledwash .wash-head{animation:wash-lens-colours 10s linear var(--wash-phase) infinite,wash-head-circle 12s linear var(--wash-phase) infinite}
 .motion-ok .lights-on .stage-movers .mh-ledwash::after{animation:wash-beam-circle 12s linear var(--wash-phase) infinite,wash-beam-colours 10s linear var(--wash-phase) infinite}
+.stage-preview .stage-movers .mh-ledwash{pointer-events:auto;cursor:pointer}
+.countdown .stage-movers .mh-ledwash{cursor:default}

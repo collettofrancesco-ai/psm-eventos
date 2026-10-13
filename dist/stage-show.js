@@ -470,13 +470,14 @@
   // a click (or a tap on phones, which have no hover) opens the full card.
   var gearCard = document.getElementById('gear-card');
   var gearPeek = stage.querySelector ? stage.querySelector('.gear-peek') : null;
-  var gearPhotos = {beam:['beam'], strobe:['strobe'], truss:['truss'], speakers:['line-array'], mixer:['digico','venue-sc48']};
+  var gearPhotos = {beam:['beam'], strobe:['strobe'], truss:['truss'], speakers:['line-array'], mixer:['digico','venue-sc48'], wash:['led-wash-photo']};
   var gearOnSite = {speakers:true}; // photos taken at a PSM event fill the frame instead of a white cut-out
   var gearText = {
     beam: ['Cabezas móviles Beam', 'Haces nítidos que cortan el humo y se mueven al ritmo del show.'],
     strobe: ['Strobos RGB', 'Destellos y color para los momentos de máxima energía.'],
     truss: ['Estructura ground support', 'La estructura que sostiene con seguridad luces, sonido y pantallas.'],
     speakers: ['Sistema line array', 'Line arrays colgados de la estructura: el sonido llega claro y parejo a todo el público. Foto de un montaje PSM.'],
+    wash: ['Cabezas móviles LED Wash', 'Bañan el escenario de color con zoom y movimiento continuo: cada cabeza gira y cambia de tono al ritmo del show.'],
     mixer: ['Consolas de mezcla', 'Consolas digitales DiGiCo y Avid VENUE SC48: el sonido en vivo bajo control desde la regía FOH, en medio del público.']
   };
   function gearInfo(key){
@@ -499,7 +500,7 @@
   }
   function hidePeek(){ if (gearPeek) gearPeek.classList.remove('show'); }
   if (gearCard && gearPeek) {
-    [['.stage-fixtures i','beam'], ['.stage-strobes b, .stage-strobes-side b','strobe'], ['.stage-speaker','speakers']].forEach(function(pair){
+    [['.stage-fixtures i','beam'], ['.stage-movers .mh-ledwash','wash'], ['.stage-strobes b, .stage-strobes-side b','strobe'], ['.stage-speaker','speakers']].forEach(function(pair){
       Array.from(stage.querySelectorAll(pair[0])).forEach(function(el){ el.dataset.gear = pair[1]; });
     });
     var peekKey = '';
