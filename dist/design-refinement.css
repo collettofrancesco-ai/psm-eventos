@@ -229,3 +229,14 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 .light-position-panel button{padding:9px 12px;border:1px solid #b6c6ce;border-radius:6px;background:#edf3f5;color:#172632;cursor:pointer}
 .light-position-panel button[data-action="save"]{background:#102e3b;color:#fff}
 .light-position-panel small{color:#4c5962}
+/* Full-width alternating row: nine round wash heads and eight rectangular lights. */
+.stage-movers{left:12%;right:12%;align-items:flex-end}
+.stage-movers .mh{width:2.7cqw;height:2.3cqw;flex-shrink:0}
+.stage-movers .mh::before{width:2.5cqw;height:1.5cqw}
+.stage-movers .mh-ledwash{width:4.4cqw}
+.stage-movers .mh-ledwash img{width:4.4cqw;height:5cqw;bottom:-.12cqw}
+.stage-movers .mh-ledwash::after{width:13.4cqw;height:28cqw}
+.stage-movers .mh-ledwash:nth-child(4n+1){--wash-phase:0s}
+.stage-movers .mh-ledwash:nth-child(4n+3){--wash-phase:-3s}
+.stage-movers .mh-ledwash:nth-child(3n+1){--wash-phase:-6s}
+.stage-movers .mh-ledwash:nth-child(5n+1){--wash-phase:-8s}

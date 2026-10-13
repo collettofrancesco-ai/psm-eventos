@@ -4,7 +4,7 @@
   if(!stage)return;
   var canvas=stage.querySelector('.stage-canvas');
   var lamps=Array.from(stage.querySelectorAll('.stage-fixtures i,.stage-movers b,.stage-strobes b,.stage-strobes-side b'));
-  var key='psm-light-positions-v1', positions={};
+  var key='psm-light-positions-v2', positions={};
   try{positions=JSON.parse(localStorage.getItem(key)||'{}')||{};}catch(e){}
   lamps.forEach(function(el,i){el.dataset.positionId='light-'+i;apply(el);});
   function apply(el){var p=positions[el.dataset.positionId];if(p&&Number.isFinite(p.x)&&Number.isFinite(p.y))el.style.translate=p.x+'px '+p.y+'px';}
