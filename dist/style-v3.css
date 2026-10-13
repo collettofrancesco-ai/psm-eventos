@@ -1140,8 +1140,8 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-props .booth-top{fill:#1b2633}
 .stage-props .booth-led{fill:none;stroke:#1d3646;stroke-width:1.6;transition:stroke .5s}
 .lights-on .stage-props .booth-led{stroke:#56d5ee;filter:drop-shadow(0 0 3px #19c2dc)}
-.stage-props .booth-logo{fill:#9fb3c2;stroke:none;font:800 15px 'Barlow Condensed',sans-serif;letter-spacing:2px}
-.lights-on .stage-props .booth-logo{fill:#e6fbff}
+.stage-props .booth-logo{opacity:.75;transition:opacity .5s}
+.lights-on .stage-props .booth-logo,.sound-on .stage-props .booth-logo{opacity:1}
 .stage-props .deck-dot{fill:#2d4152;stroke:none}
 .sound-on .stage-props .deck-dot{fill:#5eebff}
 .stage-props .case{fill:#10171f}

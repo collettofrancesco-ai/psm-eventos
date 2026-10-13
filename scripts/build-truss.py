@@ -327,7 +327,9 @@ def props():
                f'<g class="booth"><path d="M{f(cx - w / 2)} {f(base)}V{f(base - h)}H{f(cx + w / 2)}V{f(base)}Z"/>'
                f'<path class="booth-top" d="M{f(cx - w / 2 - 2)} {f(base - h)}L{f(cx - w / 2 + 3)} {f(base - h - 5)}H{f(cx + w / 2 - 3)}L{f(cx + w / 2 + 2)} {f(base - h)}Z"/>'
                f'<path class="booth-led" d="M{f(cx - w / 2 + 3)} {f(base - h + 6)}H{f(cx + w / 2 - 3)}M{f(cx - w / 2 + 3)} {f(base - 5)}H{f(cx + w / 2 - 3)}"/>'
-               f'<text class="booth-logo" x="{f(cx)}" y="{f(base - h * .38)}" text-anchor="middle">PSM</text>'
+               # The real logo; its height undoes the viewBox stretch (x .82 px/unit, y .7 px/unit).
+               f'<image class="booth-logo" href="assets/logo-wide.webp" x="{f(cx - w * .41)}" y="{f(base - h * .5 - w * .82 * .82 / .7 / 3.71 / 2)}" '
+               f'width="{f(w * .82)}" height="{f(w * .82 * .82 / .7 / 3.71)}" preserveAspectRatio="none"/>'
                + ''.join(f'<circle class="deck-dot" cx="{f(cx + dx * w)}" cy="{f(base - h - 2.5)}" r="1.6"/>' for dx in (-.36, -.18, 0, .18, .36))
                + '</g></g>')
     # Corporate: lectern with the speaker behind it.
