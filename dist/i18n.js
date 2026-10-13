@@ -156,6 +156,7 @@ en: {
 'home.136': 'See mixing consoles',
 'home.137': 'PSM EQUIPMENT',
 'home.138': 'See line array system',
+'home.139': 'Watch the show',
 'home.123': 'Close full screen',
 'home.124': 'Tap the stage to exit',
 
@@ -543,6 +544,7 @@ it: {
 'home.136': 'Vedi mixer audio',
 'home.137': 'ATTREZZATURA PSM',
 'home.138': 'Vedi impianto line array',
+'home.139': 'Guarda lo show',
 'home.123': 'Chiudi schermo intero',
 'home.124': 'Tocca il palco per uscire',
 
@@ -930,6 +932,7 @@ pt: {
 'home.136': 'Ver mesas de som',
 'home.137': 'EQUIPAMENTOS PSM',
 'home.138': 'Ver sistema line array',
+'home.139': 'Assista ao show',
 'home.123': 'Fechar tela cheia',
 'home.124': 'Toque no palco para sair',
 

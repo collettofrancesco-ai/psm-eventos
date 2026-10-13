@@ -238,6 +238,10 @@
       showCycle=setInterval(function(){index=(index+1)%modes.length;stage.dataset.lightEffect=modes[index];effect.value=modes[index];},8000);
     },COUNT_STEP*3));
   });
+  // Big play button on the dark LED wall: most visitors never reach the console below the
+  // stage on phones. It runs the same show start inside the tap, so iOS lets the music play.
+  var playButton = stage.querySelector ? stage.querySelector('.stage-play') : null;
+  if (playButton) playButton.addEventListener('click', function(event){ event.stopPropagation(); if (!showRunning) showButton.click(); });
   // Countdown on the blacked-out LED wall, then music, video and every light hit at once.
   var COUNT_STEP = 800;
   var ledCount = stage.querySelector ? stage.querySelector('.led-count') : null;

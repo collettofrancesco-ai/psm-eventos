@@ -1068,6 +1068,17 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .gear-body h3{margin:8px 0 6px;font:800 30px/1 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.02em}
 .gear-body p{margin:0 0 18px;color:#c4d0d9;font-size:15px;line-height:1.55}
 .gear-body .button{width:auto}
+/* Play button on the dark LED wall (stage-show.js); only while the stage is fully off.
+   It grows less than the hotspots on phones so it stays inside the wall. */
+.stage-play{--play-scale:max(var(--stage-scale,1),.64);position:absolute;left:50%;top:76%;z-index:8;display:none;align-items:center;gap:calc(10px / var(--play-scale));transform:translate(-50%,-50%);padding:calc(10px / var(--play-scale)) calc(20px / var(--play-scale)) calc(10px / var(--play-scale)) calc(10px / var(--play-scale));border:calc(1.5px / var(--play-scale)) solid #5eebff;border-radius:999px;background:#061017e6;color:#fff;font:800 calc(14px / var(--play-scale))/1 'Inter',sans-serif;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;cursor:pointer;box-shadow:0 0 calc(24px / var(--play-scale)) #19c2dc66}
+.stage-play-icon{display:grid;place-items:center;width:calc(34px / var(--play-scale));height:calc(34px / var(--play-scale));padding-left:calc(3px / var(--play-scale));border-radius:50%;background:#19c2dc;color:#061014;font-size:calc(14px / var(--play-scale))}
+.stage-play:hover,.stage-play:focus-visible{background:#19c2dc;color:#061014;border-color:#fff}
+.stage-play:hover .stage-play-icon,.stage-play:focus-visible .stage-play-icon{background:#061014;color:#5eebff}
+.stage-play:focus-visible{outline:calc(3px / var(--play-scale)) solid #fff;outline-offset:3px}
+.stage-preview:not(.sound-on):not(.lights-on):not(.led-on):not(.show-running):not(.stage-intro) .stage-play{display:flex}
+.motion-ok .stage-preview:not(.sound-on):not(.lights-on):not(.led-on):not(.show-running):not(.stage-intro) .stage-play{animation:play-in .6s ease-out both,play-glow 2.4s ease-in-out .6s infinite}
+@keyframes play-in{from{opacity:0;transform:translate(-50%,-30%)}to{opacity:1;transform:translate(-50%,-50%)}}
+@keyframes play-glow{50%{box-shadow:0 0 calc(40px / var(--play-scale)) #19c2dcaa}}
 .stage-canvas{position:absolute;inset:0;container-type:size}
 @media(max-width:760px){
   .stage-preview{aspect-ratio:820/700}
