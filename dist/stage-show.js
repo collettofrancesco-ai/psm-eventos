@@ -204,8 +204,9 @@
     clearInterval(showCycle); showCycle = null;
     showRunning = false; intro = false;
     music.volume = .45;
-    stage.classList.remove('finale');
+    stage.classList.remove('finale','countdown','show-go');
     if (confetti) confetti.innerHTML = '';
+    if (ledCount) ledCount.innerHTML = '';
   }
   buttons.forEach(function(button){
     button.addEventListener('click',function(){cancelShow();state[button.dataset.stage] = !state[button.dataset.stage];render();});
@@ -221,14 +222,31 @@
     // audio.volume, so a muted warm-up would be heard as repeated restarts.
     cancelShow();manualTrack=false;showRunning=true;finaleDone=false;showStart=Date.now();
     state={sound:true,lights:false,led:true};render();
+    countdown();
     timers.push(setTimeout(function(){
       showMode=0;state.lights=true;stage.dataset.lightEffect='cross';effect.value='cross';render();
       // Tracks with a beat map change effect on the music (fireBeat); others on a timer.
       if (trackBeats()) return;
       var modes=['cross','color','sweep','pulse'], index=0;
       showCycle=setInterval(function(){index=(index+1)%modes.length;stage.dataset.lightEffect=modes[index];effect.value=modes[index];},8000);
-    },1000));
+    },COUNT_STEP*3));
   });
+  // Countdown on the LED wall while the intro music builds, then every light hits at once.
+  var COUNT_STEP = 800;
+  var ledCount = stage.querySelector ? stage.querySelector('.led-count') : null;
+  function countdown(){
+    if (!ledCount) return;
+    var name = nameInput ? eventName() : '';
+    stage.classList.add('countdown');
+    [3, 2, 1].forEach(function(n, k){
+      timers.push(setTimeout(function(){
+        ledCount.innerHTML = '<b>' + n + '</b><small></small>';
+        ledCount.lastChild.textContent = name;
+      }, k * COUNT_STEP));
+    });
+    timers.push(setTimeout(function(){ stage.classList.remove('countdown'); ledCount.innerHTML = ''; stage.classList.add('show-go'); }, COUNT_STEP * 3));
+    timers.push(setTimeout(function(){ stage.classList.remove('show-go'); }, COUNT_STEP * 3 + 1200));
+  }
 
   function scheduleFrame(){
     if (!frame && inView && !document.hidden && ((state.sound && !music.paused) || (state.led && !video.paused))) frame=requestAnimationFrame(paint);
@@ -415,6 +433,38 @@
     nameInput.addEventListener('keydown', function(event){ if (event.key === 'Enter') nameInput.blur(); });
     nameSend.addEventListener('click', updateSend);
     showName();
+  }
+
+  // Gear cards: the hotspots on the stage open the real equipment PSM brings.
+  var gearCard = document.getElementById('gear-card');
+  var gearPhotos = {beam:['beam'], strobe:['strobe'], truss:['truss'], mixer:['digico','venue-sc48']};
+  var gearText = {
+    beam: ['Cabezas móviles Beam', 'Haces nítidos que cortan el humo y se mueven al ritmo del show.'],
+    strobe: ['Strobos RGB', 'Destellos y color para los momentos de máxima energía.'],
+    truss: ['Estructura ground support', 'La estructura que sostiene con seguridad luces, sonido y pantallas.'],
+    mixer: ['Consolas de mezcla', 'Consolas digitales DiGiCo y Avid VENUE SC48: el sonido en vivo bajo control desde la posición de mezcla.']
+  };
+  function openGear(key){
+    var dyn = window.PSM_DYN && window.PSM_DYN.gear && window.PSM_DYN.gear[psmLang()];
+    var text = (dyn && dyn[key]) || gearText[key];
+    var media = gearCard.querySelector('.gear-media');
+    media.innerHTML = '';
+    gearPhotos[key].forEach(function(name){
+      var img = document.createElement('img');
+      img.src = 'assets/gear/' + name + '.webp'; img.alt = text[0];
+      media.appendChild(img);
+    });
+    gearCard.querySelector('h3').textContent = text[0];
+    gearCard.querySelector('p').textContent = text[1];
+    if (gearCard.showModal) gearCard.showModal(); else gearCard.setAttribute('open', '');
+  }
+  if (gearCard) {
+    Array.from(stage.querySelectorAll('.gear-spot')).forEach(function(spot){
+      spot.addEventListener('click', function(event){ event.stopPropagation(); openGear(spot.dataset.gear); });
+    });
+    gearCard.addEventListener('click', function(event){
+      if (event.target === gearCard || event.target.classList.contains('close')) gearCard.close ? gearCard.close() : gearCard.removeAttribute('open');
+    });
   }
 
   var dayBtn = document.getElementById('stage-daynight');

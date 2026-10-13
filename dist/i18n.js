@@ -150,6 +150,11 @@ en: {
 'home.130': 'Your event on the LED screens',
 'home.131': 'E.g.: Ana & Luis wedding',
 'home.132': 'I want this stage <span aria-hidden="true">↗</span>',
+'home.133': 'See Beam moving heads',
+'home.134': 'See RGB strobes',
+'home.135': 'See truss structure',
+'home.136': 'See mixing consoles',
+'home.137': 'PSM EQUIPMENT',
 'home.123': 'Close full screen',
 'home.124': 'Tap the stage to exit',
 
@@ -529,6 +534,11 @@ it: {
 'home.130': 'Il tuo evento sui LED',
 'home.131': 'Es.: Matrimonio Anna e Luca',
 'home.132': 'Voglio questo palco <span aria-hidden="true">↗</span>',
+'home.133': 'Vedi teste mobili Beam',
+'home.134': 'Vedi strobo RGB',
+'home.135': 'Vedi struttura in truss',
+'home.136': 'Vedi mixer audio',
+'home.137': 'ATTREZZATURA PSM',
 'home.123': 'Chiudi schermo intero',
 'home.124': 'Tocca il palco per uscire',
 
@@ -908,6 +918,11 @@ pt: {
 'home.130': 'Seu evento nas telas de LED',
 'home.131': 'Ex.: Casamento Ana e Luís',
 'home.132': 'Quero este palco <span aria-hidden="true">↗</span>',
+'home.133': 'Ver moving heads Beam',
+'home.134': 'Ver strobos RGB',
+'home.135': 'Ver estrutura de treliça',
+'home.136': 'Ver mesas de som',
+'home.137': 'EQUIPAMENTOS PSM',
 'home.123': 'Fechar tela cheia',
 'home.124': 'Toque no palco para sair',
 
@@ -1159,6 +1174,11 @@ stage: {
 en: { music: 'Music', lights: 'Lights', led: 'LED video', dayBtn: 'See it by day ', nightBtn: 'See it by night ', live: 'Live show.', action: 'Stage in action.', preparing: 'Setting up your show…', off: 'Everything is off. Switch on your stage.', allOff: 'Switch everything off ', allOn: 'Switch everything on ', stopShow: 'Stop show ', startShow: 'Start show ', enterFs: 'Full screen ', exitFs: 'Exit full screen ', enterFsAria: 'View stage full screen', exitFsAria: 'Exit full screen', musicErr: 'Press Sound to restart the music.', waIntro: 'Hi, PSM. I want this stage for my event', waScene: 'Scene', waLights: 'Lights' },
 it: { music: 'Musica', lights: 'Luci', led: 'Video LED', dayBtn: 'Vedi di giorno ', nightBtn: 'Vedi di notte ', live: 'Show dal vivo.', action: 'Palco in azione.', preparing: 'Preparo il tuo show…', off: 'Tutto spento. Accendi il tuo palco.', allOff: 'Spegni tutto ', allOn: 'Accendi tutto ', stopShow: 'Ferma lo show ', startShow: 'Avvia lo show ', enterFs: 'Schermo intero ', exitFs: 'Esci da schermo intero ', enterFsAria: 'Vedi il palco a schermo intero', exitFsAria: 'Esci da schermo intero', musicErr: 'Premi Audio per riavviare la musica.', waIntro: 'Ciao, PSM. Voglio questo palco per il mio evento', waScene: 'Scena', waLights: 'Luci' },
 pt: { music: 'Música', lights: 'Luzes', led: 'Vídeo LED', dayBtn: 'Ver de dia ', nightBtn: 'Ver de noite ', live: 'Show ao vivo.', action: 'Palco em ação.', preparing: 'Preparando seu show…', off: 'Tudo desligado. Ligue seu palco.', allOff: 'Desligar tudo ', allOn: 'Ligar tudo ', stopShow: 'Parar show ', startShow: 'Iniciar show ', enterFs: 'Tela cheia ', exitFs: 'Sair da tela cheia ', enterFsAria: 'Ver palco em tela cheia', exitFsAria: 'Sair da tela cheia', musicErr: 'Pressione Som para reiniciar a música.', waIntro: 'Olá, PSM. Quero este palco para o meu evento', waScene: 'Cena', waLights: 'Luzes' }
+},
+gear: {
+en: { beam: ['Beam moving heads', 'Sharp beams that cut through the haze and move with the show.'], strobe: ['RGB strobes', 'Flashes and colour for the moments of highest energy.'], truss: ['Ground-support truss', 'The structure that safely carries lights, sound and screens.'], mixer: ['Mixing consoles', 'DiGiCo and Avid VENUE SC48 digital consoles: live sound under control from the mix position.'] },
+it: { beam: ['Teste mobili Beam', 'Fasci netti che tagliano il fumo e si muovono con lo show.'], strobe: ['Strobo RGB', 'Lampi e colori per i momenti di massima energia.'], truss: ['Struttura ground support', 'La struttura che regge in sicurezza luci, audio e schermi.'], mixer: ['Mixer audio', 'Mixer digitali DiGiCo e Avid VENUE SC48: il suono dal vivo sotto controllo dalla regia.'] },
+pt: { beam: ['Moving heads Beam', 'Feixes nítidos que cortam a fumaça e se movem com o show.'], strobe: ['Strobos RGB', 'Flashes e cores para os momentos de maior energia.'], truss: ['Treliça ground support', 'A estrutura que sustenta com segurança luzes, som e telas.'], mixer: ['Mesas de som', 'Mesas digitais DiGiCo e Avid VENUE SC48: o som ao vivo sob controle desde a posição de mixagem.'] }
 },
 cinema: {
 en: { live: 'PSM LIVE', close: 'Close video', photo: 'PSM photo' },
