@@ -286,3 +286,4 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 .motion-ok .stage-preview[data-preset="corporativo"] .stage-deck-svg{animation-name:led-bar-corporativo}
 .motion-ok .show-running .stage-deck-svg{animation-duration:4.5s}
 @media(prefers-reduced-motion:reduce){.stage-deck-svg{animation:none!important}}
+.stage-preview .stage-sub{top:77.2%;bottom:7.6%}
