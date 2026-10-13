@@ -177,3 +177,14 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 .about-copy strong{color:#172632;font-weight:600}
 .service-photo{box-shadow:none;border:1px solid #d4dcdf;border-radius:12px}
 .light h2 span{color:#076577!important}
+/* Three round LED wash heads, interleaved between the four existing fixtures. */
+.mh-ledwash{width:36px;height:19px;flex-shrink:0}
+.mh-ledwash::before{display:none}
+.mh-ledwash img{position:absolute;width:36px;height:41px;max-width:none;left:0;bottom:-1px;filter:saturate(.1) brightness(.45);transition:filter .5s}
+.lights-on .mh-ledwash img{filter:saturate(1) brightness(1.15) drop-shadow(0 0 3px #457cff80)}
+.mh-ledwash::after{width:110px;height:230px;transform:translateX(-50%) rotate(0deg);background:linear-gradient(180deg,#668cff70,#5075ff10 70%,transparent);clip-path:polygon(43% 0,57% 0,100% 100%,0 100%);mask-image:linear-gradient(90deg,transparent,#000 40% 60%,transparent)}
+.motion-ok .lights-on .mh-ledwash::after{animation:mh-pan 6s ease-in-out infinite alternate}
+.motion-ok .lights-on .mh-ledwash:nth-child(4)::after{animation-delay:-2s;animation-direction:alternate-reverse}
+.motion-ok .lights-on .mh-ledwash:nth-child(6)::after{animation-delay:-4s}
+.stage-preview[data-preset="boda"] .mh-ledwash::after{background:linear-gradient(180deg,#ffdea370,#ffd89910 70%,transparent)}
+.stage-preview[data-preset="corporativo"] .mh-ledwash::after{background:linear-gradient(180deg,#c8eaff70,#bddaff10 70%,transparent)}
