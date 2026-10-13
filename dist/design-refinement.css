@@ -271,3 +271,18 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
   box-shadow:0 3px 6px #0008}
 .lights-on .stage-movers::after{filter:brightness(1.25)}
 .stage-preview[data-mode="day"] .stage-movers::after{filter:brightness(1.7) saturate(.6)}
+/* Deck-edge LED bar: the front nosing and the line under it run through colours together.
+   The colour lives on the deck SVG (--led-c), so the beat pulses on the bar keep working. */
+@property --led-c{syntax:'<color>';inherits:true;initial-value:#19c2dc}
+@keyframes led-bar-concert{0%,100%{--led-c:#19c2dc}20%{--led-c:#8b5cff}40%{--led-c:#ff2fa0}60%{--led-c:#ff8a1f}80%{--led-c:#2fe07a}}
+@keyframes led-bar-boda{0%,100%{--led-c:#ffc46b}33%{--led-c:#ff8f6b}66%{--led-c:#ffe2a8}}
+@keyframes led-bar-corporativo{0%,100%{--led-c:#7db8ff}50%{--led-c:#e6f2ff}}
+.stage-deck-svg .deck-nosing{fill:var(--led-c);opacity:.35;transition:opacity .6s}
+.stage-deck-svg .deck-led{stroke:var(--led-c);stroke-width:3;opacity:.3;transition:opacity .6s}
+.lights-on .stage-deck-svg .deck-nosing,.sound-on .stage-deck-svg .deck-nosing{fill:var(--led-c);opacity:1;filter:drop-shadow(0 0 4px var(--led-c)) drop-shadow(0 0 12px var(--led-c))}
+.lights-on .stage-deck-svg .deck-led,.sound-on .stage-deck-svg .deck-led{stroke:var(--led-c);opacity:.85;filter:drop-shadow(0 0 4px var(--led-c))}
+.motion-ok .stage-deck-svg{animation:led-bar-concert 9s linear infinite}
+.motion-ok .stage-preview[data-preset="boda"] .stage-deck-svg{animation-name:led-bar-boda}
+.motion-ok .stage-preview[data-preset="corporativo"] .stage-deck-svg{animation-name:led-bar-corporativo}
+.motion-ok .show-running .stage-deck-svg{animation-duration:4.5s}
+@media(prefers-reduced-motion:reduce){.stage-deck-svg{animation:none!important}}
