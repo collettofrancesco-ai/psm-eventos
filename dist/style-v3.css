@@ -1010,7 +1010,8 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 /* Event name on the LED surfaces (stage-show.js): big on the wall, a ticker on the wings. */
 .led-title{position:absolute;inset:0;z-index:5;display:grid;place-items:center;padding:6%;opacity:0;pointer-events:none;transition:opacity .4s}
 .has-title .led-title{opacity:1}
-.led-on.has-title .led-title{background:radial-gradient(ellipse 90% 60% at 50% 50%,#000d,#0006 70%,transparent 90%)}
+.led-on.has-title .led-title{bottom:auto;padding:4% 6% 7%;background:linear-gradient(180deg,#000d,#0009 60%,transparent)}
+.led-on.has-title .led-title span{font-size:calc(var(--title-fit,6)*.72cqw)}
 .led-title span{max-width:100%;font:800 calc(var(--title-fit,6)*1cqw)/.95 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.04em;text-align:center;text-wrap:balance;overflow-wrap:anywhere;color:#effdff;text-shadow:0 0 6px #5eebff,0 0 22px #19c2dcaa,0 0 52px #19c2dc66}
 .stage-preview[data-preset="boda"] .led-title span,.stage-preview[data-preset="boda"] .wing-title span{color:#fff6e3;text-shadow:0 0 6px #ffd38a,0 0 22px #ffb45eaa,0 0 52px #ff9e5e55}
 .stage-preview[data-preset="corporativo"] .led-title span,.stage-preview[data-preset="corporativo"] .wing-title span{color:#fff;text-shadow:0 0 6px #b9d8ff,0 0 22px #7db8ffaa,0 0 52px #7db8ff55}
