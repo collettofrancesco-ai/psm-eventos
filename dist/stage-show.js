@@ -175,6 +175,7 @@
     else if (!intro) { music.pause(); music.currentTime = 0; }
     if (state.led) startVideo();
     else { video.pause(); clearTimeout(stallTimer); retryButton.hidden = true; wallMessage(''); stage.classList.remove('led-fallback'); }
+    if (state.sound || state.lights || state.led) endIntro();
     scheduleFrame();
     scheduleBeat();
   }
@@ -183,6 +184,8 @@
     clearInterval(showCycle); showCycle = null;
     showRunning = false; intro = false;
     music.volume = .45;
+    stage.classList.remove('finale');
+    if (confetti) confetti.innerHTML = '';
   }
   buttons.forEach(function(button){
     button.addEventListener('click',function(){cancelShow();state[button.dataset.stage] = !state[button.dataset.stage];render();});
@@ -196,7 +199,7 @@
     if (showRunning) {cancelShow();state={sound:false,lights:false,led:false};render();return;}
     // Video and its track start once, together, inside the tap: iOS ignores
     // audio.volume, so a muted warm-up would be heard as repeated restarts.
-    cancelShow();manualTrack=false;showRunning=true;
+    cancelShow();manualTrack=false;showRunning=true;finaleDone=false;showStart=Date.now();
     state={sound:true,lights:false,led:true};render();
     timers.push(setTimeout(function(){
       showMode=0;state.lights=true;stage.dataset.lightEffect='cross';effect.value='cross';render();
@@ -253,11 +256,44 @@
     else if(state.led)startVideo();
   });
   addEventListener('pagehide',function(){cancelShow();music.pause();video.pause();cancelAnimationFrame(frame);});
-  window.psmStage={stopSound:function(){cancelShow();state.sound=false;render();}};
+  window.psmStage={stopSound:function(){cancelShow();state.sound=false;render();},finale:finale};
+
+  // Intro: the first time the stage scrolls into view the rig wakes up once:
+  // deck LED, top strobes left to right, side strobes upwards, cones, then the logo.
+  var introDone = false, introTimer = 0;
+  Array.from(stage.querySelectorAll('.stage-strobes b, .stage-strobes-side b, .stage-fixtures i')).forEach(function(el){
+    el.style.setProperty('--i', Array.prototype.indexOf.call(el.parentNode.children, el));
+  });
+  function endIntro(){ clearTimeout(introTimer); stage.classList.remove('stage-intro'); }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(entries, observer){
+      if (introDone || !entries[0].isIntersecting) return;
+      introDone = true; observer.disconnect();
+      if (reduced.matches || state.sound || state.lights || state.led) return;
+      stage.classList.add('stage-intro');
+      introTimer = setTimeout(endIntro, 3900);
+    }, {threshold:.5}).observe(stage);
+  }
+
+  // Finale: once per show, on the song's big moment, flames on the deck and confetti from the truss.
+  var confetti = stage.querySelector ? stage.querySelector('.stage-confetti') : null;
+  var finaleDone = false, showStart = 0;
+  var confettiColors = ['#5eebff','#c79cff','#ffffff','#ffd66b','#ff7db8'];
+  function finale(){
+    finaleDone = true;
+    if (!confetti || reduced.matches) return;
+    var pieces = '';
+    for (var n = 0; n < 80; n++) {
+      pieces += '<i style="--x:' + (Math.random() * 100).toFixed(1) + '%;--dx:' + Math.round(Math.random() * 120 - 60) + 'px;--r:' + Math.round(Math.random() * 900 - 450) + 'deg;--s:' + (2.6 + Math.random() * 1.8).toFixed(2) + 's;--d:' + (Math.random() * .7).toFixed(2) + 's;--c:' + confettiColors[n % confettiColors.length] + '"></i>';
+    }
+    confetti.innerHTML = pieces;
+    stage.classList.add('finale');
+    timers.push(setTimeout(function(){ stage.classList.remove('finale'); confetti.innerHTML = ''; }, 5600));
+  }
 
   // Beat sync: the lights hit on the beats precomputed by scripts/analyze-beats.py,
   // timed from music.currentTime so phones stay on the beat at any frame rate.
-  var beatMap = null, beatTimer = 0, lastBeat = -1, beatParity = false, lastEnergy = 0, showMode = 0;
+  var beatMap = null, beatTimer = 0, lastBeat = -1, beatParity = false, lastEnergy = 0, showMode = 0, jumpBeats = 0;
   var showModes = ['cross','color','sweep','pulse'];
   var strobes = Array.from(stage.querySelectorAll('.stage-strobes b'));
   var sideStrobes = Array.from(stage.querySelectorAll('.stage-strobes-side b'));
@@ -274,6 +310,8 @@
     clearTimeout(beatTimer); beatTimer = 0;
     stage.classList.remove('beat-sync');
     lit(strobes, none); lit(sideStrobes, none);
+    stage.classList.remove('crowd-hype','crowd-jump');
+    jumpBeats = 0;
   }
   function scheduleBeat(){
     clearTimeout(beatTimer); beatTimer = 0;
@@ -295,8 +333,14 @@
     stage.style.setProperty('--energy', energy);
     stage.classList.remove('hit-a','hit-b','flash-a','flash-b');
     stage.classList.add(beatParity ? 'hit-a' : 'hit-b');
+    // The crowd bobs on every beat, raises its hands when the song is up and jumps on the drop.
+    stage.classList.toggle('crowd-hype', energy > .6);
+    if (jumpBeats > 0) jumpBeats--;
+    stage.classList.toggle('crowd-jump', jumpBeats > 0);
     if (inBar === 0) {
       stage.dataset.bar = ((bar % 4) + 4) % 4;
+      if (energy > .7 && lastEnergy < .4) { jumpBeats = 8; stage.classList.add('crowd-jump'); }
+      if (showRunning && !finaleDone && bar >= 8 && (energy >= .9 || (Date.now() - showStart > 45000 && energy > .6))) finale();
       // During the show the effect changes with the song: every 8 bars or when it drops.
       if (showRunning && bar > 0 && (bar % 8 === 0 || (energy > .7 && lastEnergy < .4))) {
         showMode = (showMode + 1) % showModes.length;

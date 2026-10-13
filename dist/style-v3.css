@@ -953,6 +953,58 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 @keyframes deck-glare-b{from{opacity:calc(.12 + var(--energy)*.3)}to{opacity:.05}}
 @keyframes deck-led-a{from{filter:brightness(calc(1.4 + var(--energy))) drop-shadow(0 0 6px #19c2dc)}to{filter:none}}
 @keyframes deck-led-b{from{filter:brightness(calc(1.4 + var(--energy))) drop-shadow(0 0 6px #19c2dc)}to{filter:none}}
+/* Intro: stage-show.js adds .stage-intro once, the first time the stage scrolls into view. */
+.motion-ok .stage-intro .deck-led{transform-box:fill-box;transform-origin:center;animation:intro-led 3.8s ease-out}
+.motion-ok .stage-intro .stage-strobes b::after{animation:intro-strobe .42s calc(.55s + var(--i)*.1s) ease-out}
+.motion-ok .stage-intro .stage-strobes-side b::after{animation:intro-strobe .42s calc(1.5s + (5 - var(--i))*.1s) ease-out}
+.motion-ok .stage-intro .stage-fixtures i s{animation:intro-cone 1.3s calc(2.1s + var(--i)*.12s) ease-in-out}
+.motion-ok .stage-intro .led-brand{animation:intro-logo 1.5s 2.4s ease-out}
+.motion-ok .stage-intro .stage-led{animation:intro-wall 1.5s 2.4s ease-out}
+@keyframes intro-led{0%{transform:scaleX(0);stroke:#56d5ee;filter:drop-shadow(0 0 4px #19c2dc)}22%{transform:scaleX(1);stroke:#56d5ee;filter:drop-shadow(0 0 4px #19c2dc)}100%{transform:scaleX(1)}}
+@keyframes intro-strobe{0%{background:#f4feff;box-shadow:0 0 26px 8px #d8fbff}100%{}}
+@keyframes intro-cone{0%,100%{opacity:0}45%{opacity:.8}}
+@keyframes intro-logo{0%{opacity:.5}30%{opacity:1;box-shadow:0 0 36px #59ddecaa,0 0 0 1px #9fefff}100%{opacity:.5}}
+@keyframes intro-wall{30%{border-color:#5eebff;box-shadow:0 0 0 4px #060b13,0 0 30px #19c2dc70}}
+
+/* Haze: a drifting smoke texture (scripts/build-stage-assets.py) makes the cones volumetric. */
+.stage-fixtures i s::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--lamp-color),.6),rgba(var(--lamp-color),.22) 55%,transparent);-webkit-mask:url('assets/stage-fog.webp') 0 0/170px 110px repeat;mask:url('assets/stage-fog.webp') 0 0/170px 110px repeat}
+.motion-ok .lights-on .stage-fixtures i s::after{animation:beam-smoke 16s linear infinite;animation-delay:calc(var(--i,0)*-3s)}
+@keyframes beam-smoke{to{-webkit-mask-position:170px 110px;mask-position:170px 110px}}
+.stage-fog{top:16%;bottom:12%;height:auto;left:0;right:0}
+.stage-fog i{inset:0 -20%;height:auto;background:linear-gradient(180deg,transparent,#a6dcec55 45%,#a6dcec80);filter:none;-webkit-mask:url('assets/stage-fog.webp') 0 0/460px 280px repeat;mask:url('assets/stage-fog.webp') 0 0/460px 280px repeat}
+.stage-fog i:nth-child(2){-webkit-mask-size:300px 190px;mask-size:300px 190px}
+.lights-on .stage-fog{opacity:.3}
+
+/* Crowd: bobs on the beat, hands up when the song is up, jumps on the drop. */
+.crowd-hands{position:absolute;inset:0;background:url('assets/stage-crowd-hands.svg') 23px bottom/640px 151px repeat-x;opacity:0;transform:translateY(16px);transition:opacity .45s,transform .45s;pointer-events:none}
+.crowd-hype .crowd-hands{opacity:1;transform:none}
+.motion-ok .beat-sync.music-playing.hit-a .stage-audience{animation:crowd-bob-a var(--beat-len) ease-out}
+.motion-ok .beat-sync.music-playing.hit-b .stage-audience{animation:crowd-bob-b var(--beat-len) ease-out}
+.motion-ok .beat-sync.music-playing.crowd-jump.hit-a .stage-audience{animation:crowd-jump-a var(--beat-len) cubic-bezier(.3,.7,.4,1)}
+.motion-ok .beat-sync.music-playing.crowd-jump.hit-b .stage-audience{animation:crowd-jump-b var(--beat-len) cubic-bezier(.3,.7,.4,1)}
+.motion-ok .beat-sync.crowd-hype.hit-a .crowd-hands{animation:hands-a var(--beat-len) ease-out}
+.motion-ok .beat-sync.crowd-hype.hit-b .crowd-hands{animation:hands-b var(--beat-len) ease-out}
+@keyframes crowd-bob-a{from{transform:translateY(calc(1px + var(--energy)*3px))}to{transform:none}}
+@keyframes crowd-bob-b{from{transform:translateY(calc(1px + var(--energy)*3px))}to{transform:none}}
+@keyframes crowd-jump-a{0%{transform:translateY(4px)}40%{transform:translateY(-13px)}100%{transform:none}}
+@keyframes crowd-jump-b{0%{transform:translateY(4px)}40%{transform:translateY(-13px)}100%{transform:none}}
+@keyframes hands-a{from{transform:translateY(6px)}to{transform:none}}
+@keyframes hands-b{from{transform:translateY(6px)}to{transform:none}}
+
+/* Finale: once per show (stage-show.js), flame jets on the deck and confetti from the truss. */
+.stage-flames{position:absolute;inset:0;z-index:4;pointer-events:none}
+.stage-flames i{position:absolute;bottom:20.6%;left:29%;width:2.6%;height:1.6%;margin-left:-1.3%;border-radius:2px;background:linear-gradient(180deg,#46596a,#121a24);box-shadow:0 1px 2px #000}
+.stage-flames i:nth-child(2){left:71%}
+.stage-flames i::after{content:'';position:absolute;left:50%;bottom:60%;width:520%;height:2200%;margin-left:-260%;transform-origin:50% 100%;transform:scaleY(0);opacity:0;background:radial-gradient(ellipse 22% 30% at 50% 84%,#fffef2,#ffe58a 40%,transparent 72%),radial-gradient(ellipse 34% 62% at 50% 64%,#ffb13bf2,#ff6a1fb0 50%,transparent 74%),radial-gradient(ellipse 48% 50% at 50% 50%,#ff4d1a55,transparent 70%);filter:blur(2px)}
+.motion-ok .finale .stage-flames i::after{animation:flame-burst 1.1s ease-out 3}
+.motion-ok .finale .stage-room-glow{animation:flame-glow 3.3s ease-out}
+@keyframes flame-burst{0%{transform:scaleY(.1) scaleX(.6);opacity:0}12%{transform:scaleY(1.05);opacity:1}45%{transform:scaleY(.9) scaleX(1.1);opacity:.9}100%{transform:scaleY(1.2) scaleX(1.3);opacity:0}}
+@keyframes flame-glow{0%,100%{filter:none}10%,70%{filter:sepia(1) saturate(3) brightness(1.4) hue-rotate(-20deg)}}
+.stage-confetti{position:absolute;inset:0;z-index:7;overflow:hidden;pointer-events:none}
+.stage-confetti i{position:absolute;top:12%;left:var(--x);width:7px;height:11px;border-radius:1px;background:var(--c);opacity:0;animation:confetti-fall var(--s) cubic-bezier(.2,.6,.45,1) var(--d) both}
+.stage-confetti i:nth-child(3n){width:5px;height:5px;border-radius:50%}
+@keyframes confetti-fall{0%{transform:translate(0,-30px) rotate(0) rotateY(0);opacity:1}85%{opacity:1}100%{transform:translate(var(--dx),88cqh) rotate(var(--r)) rotateY(900deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){.stage-fixtures i s::after,.stage-audience,.crowd-hands{animation:none!important}}
 .stage-canvas{position:absolute;inset:0;container-type:size}
 @media(max-width:760px){
   .stage-preview{aspect-ratio:820/700}
