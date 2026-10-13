@@ -1245,7 +1245,7 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 
 /* Haze hangs under the roof: dense near the rig, thinning towards the audience. */
 .stage-preview .stage-fog{top:9%;bottom:14%}
-.stage-preview .stage-fog i{background:linear-gradient(180deg,#a6dcec85 0%,#a6dcec66 22%,#a6dcec33 60%,#a6dcec14 100%)}
+.stage-preview .stage-fog i{background:linear-gradient(180deg,#a6dcec38 0%,#a6dcec2a 25%,#a6dcec12 60%,transparent 100%)}
 .stage-preview .stage-fixtures i s::after{background:linear-gradient(180deg,rgba(var(--lamp-color),.85),rgba(var(--lamp-color),.35) 30%,rgba(var(--lamp-color),.1) 70%,transparent)}
 /* Line arrays in black, like the real PSM rig (assets/gear/line-array.webp): matte cabinets,
    a barely visible grille, a thin highlight on the top edge and dark rigging hardware. */
