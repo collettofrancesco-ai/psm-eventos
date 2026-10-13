@@ -240,3 +240,6 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 .stage-movers .mh-ledwash:nth-child(4n+3){--wash-phase:-3s}
 .stage-movers .mh-ledwash:nth-child(3n+1){--wash-phase:-6s}
 .stage-movers .mh-ledwash:nth-child(5n+1){--wash-phase:-8s}
+/* Give the two lighting rows separate vertical space. */
+.stage-fixtures{top:15%}
+.stage-movers{top:25.5%}
