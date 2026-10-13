@@ -208,3 +208,21 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 .motion-ok .lights-on .mh-ledwash img{animation:wash-lens-colours 10s linear var(--wash-phase) infinite}
 .motion-ok .lights-on .stage-movers .mh-ledwash::after{animation:mh-pan 6s ease-in-out var(--wash-phase) infinite alternate,wash-beam-colours 10s linear var(--wash-phase) infinite;opacity:.45}
 @media(prefers-reduced-motion:reduce){.mh-ledwash img,.mh-ledwash::after{animation:none!important}}
+/* Pan and tilt: heads pivot above their bases, beams sweep and change reach. */
+.mh-ledwash img{transform-origin:50% 85%}
+@keyframes wash-head-scan{
+  0%,100%{transform:rotate(-18deg) scaleY(.86)}
+  20%{transform:rotate(15deg) scaleY(1)}
+  40%{transform:rotate(4deg) scaleY(.72)}
+  60%{transform:rotate(-12deg) scaleY(1)}
+  80%{transform:rotate(20deg) scaleY(.82)}
+}
+@keyframes wash-beam-scan{
+  0%,100%{transform:translateX(-50%) rotate(-26deg) scaleY(.7)}
+  20%{transform:translateX(-50%) rotate(24deg) scaleY(1.35)}
+  40%{transform:translateX(-50%) rotate(6deg) scaleY(.48)}
+  60%{transform:translateX(-50%) rotate(-20deg) scaleY(1.2)}
+  80%{transform:translateX(-50%) rotate(30deg) scaleY(.82)}
+}
+.motion-ok .lights-on .mh-ledwash img{animation:wash-lens-colours 10s linear var(--wash-phase) infinite,wash-head-scan 8s ease-in-out var(--wash-phase) infinite}
+.motion-ok .lights-on .stage-movers .mh-ledwash::after{animation:wash-beam-scan 8s ease-in-out var(--wash-phase) infinite,wash-beam-colours 10s linear var(--wash-phase) infinite}
