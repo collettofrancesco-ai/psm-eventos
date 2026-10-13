@@ -203,7 +203,7 @@
     timers.forEach(clearTimeout); timers = [];
     clearInterval(showCycle); showCycle = null;
     showRunning = false; intro = false;
-    music.volume = .45;
+    music.volume = .45; music.muted = false;
     stage.classList.remove('finale','countdown','show-go');
     if (confetti) confetti.innerHTML = '';
     if (ledCount) ledCount.innerHTML = '';
@@ -218,20 +218,27 @@
   effect.addEventListener('change',function(){cancelShow();stage.dataset.lightEffect=effect.value;state.lights=true;render();});
   showButton.addEventListener('click',function(){
     if (showRunning) {cancelShow();state={sound:false,lights:false,led:false};render();return;}
-    // Video and its track start once, together, inside the tap: iOS ignores
-    // audio.volume, so a muted warm-up would be heard as repeated restarts.
+    // The track is unlocked inside the tap (iOS needs the gesture) but muted, since iOS
+    // ignores audio.volume; the clip only buffers. Both start from zero when the countdown ends.
     cancelShow();manualTrack=false;showRunning=true;finaleDone=false;showStart=Date.now();
-    state={sound:true,lights:false,led:true};render();
+    selectTrackFile(wallTracks[ledIndex]);
+    music.muted=true;
+    state={sound:true,lights:false,led:false};render();
+    video.muted=true;video.currentTime=0;
+    var warm=video.play();
+    if (warm && warm.then) warm.then(function(){ if (!state.led) { video.pause(); video.currentTime=0; } }).catch(function(){});
     countdown();
     timers.push(setTimeout(function(){
-      showMode=0;state.lights=true;stage.dataset.lightEffect='cross';effect.value='cross';render();
+      music.pause();music.currentTime=0;music.muted=false;
+      video.currentTime=0; // buffered by the warm-up, so music and video start in the same render
+      showMode=0;state.lights=true;state.led=true;stage.dataset.lightEffect='cross';effect.value='cross';render();
       // Tracks with a beat map change effect on the music (fireBeat); others on a timer.
       if (trackBeats()) return;
       var modes=['cross','color','sweep','pulse'], index=0;
       showCycle=setInterval(function(){index=(index+1)%modes.length;stage.dataset.lightEffect=modes[index];effect.value=modes[index];},8000);
     },COUNT_STEP*3));
   });
-  // Countdown on the LED wall while the intro music builds, then every light hits at once.
+  // Countdown on the blacked-out LED wall, then music, video and every light hit at once.
   var COUNT_STEP = 800;
   var ledCount = stage.querySelector ? stage.querySelector('.led-count') : null;
   function countdown(){
@@ -354,7 +361,7 @@
   function scheduleBeat(){
     clearTimeout(beatTimer); beatTimer = 0;
     var map = trackBeats();
-    if (!map || music.paused || reduced.matches || document.hidden) { stopBeats(); return; } // lights rules also need .lights-on; the crowd moves with music alone
+    if (!map || music.paused || music.muted || reduced.matches || document.hidden) { stopBeats(); return; } // lights rules also need .lights-on; the crowd moves with music alone
     stage.classList.add('beat-sync');
     stage.style.setProperty('--beat-len', (60 / map.bpm).toFixed(3) + 's');
     var now = music.currentTime, beats = map.beats;
