@@ -1,0 +1,96 @@
+/* Visual refinement: spacing, editorial photography and console hierarchy. */
+:root{--surface:#111923;--surface-2:#17212c;--text-3:#a1adb8}
+.section{padding-block:clamp(72px,7.5vw,112px)}
+.section-heading,.gallery-heading{margin-top:32px;margin-bottom:48px;gap:48px}
+h2{font-size:clamp(38px,4.1vw,64px);line-height:1.06;letter-spacing:-.7px}
+h3{line-height:1.12}
+.eyebrow,.eyebrow.on-light{color:#b4c4cd;letter-spacing:1.2px;font-weight:500}
+.eyebrow i{width:5px;height:5px;box-shadow:none}
+.small{letter-spacing:.8px}
+.light,.about,.services-section,.contact{background:#0d151e}
+.projects-section,.gallery-section{background:#0a0e14}
+.events-section{background:#0f1822}
+.section-heading h2 span,.gallery-heading h2 span{color:#d1dce3}
+.hero-inner{padding-top:64px;padding-bottom:32px}
+.hero-top{margin-bottom:30px}
+.hero-bottom{gap:28px}
+.hero-bottom p{font-size:18px;line-height:1.75}
+.hero-foot{margin-top:38px}
+.hero-shade{background:linear-gradient(90deg,#070d16e6,#070d1680 50%,#070d1610),linear-gradient(0deg,#070d16b3,transparent 55%)}
+.experience-strip{background:#0f1822}
+.experience-strip .wrap{padding-block:24px}
+.button{border-radius:8px}
+.button.ghost{border-color:#ffffff30}
+.nav-cta{background:#e8eef2}
+.nav-cta:hover{box-shadow:0 8px 24px #0003}
+.cards,.event-grid,.video-grid{gap:26px}
+.pro-card,.event-card,.video-card{border-radius:12px;box-shadow:none}
+.pro-card .ph{aspect-ratio:4/3}
+.pro-card .pb{padding:28px}
+.pro-card .tag,.event-label,.video-tag{color:#a6b8c5;letter-spacing:1px;font-weight:500}
+.pro-card .pb h3{font-size:32px;margin-block:12px}
+.pro-card:hover,.event-card:hover{border-color:#70889780}
+.video-body{padding:24px}
+.split{gap:64px}
+.split img.round{height:540px;border-radius:12px;box-shadow:none}
+/* A leading portrait with two landscape details, followed by two panoramas. */
+.home-page .gallery{grid-template-columns:repeat(12,minmax(0,1fr));gap:20px;grid-auto-rows:260px}
+.home-page .gallery-item{grid-column:span 5;aspect-ratio:auto;border-radius:10px}
+.home-page .gallery-item.wide{grid-column:span 7;grid-row:span 2}
+.home-page .gallery-item:nth-child(n+4){grid-column:span 6;grid-row:span 1}
+.gallery-item>span{bottom:22px;left:22px;right:22px}
+.gallery-item b{font-size:14px;line-height:1.5;font-weight:500}
+.gallery-item i{width:36px;height:36px;background:#0b11194d;border-color:#ffffff50;flex-shrink:0}
+.gallery-item:after{background:linear-gradient(180deg,transparent 55%,#050a12bf)}
+.cta-band{background:#12202c;border-color:#31424e;border-radius:16px;padding:48px;margin-block:32px 88px}
+.cta-band h2{max-width:650px}
+footer{background:#080c12}
+/* Console styling changes only: the stage's drawing and geometry stay independent. */
+.stage-interactive{border-color:#354552;box-shadow:0 20px 60px #0004}
+.stage-console{background:#101b26;border-left-color:#354552;scrollbar-color:#50616f #101b26}
+.stage-console-heading p{font-size:14px;color:#aebec9}
+.stage-console .mini-label{font-size:11px;letter-spacing:.7px;color:#aebec9;font-weight:500}
+.stage-switches button{border-radius:8px;background:#0c141e;border-color:#354552}
+.stage-control-icon{font-size:19px;width:30px;height:30px;display:grid;place-items:center;border-radius:6px;background:#ffffff06}
+.stage-switches button[aria-pressed="true"]{background:#17323d;border-color:#56bfd0;box-shadow:inset 0 -2px 0 #56bfd0}
+.stage-presets button,.stage-tracks button{border-radius:7px;border-color:#415361}
+.stage-presets button[aria-pressed="true"],.stage-tracks button[aria-pressed="true"]{background:#d9e7ed;color:#10212a;border-color:#d9e7ed}
+.stage-name input,.light-effect-select{border-color:#415361;border-radius:7px;background:#0b141d;color:#eef3f6}
+.stage-show-actions #stage-show{background:var(--cyan);border-radius:8px;min-height:52px;box-shadow:0 6px 18px #0003}
+.stage-show-actions .stage-fullscreen{border-color:#415361;border-radius:7px;background:transparent}
+.stage-show-actions #stage-finale{color:#c3d3de;border-color:#415361}
+.stage-status{color:#aebec9}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #75d8e8;outline-offset:4px}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .pro-card .ph img,.event-card img,.gallery-item img{transition:transform .55s ease}
+  .pro-card:hover .ph img,.event-card:hover img,.gallery-item:hover img{transform:scale(1.025)}
+  .card-link:hover i,.gallery-item:hover i{background:#e8eef2;color:#101820;border-color:#e8eef2}
+}
+@media(min-width:761px){.hero{min-height:600px}.hero-title{font-size:clamp(70px,7.2vw,110px)}}
+@media(max-width:1000px) and (min-width:761px){.home-page .gallery{grid-auto-rows:210px}.section-heading{gap:30px}.section-heading p{max-width:340px}}
+@media(max-width:760px){
+  .section{padding:64px 20px}
+  .section-heading,.gallery-heading{margin:24px 0 32px;gap:20px}
+  h2{font-size:42px}
+  .hero-inner{padding-top:40px;padding-bottom:24px}
+  .hero-top{margin-bottom:22px}
+  .hero-bottom p{font-size:16px}
+  .hero-foot{margin-top:26px}
+  .cards,.event-grid,.video-grid{gap:16px}
+  .pro-card .pb,.video-body{padding:22px}
+  .split{gap:32px}
+  .split img.round{height:360px}
+  .home-page .gallery{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:auto;gap:12px}
+  .home-page .gallery-item,.home-page .gallery-item:nth-child(n+4){grid-column:span 1;grid-row:auto;aspect-ratio:3/4}
+  .home-page .gallery-item.wide{grid-column:1/-1;grid-row:auto;aspect-ratio:4/3}
+  .gallery-item>span{left:14px;right:14px;bottom:14px;gap:8px}
+  .gallery-item b{font-size:12px}
+  .gallery-item i{width:28px;height:28px;font-size:16px}
+  .cta-band{padding:28px 24px;margin-bottom:64px}
+}
+@media(prefers-reduced-motion:reduce){.gallery-item img,.pro-card .ph img,.event-card img{transition:none;transform:none!important}}
+/* Choices share one aligned row; their labels occupy the full row above. */
+.stage-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.stage-tracks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.stage-presets>.mini-label,.stage-tracks>.mini-label{grid-column:1/-1}
+.stage-presets button,.stage-tracks button{min-width:0;padding:10px 4px;margin:0;font-size:11px;text-align:center}
