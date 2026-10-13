@@ -247,3 +247,17 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 .stage-fixtures .fixture-edge{position:absolute;top:0}
 .stage-fixtures .fixture-edge-left{left:-29%;--pan:-12deg;--delay:-2s;--timing:9s}
 .stage-fixtures .fixture-edge-right{right:-29%;--pan:12deg;--delay:-6s;--timing:9s}
+/* Moving heads: base and yoke stay put; the round LED head turns on its pivot in step with
+   its beam (same 8s timeline as wash-beam-scan), foreshortening as it aims away. */
+.mh-ledwash .wash-head{transform-origin:50% 35.3%}
+.lights-on .mh-ledwash .wash-yoke{filter:brightness(.9)}
+@keyframes wash-head-aim{
+  0%,100%{transform:translateX(5%) scale(.84,.9)}
+  20%{transform:translateX(-5%) scale(.86,.74)}
+  40%{transform:translateX(-1%) scale(.98,1)}
+  60%{transform:translateX(4%) scale(.88,.78)}
+  80%{transform:translateX(-6%) scale(.82,.88)}
+}
+.motion-ok .lights-on .mh-ledwash .wash-yoke{animation:none}
+.motion-ok .lights-on .mh-ledwash .wash-head{animation:wash-lens-colours 10s linear var(--wash-phase) infinite,wash-head-aim 8s ease-in-out var(--wash-phase) infinite}
+@media(prefers-reduced-motion:reduce){.mh-ledwash .wash-head{animation:none!important}}
