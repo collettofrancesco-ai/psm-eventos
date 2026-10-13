@@ -261,3 +261,13 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 .motion-ok .lights-on .mh-ledwash .wash-yoke{animation:none}
 .motion-ok .lights-on .mh-ledwash .wash-head{animation:wash-lens-colours 10s linear var(--wash-phase) infinite,wash-head-aim 8s ease-in-out var(--wash-phase) infinite}
 @media(prefers-reduced-motion:reduce){.mh-ledwash .wash-head{animation:none!important}}
+/* The lower light row stands on its own truss bar, tower to tower; the LED screens start just
+   below it instead of behind the fixtures. */
+.stage-preview .stage-led{top:30.6%}
+.stage-preview .stage-led-wing{top:30.6%}
+.stage-movers::after{content:'';position:absolute;z-index:-1;left:-1.4%;right:-1.4%;top:100%;height:1.9cqh;
+  background:linear-gradient(#93a7b6,#93a7b6) top/100% 1.5px no-repeat,linear-gradient(#6f8494,#6f8494) bottom/100% 1.5px no-repeat,
+  repeating-linear-gradient(60deg,transparent 0 5px,#5e7383 5px 6.4px,transparent 6.4px 10px),repeating-linear-gradient(-60deg,transparent 0 5px,#4e6170 5px 6.4px,transparent 6.4px 10px),#111a23;
+  box-shadow:0 3px 6px #0008}
+.lights-on .stage-movers::after{filter:brightness(1.25)}
+.stage-preview[data-mode="day"] .stage-movers::after{filter:brightness(1.7) saturate(.6)}
