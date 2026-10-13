@@ -188,3 +188,9 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 .motion-ok .lights-on .mh-ledwash:nth-child(6)::after{animation-delay:-4s}
 .stage-preview[data-preset="boda"] .mh-ledwash::after{background:linear-gradient(180deg,#ffdea370,#ffd89910 70%,transparent)}
 .stage-preview[data-preset="corporativo"] .mh-ledwash::after{background:linear-gradient(180deg,#c8eaff70,#bddaff10 70%,transparent)}
+/* Two matching heads at the marked outer ends; keep the inner row in place. */
+.stage-movers .wash-edge{position:absolute;top:0}
+.stage-movers .wash-edge-left{left:-38px}
+.stage-movers .wash-edge-right{right:-38px}
+.motion-ok .lights-on .wash-edge-left::after{animation-delay:-1s}
+.motion-ok .lights-on .wash-edge-right::after{animation-delay:-3s;animation-direction:alternate-reverse}
