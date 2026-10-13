@@ -480,9 +480,9 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 .motion-ok .lights-on .stage-strobes-side b::after{animation:strobe-flash 1.3s steps(1) infinite}
 .motion-ok .lights-on .stage-strobes-side b:nth-child(2)::after{animation-delay:.45s}
 .motion-ok .lights-on .stage-strobes-side b:nth-child(3)::after{animation-delay:.9s}.motion-ok .lights-on .stage-strobes-side b:nth-child(4)::after{animation-delay:.2s}.motion-ok .lights-on .stage-strobes-side b:nth-child(5)::after{animation-delay:.65s}.motion-ok .lights-on .stage-strobes-side b:nth-child(6)::after{animation-delay:1.1s}
-@media(max-width:760px){.stage-strobes-side{top:30%;bottom:38%}.stage-strobes-side b{width:22px;height:15px}}.motion-ok .lights-on .stage-strobes b:nth-child(10)::after{animation-delay:.5s}.motion-ok .lights-on .stage-strobes b:nth-child(11)::after{animation-delay:.95s}.stage-strobe-flash{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 0%,#ffffff50,transparent 60%)}.motion-ok .lights-on .stage-strobe-flash{animation:flash-soft 1.3s steps(1) infinite}@keyframes flash-soft{0%,86%{opacity:0}87%,92%{opacity:.5}93%,100%{opacity:0}}
+.motion-ok .lights-on .stage-strobes b:nth-child(10)::after{animation-delay:.5s}.motion-ok .lights-on .stage-strobes b:nth-child(11)::after{animation-delay:.95s}.stage-strobe-flash{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 0%,#ffffff50,transparent 60%)}.motion-ok .lights-on .stage-strobe-flash{animation:flash-soft 1.3s steps(1) infinite}@keyframes flash-soft{0%,86%{opacity:0}87%,92%{opacity:.5}93%,100%{opacity:0}}
 @keyframes strobe-flash{0%,86%{opacity:.12;box-shadow:none}87%,92%{opacity:1;box-shadow:0 0 26px 8px #d8fbff}93%,100%{opacity:.12;box-shadow:none}}
-@media(max-width:760px){.stage-strobes{left:16%;right:16%;top:calc(9% - 16px)}.stage-strobes b{width:22px;height:15px}}
+
 .stage-fixtures{position:absolute;top:17%;left:20%;right:20%;display:flex;justify-content:space-between;z-index:5}
 .stage-fixtures i{position:relative;width:30px;height:48px;background:linear-gradient(90deg,transparent 3px,#33455a 3px 7px,transparent 7px 23px,#33455a 23px 27px,transparent 27px),linear-gradient(180deg,transparent 0 34px,#0d141c 34px),radial-gradient(circle at 50% 41px,#1b4d5c 0 3px,transparent 4px)}
 .stage-fixtures i::before{content:'';position:absolute;left:50%;top:2px;width:24px;height:24px;transform:translateX(-50%);transform-origin:50% 92%;border-radius:7px;background:linear-gradient(135deg,#3a4e64,#0b1119 72%);border:1px solid #5a7187;box-shadow:inset 2px 0 3px #ffffff14}
@@ -495,8 +495,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 .lights-on .stage-fixtures i s{opacity:.6}
 .motion-ok .lights-on .stage-fixtures i s{animation:mh-tilt-sm 4.6s ease-in-out infinite alternate}
 .motion-ok .lights-on .stage-fixtures i:nth-child(even) s{animation-delay:-2.3s;animation-direction:alternate-reverse}
-@media(max-width:760px){.stage-fixtures i s{width:44px;height:120px}}
-@media(max-width:760px){.stage-fixtures i{width:20px;height:32px}}
+
+
 
 /* Teste mobili BEAM + WASH (aggiunte, fari esistenti invariati) */
 .stage-movers{position:absolute;top:24%;left:29%;right:29%;display:flex;justify-content:space-between;z-index:6;pointer-events:none}
@@ -513,7 +513,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offse
 .stage-preview[data-preset="boda"] .mh-beam::after{background:linear-gradient(180deg,#fff3d6e6,#ffb45e1a)}
 .stage-preview[data-mode="day"] .mh::after{opacity:.3}
 /* Mobile: the moving heads sit flush on the main LED screen. */
-@media(max-width:760px){.stage-movers{left:29%;right:29%;top:calc(25% - 19px)}.mh::after{height:150px}}
+
 @media(prefers-reduced-motion:reduce){.mh::after{animation:none!important}}
 .stage-beams{position:absolute;inset:17% 0 15%;z-index:2;opacity:0;transition:opacity .7s;pointer-events:none}
 .lights-on .stage-beams{opacity:.85}
@@ -544,7 +544,7 @@ background:radial-gradient(circle at 50% 50%,#000 0 1px,#1a2129 1.4px) 0 0/7px 7
 box-shadow:6px 10px 22px #0009,inset 0 0 0 2px #000,inset 0 1px 0 #ffffff14}
 .stage-sub::before{content:'';position:absolute;top:10%;bottom:10%;left:5px;width:16px;border-radius:3px;background:#05080c;border:1px solid #232e39;
 background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 15px,transparent 15px 24px)}
-.stage-sub::after{content:'';position:absolute;top:12%;right:8px;width:26px;height:9px;border-radius:2px;background:linear-gradient(180deg,#c7cfd6,#7d8894);box-shadow:0 0 3px #000}.sub-left{left:14%}.sub-right{right:14%}.sound-on .stage-sub{border-color:#19c2dc80}@media(max-width:760px){.stage-speaker{top:25%;bottom:33%}.stage-sub{top:60%;bottom:16%}.la-rig::before,.la-rig::after{height:14px;top:-14px}}
+.stage-sub::after{content:'';position:absolute;top:12%;right:8px;width:26px;height:9px;border-radius:2px;background:linear-gradient(180deg,#c7cfd6,#7d8894);box-shadow:0 0 3px #000}.sub-left{left:14%}.sub-right{right:14%}.sound-on .stage-sub{border-color:#19c2dc80}
 .sound-on .stage-speaker{border-color:#19c2dc80}
 .motion-ok .sound-on .stage-speaker i{animation:speaker-pulse .7s ease-in-out infinite alternate}
 @keyframes speaker-pulse{to{transform:scale(1.07);box-shadow:0 0 12px #19c2dc35}}
@@ -585,7 +585,7 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-console .button{width:100%;font-size:13px;gap:12px}
 .stage-quote{display:flex;justify-content:space-between;margin-top:20px;font-size:12px;font-weight:600;color:#c7dae5}
 @media(max-width:1080px){.stage-interactive{grid-template-columns:minmax(0,1fr) 280px}.stage-preview{min-height:480px}}
-@media(max-width:760px){.hero-lights{opacity:.3}.hero-beam{width:130px}.stage-interactive{grid-template-columns:1fr}.stage-preview{min-height:0;aspect-ratio:1.3}.stage-console{border-left:0;border-top:1px solid #ffffff15;padding:24px}.stage-switches{gap:8px}.stage-switches button{min-height:66px}.stage-status{min-height:20px}.led-brand{font-size:40px}.led-brand small{font-size:6px;letter-spacing:.6px}.stage-fixtures i{width:14px;height:12px}.stage-speaker{padding:3px}.stage-equalizer{gap:2px}.cinema-dialog{padding:16px;width:96vw}.cinema-top h2{font-size:28px}.cinema-screen video{height:60dvh}.stage-scene-label{font-size:8px;left:16px;bottom:12px}}
+@media(max-width:760px){.hero-lights{opacity:.3}.hero-beam{width:130px}.stage-interactive{grid-template-columns:1fr}.stage-preview{min-height:0;aspect-ratio:1.3}.stage-console{border-left:0;border-top:1px solid #ffffff15;padding:24px}.stage-switches{gap:8px}.stage-switches button{min-height:66px}.stage-status{min-height:20px}.cinema-dialog{padding:16px;width:96vw}.cinema-top h2{font-size:28px}.cinema-screen video{height:60dvh}.stage-scene-label{font-size:8px;left:16px;bottom:12px}}
 @media(prefers-reduced-motion:reduce){.hero-beam,.stage-preview *,.hero-title *,.cinema-dialog{animation:none!important}.hero-slides,.gallery-item img,.tilt-card:hover{transform:none!important}.hero-title *{opacity:1!important}.tilt-card:after{display:none}.hero-lights{opacity:.25}}
 
 .tilt-card{position:relative}
@@ -616,14 +616,14 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .motion-ok .led-on .stage-led-wing i{animation:led-wing-flow 3s linear infinite}
 @keyframes led-wing-flow{to{background-position:0 76px}}
 .led-fallback .stage-led video{opacity:0}
-@media(max-width:760px){.hero-photo{object-position:60% center}.hero-shade{background:linear-gradient(90deg,rgba(7,9,13,.75),rgba(7,9,13,.35)),linear-gradient(0deg,rgba(7,9,13,.6),transparent 65%)}.led-on .led-brand{font-size:20px;padding:4px}}
+@media(max-width:760px){.hero-photo{object-position:60% center}.hero-shade{background:linear-gradient(90deg,rgba(7,9,13,.75),rgba(7,9,13,.35)),linear-gradient(0deg,rgba(7,9,13,.6),transparent 65%)}}
 @media(prefers-reduced-motion:reduce){.stage-led-wing i{animation:none!important}}
 
 /* Keep the LED footage clear, with the real PSM mark. */
 .led-brand{position:relative;display:block;width:60%;aspect-ratio:3.4;align-self:center;justify-self:center;padding:0;border-radius:4px;overflow:hidden;background:#000;opacity:.5;transition:opacity .4s}
 .led-brand img{display:block;width:100%;height:100%;object-fit:cover}
 .led-on .led-brand{align-self:end;justify-self:center;width:clamp(70px,13vw,140px);padding:0;margin-bottom:8px;background:#000;opacity:1;box-shadow:0 2px 10px #0005}
-@media(max-width:760px){.led-on .led-brand{width:70px;padding:0;margin-bottom:5px}}
+
 
 /* Visible beams across the screen, with a light transparent wash. */
 .stage-beams{z-index:4}
@@ -682,7 +682,7 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-switches button[aria-pressed="true"]{background:linear-gradient(110deg,#16313c,#13232f);border-color:#3c8392}
 .stage-control-icon{background:#ffffff04;border-radius:7px;height:32px;display:grid;place-items:center;font-size:22px}
 .stage-switches button>i{width:7px;height:7px}
-@media(max-width:760px){.stage-fixtures i{width:16px;height:13px;border-width:3px}.stage-fixtures i:after{left:2px;right:2px;top:-7px}.stage-speaker{padding:3px;border-radius:4px}.stage-speaker:after{height:2px;top:5px}.stage-audience{background-size:160px 67px}.stage-audience:before{background-size:130px 55px;bottom:8px}.stage-scene-label{font-size:7px;bottom:8px;padding:3px 5px}.led-on .led-brand{width:65px;margin:0 5px 5px 0}.stage-equalizer{gap:2px}}
+@media(max-width:760px){.stage-scene-label{font-size:7px;bottom:8px;padding:3px 5px}}
 
 /* Concert show: moving heads, reflective floor and coordinated LED footage. */
 .stage-interactive{border:1px solid #3c5065;background:#080f1b;box-shadow:0 25px 90px #0006,0 0 45px #19c2dc08}
@@ -737,7 +737,7 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-fullscreen-open{overflow:hidden}
 #escenario{scroll-margin-top:76px}
 @media(max-width:1080px){.stage-interactive{grid-template-columns:minmax(0,1fr) 300px}.stage-preview{min-height:610px}}
-@media(max-width:760px){.stage-interactive{grid-template-columns:1fr}.stage-preview{min-height:0;aspect-ratio:.82}.stage-fixtures i{width:18px;height:24px;border-width:1px}.stage-speaker i{border-width:1px}.stage-fog i{filter:blur(4px)}.stage-interactive:fullscreen,.stage-interactive.stage-expanded{display:flex;flex-direction:column}.stage-interactive:fullscreen .stage-preview,.stage-expanded .stage-preview{height:auto;min-height:270px;flex:0 0 43vh;aspect-ratio:auto}.stage-interactive:fullscreen .stage-console,.stage-expanded .stage-console{justify-content:flex-start;padding:18px;flex:1;display:flex;flex-direction:column;overflow-y:auto;max-height:calc(100dvh - var(--preview-h,43vh))}.stage-interactive:fullscreen .stage-switches,.stage-expanded .stage-switches{grid-template-columns:repeat(3,1fr);gap:6px}.stage-interactive:fullscreen .stage-switches button,.stage-expanded .stage-switches button{padding:10px;min-height:48px;gap:6px}.stage-interactive:fullscreen .stage-switches small,.stage-expanded .stage-switches small{display:none}.stage-interactive:fullscreen .stage-control-icon,.stage-expanded .stage-control-icon{display:none}.stage-reflection{filter:blur(.7px)}}
+@media(max-width:760px){.stage-interactive{grid-template-columns:1fr}.stage-preview{min-height:0;aspect-ratio:.82}.stage-interactive:fullscreen,.stage-interactive.stage-expanded{display:flex;flex-direction:column}.stage-interactive:fullscreen .stage-preview,.stage-expanded .stage-preview{height:auto;min-height:270px;flex:0 0 43vh;aspect-ratio:auto}.stage-interactive:fullscreen .stage-console,.stage-expanded .stage-console{justify-content:flex-start;padding:18px;flex:1;display:flex;flex-direction:column;overflow-y:auto;max-height:calc(100dvh - var(--preview-h,43vh))}.stage-interactive:fullscreen .stage-switches,.stage-expanded .stage-switches{grid-template-columns:repeat(3,1fr);gap:6px}.stage-interactive:fullscreen .stage-switches button,.stage-expanded .stage-switches button{padding:10px;min-height:48px;gap:6px}.stage-interactive:fullscreen .stage-switches small,.stage-expanded .stage-switches small{display:none}.stage-interactive:fullscreen .stage-control-icon,.stage-expanded .stage-control-icon{display:none}}
 @media(prefers-reduced-motion:reduce){.stage-fixtures i,.stage-fog i{animation:none!important}.stage-speaker i{transform:none!important}.stage-reflection{filter:none}}
 
 /* ---------- Selettore lingua (dropdown con bandiere) ---------- */
@@ -836,7 +836,7 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .lights-on .stage-room-glow{background:radial-gradient(ellipse at 25% 18%,rgba(var(--lamp-color),.14),transparent 50%),radial-gradient(ellipse at 80% 25%,#a176d51c,transparent 55%)}
 .lights-on .speaker-left{box-shadow:4px 9px 18px #000a,inset 2px 0 3px #99e4ff33}
 .lights-on .speaker-right{box-shadow:4px 9px 18px #000a,inset -2px 0 3px #d6b5ff33}
-@media(max-width:760px){.stage-preview{--beam-reach:clamp(145px,49vw,235px)}.stage-fixtures i{width:19px;height:21px;border-radius:5px 5px 7px 7px}.stage-fixtures i::before{width:12px;height:12px;top:5px;border-width:1px}.stage-fixtures i::after{left:-3px;top:2px;width:23px;height:14px;border-width:2px}.stage-fixtures i s{top:11px;width:65px}.lights-on .mh::after{opacity:.18}}
+
 @media(prefers-reduced-motion:reduce){.stage-fixtures i,.stage-fixtures i::before,.stage-fixtures i::after,.stage-fixtures i s,.stage-floor-spots,.stage-floor-spots i{animation:none!important}}
 .motion-ok .lights-on[data-light-effect="pulse"] .stage-room-glow,.motion-ok .lights-on[data-light-effect="pulse"] .stage-movers{animation:optical-blackout 4.8s ease-in-out infinite}
 .motion-ok .lights-on[data-light-effect="color"] .stage-movers{animation:optical-color 12s linear infinite}
@@ -852,16 +852,10 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-audience::before{left:-20px;right:-20px;bottom:16px;height:142px;background:url('assets/stage-audience-back.svg') -44px bottom/570px 122px repeat-x;opacity:.66;z-index:-1}
 .stage-audience::after{content:'';position:absolute;inset:65% 0 0;background:linear-gradient(transparent,#03070da8);pointer-events:none}
 .lights-on .stage-audience{filter:drop-shadow(0 -1px 1px #9dd5e22e)}
-@media(max-width:760px){.stage-audience{background-size:360px 85px;background-position:5px bottom}.stage-audience::before{height:83px;bottom:10px;background-size:330px 75px}.lights-on .stage-audience{filter:none}}
+
 
 /* Reserve room for the rotating heads above the mobile LED and its strobes. */
-@media(max-width:760px){
-  .stage-preview{--mobile-led-top:max(31%,calc(17% + 60px))}
-  .stage-led{top:var(--mobile-led-top)}
-  .stage-movers{top:calc(var(--mobile-led-top) - 19px)}
-  .stage-speaker{top:var(--mobile-led-top)}
-  .stage-led-wing{top:calc(var(--mobile-led-top) + 2%)}
-}
+
 /* Ground-support truss drawn by scripts/build-truss.py: rear plane dimmer, front plane on the layout grid. */
 .stage-truss path{fill:none;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
 .stage-truss .truss-chord{stroke:url(#truss-metal);stroke-width:2.6}
@@ -877,14 +871,10 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-truss .truss-motor{fill:#0c131b}
 .stage-truss .truss-motor.rear{opacity:.5}
 .stage-truss .truss-plate,.stage-truss .truss-sleeve{fill:#2a3a49}
-@media(max-width:760px){
-  .stage-truss .truss-chord{stroke-width:1.8}
-  .stage-truss .truss-web{stroke-width:.7}
-  .stage-truss .truss-side .truss-chord{stroke-width:1.4}
-}
+
 /* Line arrays hang on chains from the motors under the front truss (bottom at 20.2% of the stage). */
-.stage-preview{container-type:size;--spk-top:27cqh}
-@media(max-width:760px){.stage-preview{--spk-top:max(31cqh,calc(17cqh + 60px))}}
+.stage-preview{--spk-top:27cqh}
+
 .la-rig{width:76%}
 .la-rig::before,.la-rig::after{top:auto;bottom:100%;height:max(0px,calc(var(--spk-top) + 9px - 20.2cqh))}
 /* Line array: separate cabinets on a bumper, the lower ones splaying towards the audience (J-curve). */
@@ -895,17 +885,7 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-speaker i:nth-of-type(6){rotate:x 40deg;scale:1.07 1;border-bottom:4px solid #0b1118}
 /* Phone: the array is half as wide as on desktop, so its fixed-pixel details shrink with it
    to keep the desktop proportions; heads move in so the chains read as rigging, not light cables. */
-@media(max-width:760px){
-  .stage-speaker{bottom:42%;padding:3px 3px 4px;gap:2px}
-  .la-rig{height:6px;width:calc(6.1cqw + 5.4px)}
-  .la-rig::before,.la-rig::after{width:3px;height:max(0px,calc(var(--spk-top) + 3px - 20.2cqh));background:repeating-linear-gradient(180deg,#8d9cab 0 2px,#27313d 2px 4px)}
-  .stage-speaker i{border-left-width:2px;border-right-width:2px}
-  .stage-speaker i::before,.stage-speaker i::after{width:3px;height:3px}
-  .stage-speaker i:nth-of-type(4){rotate:x 12deg}
-  .stage-speaker i:nth-of-type(5){rotate:x 20deg}
-  .stage-speaker i:nth-of-type(6){rotate:x 28deg}
-  .stage-fixtures{left:26%;right:26%}
-}
+
 /* Beat sync: stage-show.js toggles hit-a/hit-b on each beat of assets/beats.json and data-bar on each bar.
    Alternating a/b names restarts the animation without forcing a reflow. */
 .stage-preview{--beat-len:.5s;--energy:.6}
@@ -938,4 +918,11 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
   .stage-interactive:fullscreen,.stage-interactive.stage-expanded{display:flex;flex-direction:row;align-items:stretch;height:100dvh;padding:0;gap:0;overflow:hidden}
   .stage-interactive:fullscreen .stage-preview,.stage-expanded .stage-preview{flex:1 1 auto;height:100%;min-height:0;aspect-ratio:auto;border-radius:0}
   .stage-interactive:fullscreen .stage-console,.stage-expanded .stage-console{flex:0 0 280px;height:100%;max-height:none;overflow-y:auto;padding:14px 14px calc(14px + env(safe-area-inset-bottom));padding-right:calc(14px + env(safe-area-inset-right));border:0;border-left:1px solid #33404d;border-radius:0;justify-content:flex-start}
+}
+/* Phone: the stage is the desktop drawing (820x700) scaled to fit, so strobes, arrays and
+   truss match the PC exactly. stage-show.js sets --stage-scale/-x/-y from the preview size. */
+.stage-canvas{position:absolute;inset:0;container-type:size}
+@media(max-width:760px){
+  .stage-preview{aspect-ratio:820/700}
+  .stage-canvas{inset:auto;left:0;top:0;width:820px;height:700px;transform-origin:0 0;transform:translate(var(--stage-x,0px),var(--stage-y,0px)) scale(var(--stage-scale,.47))}
 }

@@ -3,9 +3,17 @@
   'use strict';
   var stage = document.querySelector('.stage-preview');
   if (!stage) return;
-  // Let the light cones reach the deck at every viewport and fullscreen size.
+  // On phones the canvas is the desktop stage (820x700) scaled to fit the preview,
+  // so it looks identical to the PC; the light cones reach the deck at every size.
+  var canvas = (stage.querySelector && stage.querySelector('.stage-canvas')) || stage;
   function sizeLightCones(){
-    if (stage.clientHeight) stage.style.setProperty('--beam-reach', Math.round(stage.clientHeight * .64) + 'px');
+    var width = stage.clientWidth, height = stage.clientHeight;
+    if (!height) return;
+    var scale = Math.min(width / 820, height / 700);
+    stage.style.setProperty('--stage-scale', scale.toFixed(4));
+    stage.style.setProperty('--stage-x', ((width - 820 * scale) / 2).toFixed(1) + 'px');
+    stage.style.setProperty('--stage-y', ((height - 700 * scale) / 2).toFixed(1) + 'px');
+    stage.style.setProperty('--beam-reach', Math.round(canvas.clientHeight * .64) + 'px');
   }
   sizeLightCones();
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(sizeLightCones).observe(stage);
