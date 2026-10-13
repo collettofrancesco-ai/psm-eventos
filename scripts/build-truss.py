@@ -210,6 +210,9 @@ def forward(point, scale):
     return back(point, scale)
 
 
+M_Y, M_X = 72, 61  # viewBox units per metre at the deck front (vertical, horizontal); deck about 1 m high
+
+
 def deck():
     """Stage deck: perspective top with planks, pleated skirt, LED nosing and stairs."""
     fl, fr = (DECK_LEFT, DECK_TOP), (DECK_RIGHT, DECK_TOP)
@@ -219,8 +222,13 @@ def deck():
     planks = ''.join(line(lerp(fl, fr, n / 32), lerp(rl, rr, n / 32)) for n in range(1, 32))
     panels = ''.join(line(lerp(fl, rl, t), lerp(fr, rr, t)) for t in (0.34, 0.66))
     skirt = poly(fl, fr, (DECK_RIGHT, FLOOR), (DECK_LEFT, FLOOR))
-    nosing = f'<rect class="deck-nosing" x="{DECK_LEFT - 2}" y="{DECK_TOP - 2}" width="{DECK_RIGHT - DECK_LEFT + 4}" height="7" rx="1.5"/>'
-    led = line((DECK_LEFT + 4, DECK_TOP + 9), (DECK_RIGHT - 4, DECK_TOP + 9))
+    # LED bar on the front edge, built from 1 m modules with a small gap between them.
+    modules = round((DECK_RIGHT - DECK_LEFT) / M_X)
+    pitch, gap = (DECK_RIGHT - DECK_LEFT + 4) / modules, 3
+    nosing = ''.join(f'<rect class="deck-nosing" x="{f(DECK_LEFT - 2 + n * pitch + gap / 2)}" y="{DECK_TOP - 2}" width="{f(pitch - gap)}" height="7" rx="1.2"/>'
+                     for n in range(modules))
+    led = ''.join(line((DECK_LEFT - 2 + n * pitch + gap / 2 + 2, DECK_TOP + 9), (DECK_LEFT - 2 + (n + 1) * pitch - gap / 2 - 2, DECK_TOP + 9))
+                  for n in range(modules))
     # Stairs: each step sits a little closer to the audience than the one above.
     x0, x1 = STAIRS_X
     rise = (FLOOR - DECK_TOP) / STEPS
@@ -259,7 +267,6 @@ def deck():
 
 
 DECK_REAR = VANISH[1] + REAR * (DECK_TOP - VANISH[1])
-M_Y, M_X = 72, 61  # viewBox units per metre at the deck front (vertical, horizontal); deck about 1 m high
 
 
 def on_deck(x, t):
