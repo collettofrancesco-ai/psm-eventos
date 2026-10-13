@@ -1,34 +1,17 @@
 #!/usr/bin/env python3
-"""Draw the stage's fog texture and its crowd.
+"""Draw the stage's crowd and the daytime tree line.
 
 Run from the repo root:
     python3 scripts/build-stage-assets.py
-Writes dist/assets/stage-fog.webp (a tileable smoke mask) and the crowd silhouettes
-(three rows, rim-lit, split into groups that move on their own) into dist/index.html.
+Writes dist/assets/stage-treeline.svg and the crowd silhouettes (three rows, rim-lit, split
+into groups that move on their own, plus the FOH tent) into dist/index.html.
 """
 from pathlib import Path
 
 import numpy as np
-from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / 'dist' / 'assets'
-
-
-def fog(size=256, seed=7):
-    """Periodic smoke: white noise low-passed in the frequency domain, so it tiles."""
-    rng = np.random.default_rng(seed)
-    fx = np.fft.fftfreq(size)[:, None]
-    fy = np.fft.fftfreq(size)[None, :]
-    radius = np.sqrt(fx ** 2 + (fy * 2.2) ** 2)  # wisps a little wider than tall
-    spectrum = np.fft.fft2(rng.standard_normal((size, size))) * np.exp(-(radius * 14) ** 2) / (radius + 1 / size) ** 1.2
-    smoke = np.real(np.fft.ifft2(spectrum))
-    smoke = (smoke - smoke.min()) / (smoke.max() - smoke.min())
-    alpha = np.clip((smoke - .25) / .6, 0, 1) ** 1.4
-    rgba = np.zeros((size, size, 4), np.uint8)
-    rgba[..., :3] = 255
-    rgba[..., 3] = (alpha * 255).astype(np.uint8)
-    Image.fromarray(rgba, 'RGBA').save(ASSETS / 'stage-fog.webp', quality=82, method=6)
 
 
 W, H = 820, 161  # .stage-audience box on the 820x700 stage canvas
@@ -281,7 +264,6 @@ def write_crowd():
 
 
 if __name__ == '__main__':
-    fog()
     treeline()
     write_crowd()
-    print('Wrote dist/assets/stage-fog.webp and the crowd into dist/index.html')
+    print('Wrote dist/assets/stage-treeline.svg and the crowd into dist/index.html')
