@@ -341,7 +341,10 @@
     var title = nameInput ? eventName() : '';
     var sceneLabel = stage.querySelector('.stage-scene-label');
     Array.from(stage.querySelectorAll('.finale-title:not(.finale-wing) small')).forEach(function(el){ el.textContent = (sceneLabel ? sceneLabel.textContent.trim() : 'Tu evento, en escena') + ' · PSM'; });
-    Array.from(stage.querySelectorAll('.finale-title b')).forEach(function(el){ el.textContent = title || 'PSM'; });
+    Array.from(stage.querySelectorAll('.finale-title')).forEach(function(el){
+      el.classList.toggle('has-finale-name', !!title);
+      el.querySelector('b').textContent = title;
+    });
     stage.classList.add('finale');
     timers.push(setTimeout(function(){ stage.classList.remove('finale'); if (confetti) confetti.innerHTML = ''; }, 5600));
     if (!confetti || reduced.matches) return;

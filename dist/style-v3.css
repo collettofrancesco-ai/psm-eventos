@@ -1162,3 +1162,9 @@ textarea.message-preview:focus-visible{outline:3px solid var(--cyan);outline-off
 .stage-show-actions #stage-finale{grid-column:1/-1;justify-content:center;border-color:#19c2dc66;color:#8deafa}
 .finale.lights-on .stage-fixtures i s{opacity:.85!important}
 .finale.lights-on .stage-fixtures i::before{opacity:1!important;filter:brightness(1.2)}
+/* The finale uses the real PSM logo, with the event name when provided. */
+.finale-logo{display:block;width:90%;max-width:520px;height:auto;object-fit:contain;border-radius:5px;box-shadow:0 0 22px #19c2dc20}
+.finale-title:not(.has-finale-name) b{display:none}
+.finale-title.has-finale-name .finale-logo{width:55%;max-width:260px}
+.finale-wing .finale-logo{width:100%;border-radius:2px}
+.finale-wing.has-finale-name .finale-logo{width:95%}
