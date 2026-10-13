@@ -233,9 +233,19 @@ def deck():
         treads.append(poly(a, b, c, d))
         bottom = forward((x0, y + rise), near)[1]
         risers.append(poly(d, c, (c[0], bottom), (d[0], bottom)))
+    # Stair stringers (side panels following the step noses) and a handrail on each side.
+    stringers, rails = [], []
+    for x in (x0, x1):
+        pts = [forward((x, DECK_TOP), 1)] + [forward((x, DECK_TOP + rise * (k + 1)), 1 + 0.035 * (k + 1)) for k in range(STEPS)]
+        foot = (pts[-1][0], FLOOR + 2 + 0.035 * STEPS * (FLOOR - VANISH[1]))
+        side = -1 if x == x0 else 1
+        stringers.append(poly(*[(px + side * 3, py) for px, py in pts], (foot[0] + side * 3, foot[1]), (foot[0] - side * 2, foot[1]),
+                              *[(px - side * 2, py) for px, py in reversed(pts)]))
+        top, low = (pts[0][0], pts[0][1] - 30), (pts[-1][0], pts[-1][1] - 30)
+        rails.append(line(top, low) + line((top[0], top[1]), (top[0], pts[0][1])) + line(low, (low[0], foot[1])))
     shine = poly(fl, fr, rr, rl)
     return ('<svg class="stage-deck-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">'
-            '<defs><linearGradient id="deck-top" x1="0" y1="1" x2="0" y2="0"><stop stop-color="#2c3b49"/><stop offset="1" stop-color="#121b26"/></linearGradient>'
+            '<defs><linearGradient id="deck-top" x1="0" y1="1" x2="0" y2="0"><stop stop-color="#15191e"/><stop offset="1" stop-color="#080a0d"/></linearGradient>'
             '<linearGradient id="deck-skirt" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0d141d"/><stop offset="1" stop-color="#05080d"/></linearGradient>'
             '<pattern id="deck-pleats" width="11" height="1000" patternUnits="userSpaceOnUse"><rect width="11" height="1000" fill="url(#deck-skirt)"/>'
             '<rect x="7" width="4" height="1000" fill="#000" opacity=".45"/><rect x="2" width="2" height="1000" fill="#4a6175" opacity=".18"/></pattern>'
@@ -244,6 +254,7 @@ def deck():
             f'<path class="deck-glare" d="{shine}"/>'
             f'<path class="deck-skirt" d="{skirt}"/>{nosing}<path class="deck-led" d="{led}"/>'
             f'<g class="deck-stairs"><path class="deck-riser" d="{"".join(risers)}"/><path class="deck-tread" d="{"".join(treads)}"/>'
+            f'<path class="deck-stringer" d="{"".join(stringers)}"/><path class="deck-rail" d="{"".join(rails)}"/>'
             f'</g></svg>')
 
 

@@ -1248,6 +1248,23 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-preview .stage-equalizer{top:78.4%}
 /* No haze: beams are clean light cones. */
 .stage-fog{display:none}
+/* Drawing pass: black deck with faint panel joints, stairs with stringers and handrails,
+   real black subwoofers, and quieter crowd arms (no neon rim). */
+.deck-planks{stroke:#fff;stroke-opacity:.035}
+.deck-panels{stroke:#fff;stroke-opacity:.07}
+.lights-on .deck-top{filter:brightness(1.35)}
+.deck-tread{fill:#1a1f25}.deck-riser{fill:#07090c}
+.lights-on .deck-tread{fill:#2a323b}
+.deck-stringer{fill:#2b333c}
+.deck-rail{fill:none;stroke:#6f7f8c;stroke-width:2.2;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.stage-preview[data-mode="day"] .deck-tread{fill:#3b444d}
+.stage-preview .stage-sub{border:1px solid #1b2026;border-radius:3px;background:radial-gradient(circle at 50% 50%,#1d2228 0 .8px,transparent 1px) 0 0/4px 4px,linear-gradient(180deg,#121519,#07090b);box-shadow:6px 10px 22px #000a,inset 0 1px 0 #ffffff14}
+.stage-preview .stage-sub::before{inset:7% 9%;width:auto;border:0;border-radius:0;background:radial-gradient(circle closest-side at 50% 25%,#ffffff0d 0 60%,#00000080 64%,transparent 70%),radial-gradient(circle closest-side at 50% 75%,#ffffff0d 0 60%,#00000080 64%,transparent 70%);background-size:100% 100%}
+.stage-preview .stage-sub::after{top:auto;bottom:5%;right:50%;width:22px;height:5px;margin-right:-11px;border-radius:1px;background:#2a3138;box-shadow:none}
+.stage-preview.sound-on .stage-sub{border-color:#1b2026}
+.motion-ok .beat-sync.music-playing.hit-a .stage-sub::before,.motion-ok .beat-sync.music-playing.hit-b .stage-sub::before{transform:scale(1.03)}
+.stage-preview .stage-sub::before{transition:transform .08s}
+.crowd-layer .arms{stroke-opacity:.3}
 .stage-canvas{position:absolute;inset:0;container-type:size}
 @media(max-width:760px){
   .stage-preview{aspect-ratio:820/700}

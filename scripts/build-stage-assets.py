@@ -147,15 +147,16 @@ def hand(rng, kind, wx, wy, angle, s):
 
 
 def raised_arms(rng, x, hy, s, shoulders, head_shift):
-    choice = rng.choice(['V', 'V', 'L', 'R', 'L', 'R'])
+    choice = rng.choice(['V', 'L', 'R', 'L', 'R', 'R'])
+    reach = rng.choice([1, 1, .75, .5])  # fully up, half up, or a hand at head height
     sides = (-1, 1) if choice == 'V' else ((-1,) if choice == 'L' else (1,))
     out = ''
     for side in sides:
         sw = shoulders[side > 0]
         sx, sy = x + side * s * (4.5 + 13.5 * sw), hy + 23 * s
         spread = rng.uniform(.2, 1) if choice == 'V' else rng.uniform(-.2, .6)
-        ex, ey = sx + side * s * (6 + 7 * spread), hy + s * rng.uniform(-9, -1)
-        wx, wy = ex + side * s * rng.uniform(-5, 6 * spread + 2), hy - s * rng.uniform(32, 42)
+        ex, ey = sx + side * s * (6 + 7 * spread + (1 - reach) * 8), hy + s * (rng.uniform(-9, -1) + (1 - reach) * 14)
+        wx, wy = ex + side * s * rng.uniform(-5, 6 * spread + 2), hy - s * rng.uniform(32, 42) * reach + s * (1 - reach) * 6
         angle = np.degrees(np.arctan2(wx - ex, ey - wy))
         out += f'<path d="{limb([(sx, sy), (ex, ey), (wx, wy)], [9.6 * s, 7.6 * s, 5.8 * s])}"/>'
         out += hand(rng, rng.choice(['fist', 'fist', 'open', 'open', 'peace', 'horns', 'phone']), wx, wy, angle, s)
@@ -170,15 +171,15 @@ def person(rng, x, hy, s, bottom, arm_chance):
     body = f'<path d="{bust(x, hy, hs, shoulders, head_shift, bottom)}"/>' + hair(rng, x, hy, hs, head_shift)
     arms = raised_arms(rng, x, hy, hs, shoulders, head_shift) if rng.random() < arm_chance else ''
     always = ''
-    if not arms and rng.random() < arm_chance * .4:
+    if not arms and rng.random() < arm_chance * .3:
         always = raised_arms(rng, x, hy, hs, shoulders, head_shift)
     return body, arms, always
 
 
 ROWS = [  # name, scale, head y range, people, layers (groups that move with their own phase), arm chance
-    ('back', .5, (52, 60), 40, 1, .35),
-    ('mid', .72, (65, 76), 26, 2, .6),
-    ('front', 1.0, (81, 99), 16, 3, .75),
+    ('back', .5, (52, 60), 40, 1, .12),
+    ('mid', .72, (65, 76), 26, 2, .3),
+    ('front', 1.0, (81, 99), 16, 3, .45),
 ]
 
 
