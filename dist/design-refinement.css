@@ -243,3 +243,7 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 /* Give the two lighting rows separate vertical space. */
 .stage-fixtures{top:15%}
 .stage-movers{top:25.5%}
+/* Matching beam fixtures at both ends of the upper row. */
+.stage-fixtures .fixture-edge{position:absolute;top:0}
+.stage-fixtures .fixture-edge-left{left:-29%;--pan:-12deg;--delay:-2s;--timing:9s}
+.stage-fixtures .fixture-edge-right{right:-29%;--pan:12deg;--delay:-6s;--timing:9s}
