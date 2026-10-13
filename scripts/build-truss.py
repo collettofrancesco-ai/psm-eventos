@@ -200,9 +200,9 @@ def build():
 
 
 DECK_LEFT, DECK_RIGHT = 118, 882   # front edge, between the towers
-DECK_TOP = 790                     # deck height above FLOOR seen at the front
+DECK_TOP = 752                     # deck top at the front edge: a concert-height deck (~1.5 m)
 STAIRS_X = (395, 475)              # stair unit in front of the skirt, between the subs
-STEPS = 4
+STEPS = 5
 
 
 def forward(point, scale):

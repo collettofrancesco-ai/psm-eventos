@@ -1253,6 +1253,13 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-preview .stage-speaker i::before,.stage-preview .stage-speaker i::after{width:4px;height:4px;background:radial-gradient(circle at 35% 30%,#8d98a2,#3c444c 70%)}
 .stage-preview.lights-on .stage-speaker i{box-shadow:inset 0 1px 0 #9feeff3a,0 3px 5px #000a}
 .stage-preview .stage-speaker i:nth-of-type(n+4){border-bottom-color:#030405}
+/* Raised deck (DECK_TOP 752 in scripts/build-truss.py: front edge 75.2%, rear edge 69.2%):
+   everything standing on it or tied to its edges follows. */
+.stage-preview .stage-led{bottom:30.8%}
+.stage-preview .stage-floor-spots,.stage-preview .stage-gobos{top:69.2%;height:6%}
+.stage-preview .stage-reflection{top:69.4%;height:5.6%}
+.stage-preview .stage-flames i{bottom:24.6%}
+.stage-preview .stage-equalizer{top:78.4%}
 .stage-canvas{position:absolute;inset:0;container-type:size}
 @media(max-width:760px){
   .stage-preview{aspect-ratio:820/700}

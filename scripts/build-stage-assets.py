@@ -193,17 +193,17 @@ def person(rng, x, hy, s, bottom, arm_chance):
 
 
 ROWS = [  # name, scale, head y range, people, layers (groups that move with their own phase), arm chance
-    ('back', .5, (44, 54), 40, 1, .35),
-    ('mid', .72, (58, 70), 26, 2, .6),
-    ('front', 1.0, (74, 94), 16, 3, .75),
+    ('back', .5, (52, 60), 40, 1, .35),
+    ('mid', .72, (65, 76), 26, 2, .6),
+    ('front', 1.0, (81, 99), 16, 3, .75),
 ]
 
 
 def foh():
     """Front-of-house tent in the middle of the crowd, between the back and mid rows: canopy,
     poles, mixing desk with lit screens and two engineers. Hovering it shows the consoles."""
-    cx, roof, eave, w = 560, 20, 33, 118
-    desk = 60
+    cx, roof, eave, w = 560, 28, 41, 118
+    desk = 67
     return (f'<svg class="crowd-layer foh-layer" viewBox="0 0 {W} {H}" preserveAspectRatio="none" aria-hidden="true">'
             '<g class="foh" data-gear="mixer">'
             f'<rect class="foh-hit" x="{cx - w / 2}" y="{roof}" width="{w}" height="{H - roof}"/>'
