@@ -1224,6 +1224,29 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-preview[data-mode="day"] .foh .foh-label{fill:#0b5d73}
 .stage-preview[data-mode="day"] .stage-props{--rim:#fff8e6;--rim-o:.5}
 @media(prefers-reduced-motion:reduce){.stage-canvas,.crowd-spots,.stage-props .bop,.stage-props .sway{animation:none!important}}
+/* Moving heads: clamp, safety cable, base and yoke are fixed in the truss SVG; only the head
+   tilts, on its own pivot, and the beam follows it. */
+.truss-hardware .mh-clamp{fill:#5b6c7a}
+.truss-hardware .mh-base{fill:#141d27;stroke:#4f6170;stroke-width:1;vector-effect:non-scaling-stroke}
+.truss-hardware .mh-yoke{fill:#1a2530;stroke:#56697a;stroke-width:1;vector-effect:non-scaling-stroke}
+.truss-hardware .mh-pivot{fill:#7c8e9d}
+.stage-preview .stage-fixtures i{transform-origin:50% 50%;box-shadow:inset 2px 1px 2px #ffffff18,2px 5px 7px #000b}
+.stage-preview .stage-fixtures i::after{display:none}
+
+/* Music LED strip on the deck front (replaces the floating equalizer bars): 24 pixels lit by the
+   live spectrum, or by a gentle chase when the browser gives no analyser. */
+.stage-preview .stage-equalizer{left:12.6%;right:12.6%;top:81.4%;bottom:auto;height:1.2%;gap:3px;align-items:stretch;z-index:3;-webkit-mask-image:linear-gradient(90deg,#000 34%,transparent 34% 48.6%,#000 48.6%);mask-image:linear-gradient(90deg,#000 34%,transparent 34% 48.6%,#000 48.6%)}
+.stage-preview .stage-equalizer i{min-height:0;height:100%!important;transform:none!important;border-radius:1px;background:#5eebff;box-shadow:0 0 5px #19c2dc;opacity:.2}
+.stage-preview[data-preset="boda"] .stage-equalizer i{background:#ffd08a;box-shadow:0 0 5px #ff9e3d}
+.stage-preview[data-preset="corporativo"] .stage-equalizer i{background:#e3edff;box-shadow:0 0 5px #9fc4ff}
+.motion-ok .sound-on .stage-equalizer i{animation:led-chase 1.2s ease-in-out calc(var(--bar)*-.05s) infinite alternate!important}
+.motion-ok .audio-reactive .stage-equalizer i{animation:none!important;opacity:calc(.15 + var(--level-live,.04)*.85)}
+@keyframes led-chase{from{opacity:.15}to{opacity:.9}}
+
+/* Haze hangs under the roof: dense near the rig, thinning towards the audience. */
+.stage-preview .stage-fog{top:9%;bottom:14%}
+.stage-preview .stage-fog i{background:linear-gradient(180deg,#a6dcec85 0%,#a6dcec66 22%,#a6dcec33 60%,#a6dcec14 100%)}
+.stage-preview .stage-fixtures i s::after{background:linear-gradient(180deg,rgba(var(--lamp-color),.85),rgba(var(--lamp-color),.35) 30%,rgba(var(--lamp-color),.1) 70%,transparent)}
 .stage-canvas{position:absolute;inset:0;container-type:size}
 @media(max-width:760px){
   .stage-preview{aspect-ratio:820/700}

@@ -164,6 +164,18 @@ def build():
         rear_paths.append(chain)
         details.append(body.replace('truss-motor', 'truss-motor rear'))
 
+    # Moving-head rigging that stays still while the head (.stage-fixtures i, CSS) tilts on its
+    # pivot: half-coupler clamp on the bottom chord, safety cable, base and U yoke. The x positions
+    # are the centres of the five CSS heads (26%..74%, 30px wide, space-between on 820px).
+    for x in (278.3, 389.1, 500, 610.9, 721.7):
+        details.append(f'<rect class="mh-clamp" x="{f(x - 6)}" y="{TRUSS_BOTTOM - 4}" width="12" height="8" rx="1.5"/>')
+        front_paths.append(f'M{f(x + 9)} {TRUSS_BOTTOM - 2}C{f(x + 14)} {TRUSS_BOTTOM + 3} {f(x + 13)} {TRUSS_BOTTOM + 8} {f(x + 8)} {TRUSS_BOTTOM + 9}')
+        details.append(f'<rect class="mh-base" x="{f(x - 17)}" y="{TRUSS_BOTTOM + 3}" width="34" height="8" rx="2"/>')
+        details.append(f'<path class="mh-yoke" d="M{f(x - 22)} {TRUSS_BOTTOM + 9}H{f(x + 22)}V{TRUSS_BOTTOM + 21}'
+                       f'Q{f(x + 22)} {TRUSS_BOTTOM + 24} {f(x + 19)} {TRUSS_BOTTOM + 24}V{TRUSS_BOTTOM + 13}H{f(x - 19)}V{TRUSS_BOTTOM + 24}'
+                       f'Q{f(x - 22)} {TRUSS_BOTTOM + 24} {f(x - 22)} {TRUSS_BOTTOM + 21}Z"/>')
+        details.append(f'<circle class="mh-pivot" cx="{f(x - 20.5)}" cy="{TRUSS_BOTTOM + 16}" r="2.4"/><circle class="mh-pivot" cx="{f(x + 20.5)}" cy="{TRUSS_BOTTOM + 16}" r="2.4"/>')
+
     # Line-array motors under the front truss; the chains to the bumpers are CSS (.la-rig).
     for x in (183, 217, 782, 818):  # measured .la-rig chain positions
         details.append(f'<rect class="truss-motor" x="{x - 8}" y="{TRUSS_BOTTOM + 6}" width="16" height="20" rx="3"/>')
