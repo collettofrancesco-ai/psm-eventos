@@ -1195,7 +1195,7 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .stage-bloom{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0;transition:opacity .6s;mix-blend-mode:screen;
   background:radial-gradient(circle 46px at 27.7% 19.3%,rgba(var(--lamp-color),.5),transparent),radial-gradient(circle 46px at 38.9% 19.3%,#d3b3ff80,transparent),
   radial-gradient(circle 46px at 50% 19.3%,rgba(var(--lamp-color),.5),transparent),radial-gradient(circle 46px at 61.1% 19.3%,#d3b3ff80,transparent),
-  radial-gradient(circle 46px at 72.3% 19.3%,rgba(var(--lamp-color),.5),transparent),radial-gradient(ellipse 60% 10% at 50% 7.5%,#dff8ff30,transparent)}
+  radial-gradient(circle 46px at 72.3% 19.3%,rgba(var(--lamp-color),.5),transparent)}
 .lights-on .stage-bloom{opacity:calc(.85 + var(--flash,0) * .4)}
 .stage-preview[data-mode="day"] .stage-bloom{opacity:.15}
 .motion-ok .beat-sync.lights-on.hit-a .stage-bloom{animation:light-touch-a var(--beat-len) ease-out}
@@ -1245,8 +1245,8 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 
 /* Haze hangs under the roof: dense near the rig, thinning towards the audience. */
 .stage-preview .stage-fog{top:9%;bottom:14%}
-.stage-preview .stage-fog i{background:linear-gradient(180deg,#a6dcec38 0%,#a6dcec2a 25%,#a6dcec12 60%,transparent 100%)}
-.stage-preview .stage-fixtures i s::after{background:linear-gradient(180deg,rgba(var(--lamp-color),.85),rgba(var(--lamp-color),.35) 30%,rgba(var(--lamp-color),.1) 70%,transparent)}
+.stage-preview .stage-fog i{background:linear-gradient(180deg,#a6dcec1c 0%,#a6dcec12 30%,transparent 70%)}
+.stage-preview .stage-fixtures i s::after{background:linear-gradient(180deg,rgba(var(--lamp-color),.4),rgba(var(--lamp-color),.14) 30%,transparent 65%)}
 /* Line arrays in black, like the real PSM rig (assets/gear/line-array.webp): matte cabinets,
    a barely visible grille, a thin highlight on the top edge and dark rigging hardware. */
 .stage-preview .stage-speaker i{background:radial-gradient(circle at 50% 50%,#20272f 0 .7px,transparent .9px) 0 0/3px 3px,linear-gradient(180deg,#1b2026,#0b0e12 55%,#121619);border:1px solid #262d35;border-left:3px solid #040608;border-right:3px solid #040608;box-shadow:inset 0 1px 0 #ffffff22,0 3px 5px #000a}
