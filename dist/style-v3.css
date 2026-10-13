@@ -1355,3 +1355,85 @@ textarea.message-preview:focus-visible{outline:3px solid var(--cyan);outline-off
 .finale-title.has-finale-name .finale-logo{width:55%;max-width:260px}
 .finale-wing .finale-logo{width:100%;border-radius:2px}
 .finale-wing.has-finale-name .finale-logo{width:95%}
+
+/* ==========================================================================
+   Design pass v4: one dark theme, readable type, a single accent (cyan).
+   Overrides the older layers above; the stage keeps its own rules.
+   ========================================================================== */
+:root{--paper:#f4f2ec;--text:#e9edf1;--text-2:#c3ccd4;--text-3:#8e9aa5;--surface:#12151b;--surface-2:#181c23;--border:rgba(255,255,255,.1)}
+body{font-size:16px;color:var(--text)}
+p{color:var(--text-2)}
+/* Labels: larger, less tracking, lighter grey, so they read on phones too. */
+.eyebrow,.eyebrow.on-light{font-size:12px;letter-spacing:1.6px;color:var(--cyan)}
+.small,.light .small{font-size:12px;letter-spacing:1.2px;color:var(--text-3)}
+.mini-label{font-size:12px;letter-spacing:1.3px}
+.pro-card .tag,.event-label{font-size:11.5px;letter-spacing:1.4px}
+/* Headings: one accent. The grey/pink second lines become cyan. */
+.section-heading h2 span,.section-heading h2 em,.about h2 em,.contact h2 span,.gallery-heading h2 span,h2 em{color:var(--cyan)}
+.section-heading p,.light .section-heading p{font-size:17px;line-height:1.75;color:var(--text-2);max-width:420px}
+/* Every section dark: the former cream sections take a slightly lifted surface for rhythm. */
+.light,.services-section,.about,.contact{background:#0e1117;color:var(--text)}
+.light .pro-card,.pro-card{background:var(--surface);border-color:var(--border)}
+.light .pro-card .pb p,.pro-card .pb p{color:var(--text-2);font-size:15.5px;line-height:1.7}
+.light .card-link,.card-link{color:#fff}
+.light .card-link i{border-color:var(--border)}
+.light .feature,.contact .feature,.feature{background:var(--surface);border-color:var(--border)}
+.light .feature p,.contact .feature p,.feature p{color:var(--text-2);font-size:15px}
+.light .feature .ico,.contact .feature .ico{color:var(--cyan);background:rgba(25,194,220,.12);border-color:rgba(25,194,220,.3)}
+.about-lead-home{font-size:19px;line-height:1.65;color:var(--text);max-width:540px;margin:0 0 14px}
+.about-copy-home{font-size:15.5px;line-height:1.8;color:var(--text-2);max-width:540px}
+.about-copy .about-lead{color:var(--text)}
+.about-signature>div{color:var(--text-3);font-size:12px}
+.checks li{background:var(--surface);color:var(--text-2);border-color:var(--border);font-size:15px}
+.service{border-bottom-color:var(--border)}
+.service-list{border-top-color:var(--border)}
+.service-toggle{color:#fff}
+.service.active{background:var(--surface);box-shadow:none}
+.service.active .service-toggle{color:var(--cyan)}
+.service.active .number{background:var(--cyan);color:#061014;border-color:var(--cyan)}
+.service-detail p{color:var(--text-2);font-size:16px}
+.number{border-color:var(--border);color:var(--text-2)}
+/* Contact form on dark. */
+.contact-panel{background:var(--surface);border-color:var(--border);box-shadow:none}
+.contact-main>div:first-child>p,.contact-note{color:var(--text-2)}
+.contact-note a{color:#fff}
+.contact-row{background:var(--surface-2);border-color:var(--border);color:#fff}
+.event-options button{background:transparent;border-color:rgba(255,255,255,.22);color:var(--text)}
+.event-options .selected{background:var(--cyan);color:#061014;border-color:var(--cyan)}
+.quote-fields input,.quote-services label{background:#0b0e13;border-color:rgba(255,255,255,.18);color:#fff;color-scheme:dark}
+.quote-fields label,.quote-services legend,.contact-panel{color:var(--text)}
+.quote-services label:has(input:checked){background:rgba(25,194,220,.12);border-color:var(--cyan)}
+.quote-services input{accent-color:var(--cyan)}
+.message-preview,textarea.message-preview{background:#0b0e13;border-color:rgba(255,255,255,.18);color:#fff}
+textarea.message-preview:focus-visible{background:#0b0e13}
+.message-tools{color:var(--text-3)}
+.message-tools button{color:var(--cyan)}
+.contact .button.dark,.button.dark{background:var(--cyan);color:#061014}
+/* Buttons and nav CTA: the short label sits in a compact pill. */
+.nav-cta{background:var(--cyan);color:#061014!important}
+/* Footer and body copy contrast. */
+footer p,footer a{color:var(--text-2)}
+.page-hero p.lead{font-size:17px;color:var(--text-2)}
+.event-card p,.video-card p{color:var(--text-2);font-size:15.5px}
+/* Phones: card rows scroll sideways instead of stacking (shorter pages), larger body copy. */
+@media(max-width:760px){
+  body{font-size:16px}
+  .section{padding:64px 20px}
+  .section-heading{margin:20px 0 28px}
+  .section-heading p{font-size:16px}
+  .cards,.event-grid,.video-grid{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:84%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin-left:-20px;margin-right:-20px;padding:4px 20px 12px;scroll-padding:0 20px;scrollbar-width:none}
+  .cards::-webkit-scrollbar,.event-grid::-webkit-scrollbar,.video-grid::-webkit-scrollbar{display:none}
+  .cards>*,.event-grid>*,.video-grid>*{scroll-snap-align:start;min-width:0}
+}
+/* Phones: a compact stage console (three toggles in a row, secondary actions two per row). */
+@media(max-width:760px){
+  #stage-experience .stage-switches{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  #stage-experience .stage-switches button,#stage-experience.stage-expanded .stage-switches button{flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:60px;height:auto;padding:10px 6px;text-align:center}
+  #stage-experience .stage-switches button small,#stage-experience .stage-switches button>i{display:none}
+  #stage-experience .stage-switches button>span:not(.stage-control-icon){line-height:1.2;font-size:15px}
+  #stage-experience .stage-switches button>span:not(.stage-control-icon) small{display:none!important}
+  #stage-experience .stage-show-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  #stage-experience .stage-show-actions #stage-show{grid-column:1/-1}
+  #stage-experience .stage-show-actions .stage-fullscreen{min-height:44px;margin:0;font-size:12px;white-space:nowrap;padding-left:12px;padding-right:12px}
+  #stage-experience .stage-show-actions #stage-finale{grid-column:1/-1}
+}
