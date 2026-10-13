@@ -982,14 +982,16 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 .motion-ok .beat-sync.music-playing.hit-b .stage-audience{animation:crowd-bob-b var(--beat-len) ease-out}
 .motion-ok .beat-sync.music-playing.crowd-jump.hit-a .stage-audience{animation:crowd-jump-a var(--beat-len) cubic-bezier(.3,.7,.4,1)}
 .motion-ok .beat-sync.music-playing.crowd-jump.hit-b .stage-audience{animation:crowd-jump-b var(--beat-len) cubic-bezier(.3,.7,.4,1)}
+.motion-ok .beat-sync.music-playing.hit-a .stage-audience::before{animation:crowd-bob-a var(--beat-len) ease-out calc(var(--beat-len)*-.5)}
+.motion-ok .beat-sync.music-playing.hit-b .stage-audience::before{animation:crowd-bob-b var(--beat-len) ease-out calc(var(--beat-len)*-.5)}
 .motion-ok .beat-sync.crowd-hype.hit-a .crowd-hands{animation:hands-a var(--beat-len) ease-out}
 .motion-ok .beat-sync.crowd-hype.hit-b .crowd-hands{animation:hands-b var(--beat-len) ease-out}
-@keyframes crowd-bob-a{from{transform:translateY(calc(1px + var(--energy)*3px))}to{transform:none}}
-@keyframes crowd-bob-b{from{transform:translateY(calc(1px + var(--energy)*3px))}to{transform:none}}
-@keyframes crowd-jump-a{0%{transform:translateY(4px)}40%{transform:translateY(-13px)}100%{transform:none}}
-@keyframes crowd-jump-b{0%{transform:translateY(4px)}40%{transform:translateY(-13px)}100%{transform:none}}
-@keyframes hands-a{from{transform:translateY(6px)}to{transform:none}}
-@keyframes hands-b{from{transform:translateY(6px)}to{transform:none}}
+@keyframes crowd-bob-a{0%{transform:none}25%{transform:translateY(calc(3px + var(--energy)*6px))}100%{transform:none}}
+@keyframes crowd-bob-b{0%{transform:none}25%{transform:translateY(calc(3px + var(--energy)*6px))}100%{transform:none}}
+@keyframes crowd-jump-a{0%{transform:translateY(6px)}40%{transform:translateY(-20px)}100%{transform:none}}
+@keyframes crowd-jump-b{0%{transform:translateY(6px)}40%{transform:translateY(-20px)}100%{transform:none}}
+@keyframes hands-a{0%{transform:none}30%{transform:translateY(12px) rotate(.4deg)}100%{transform:none}}
+@keyframes hands-b{0%{transform:none}30%{transform:translateY(12px) rotate(-.4deg)}100%{transform:none}}
 
 /* Finale: once per show (stage-show.js), flame jets on the deck and confetti from the truss. */
 .stage-flames{position:absolute;inset:0;z-index:4;pointer-events:none}

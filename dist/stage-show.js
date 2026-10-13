@@ -316,7 +316,7 @@
   function scheduleBeat(){
     clearTimeout(beatTimer); beatTimer = 0;
     var map = trackBeats();
-    if (!map || !state.lights || music.paused || reduced.matches || document.hidden) { stopBeats(); return; }
+    if (!map || music.paused || reduced.matches || document.hidden) { stopBeats(); return; } // lights rules also need .lights-on; the crowd moves with music alone
     stage.classList.add('beat-sync');
     stage.style.setProperty('--beat-len', (60 / map.bpm).toFixed(3) + 's');
     var now = music.currentTime, beats = map.beats;
@@ -334,7 +334,7 @@
     stage.classList.remove('hit-a','hit-b','flash-a','flash-b');
     stage.classList.add(beatParity ? 'hit-a' : 'hit-b');
     // The crowd bobs on every beat, raises its hands when the song is up and jumps on the drop.
-    stage.classList.toggle('crowd-hype', energy > .6);
+    stage.classList.toggle('crowd-hype', energy > .5);
     if (jumpBeats > 0) jumpBeats--;
     stage.classList.toggle('crowd-jump', jumpBeats > 0);
     if (inBar === 0) {
