@@ -92,6 +92,18 @@
   var wallTracks = ['assets/wall-mobile/intro.m4a','assets/stage-track-1.m4a','assets/stage-track-2-thank-you.m4a','assets/stage-track-3.m4a','assets/stage-track-4-desire.m4a'];
   var ledPlaylist = [1,2,3,4,5].map(function(n){ return 'assets/wall-mobile/clip-' + n + '.mp4'; });
   var ledIndex = 0, manualTrack = false, videoWaiting = false, stallTimer = null;
+  var currentTrack = music.getAttribute('src');
+  // The next clip and its track are downloaded while the current one plays and served
+  // from memory: phones only start fetching media on play, so a switch would wait twice.
+  var prefetched = {};
+  function prefetch(file){
+    if (prefetched[file] || !window.fetch || !window.URL || !URL.createObjectURL) return;
+    prefetched[file] = 'pending';
+    fetch(file).then(function(response){ if (!response.ok) throw new Error(response.status); return response.blob(); })
+      .then(function(blob){ prefetched[file] = URL.createObjectURL(blob); })
+      .catch(function(){ delete prefetched[file]; });
+  }
+  function mediaUrl(file){ var url = prefetched[file]; return url && url !== 'pending' ? url : file; }
   var wallState = document.getElementById('wall-playback-status');
   var retryButton = document.getElementById('wall-retry');
   function alignMusic(){
@@ -101,7 +113,7 @@
   }
   function selectTrackFile(file){
     tracks.forEach(function(x){ x.setAttribute('aria-pressed', String(x.dataset.track === file)); });
-    if (music.getAttribute('src') !== file) { music.pause(); music.setAttribute('src', file); music.load(); }
+    if (currentTrack !== file) { currentTrack = file; music.pause(); music.setAttribute('src', mediaUrl(file)); music.load(); }
     if ((state.sound || intro) && (!state.led || !videoWaiting)) { alignMusic(); startMusic(); }
   }
   function setClip(index){
@@ -114,7 +126,7 @@
     stage.classList.remove('led-surfaces-ready','led-fallback','led-playing');
     wallMessage(ST('loadingVideo','Cargando video…'));
     video.muted = true;
-    video.src = ledPlaylist[ledIndex];
+    video.src = mediaUrl(ledPlaylist[ledIndex]);
     video.load();
     selectTrackFile(wallTracks[ledIndex]);
     if (state.led) startVideo();
@@ -130,12 +142,20 @@
     stallTimer = setTimeout(function(){ if (state.led && videoWaiting) retryButton.hidden = false; },8000);
   });
   video.addEventListener('error', function(){
+    if (video.src.indexOf('blob:') === 0) { video.src = ledPlaylist[ledIndex]; video.load(); if (state.led) startVideo(); return; }
     videoWaiting = true; music.pause(); retryButton.hidden = false;
     wallMessage(ST('videoErr','No se pudo cargar el video. Pulsa Reintentar.'));
+  });
+  music.addEventListener('error', function(){
+    if ((music.getAttribute('src') || '').indexOf('blob:') !== 0) return;
+    music.setAttribute('src', currentTrack); music.load();
+    if (state.sound || intro) startMusic();
   });
   video.addEventListener('playing', function(){
     videoWaiting = false; clearTimeout(stallTimer); retryButton.hidden = true;
     wallMessage((ledIndex + 1) + ' / 5');
+    var next = (ledIndex + 1) % ledPlaylist.length;
+    prefetch(ledPlaylist[next]); prefetch(wallTracks[next]);
     if (state.sound || intro) { if (!manualTrack) selectTrackFile(wallTracks[ledIndex]); else startMusic(); alignMusic(); }
   });
   video.addEventListener('timeupdate', alignMusic);
@@ -297,7 +317,7 @@
   var showModes = ['cross','color','sweep','pulse'];
   var strobes = Array.from(stage.querySelectorAll('.stage-strobes b'));
   var sideStrobes = Array.from(stage.querySelectorAll('.stage-strobes-side b'));
-  function trackBeats(){ return beatMap && beatMap[music.getAttribute('src')]; }
+  function trackBeats(){ return beatMap && beatMap[currentTrack]; }
   function lit(list, on){
     list.forEach(function(el, n){
       el.classList.remove('hit-a','hit-b');
