@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draw the ground-support truss of the home stage and write it into dist/index.html.
+"""Draw the ground-support truss and the deck of the home stage into dist/index.html.
 
 Run from the repo root after changing the geometry:
     python3 scripts/build-truss.py
@@ -181,14 +181,67 @@ def build():
             '<g class="truss-hardware">' + ''.join(details) + '</g></g></svg>')
 
 
+DECK_LEFT, DECK_RIGHT = 118, 882   # front edge, between the towers
+DECK_TOP = 790                     # deck height above FLOOR seen at the front
+STAIRS_X = (395, 475)              # stair unit in front of the skirt, between the subs
+STEPS = 4
+
+
+def forward(point, scale):
+    """Project a point towards the audience (scale > 1)."""
+    return back(point, scale)
+
+
+def deck():
+    """Stage deck: perspective top with planks, pleated skirt, LED nosing and stairs."""
+    fl, fr = (DECK_LEFT, DECK_TOP), (DECK_RIGHT, DECK_TOP)
+    rl, rr = back(fl, REAR), back(fr, REAR)
+    top = poly(fl, fr, rr, rl)
+    # Plank joints run towards the vanishing point; panel joints (2x1 m decks) across.
+    planks = ''.join(line(lerp(fl, fr, n / 32), lerp(rl, rr, n / 32)) for n in range(1, 32))
+    panels = ''.join(line(lerp(fl, rl, t), lerp(fr, rr, t)) for t in (0.34, 0.66))
+    skirt = poly(fl, fr, (DECK_RIGHT, FLOOR), (DECK_LEFT, FLOOR))
+    nosing = f'<rect class="deck-nosing" x="{DECK_LEFT - 2}" y="{DECK_TOP - 2}" width="{DECK_RIGHT - DECK_LEFT + 4}" height="7" rx="1.5"/>'
+    led = line((DECK_LEFT + 4, DECK_TOP + 9), (DECK_RIGHT - 4, DECK_TOP + 9))
+    # Stairs: each step sits a little closer to the audience than the one above.
+    x0, x1 = STAIRS_X
+    rise = (FLOOR - DECK_TOP) / STEPS
+    treads, risers = [], []
+    for k in range(STEPS):
+        y = DECK_TOP + rise * (k + 1)          # top of step k at floor-relative height
+        near, far = 1 + 0.035 * (k + 1), 1 + 0.035 * k
+        a, b = forward((x0, y), far), forward((x1, y), far)
+        c, d = forward((x1, y), near), forward((x0, y), near)
+        treads.append(poly(a, b, c, d))
+        bottom = forward((x0, y + rise), near)[1]
+        risers.append(poly(d, c, (c[0], bottom), (d[0], bottom)))
+    shine = poly(fl, fr, rr, rl)
+    return ('<svg class="stage-deck-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">'
+            '<defs><linearGradient id="deck-top" x1="0" y1="1" x2="0" y2="0"><stop stop-color="#2c3b49"/><stop offset="1" stop-color="#121b26"/></linearGradient>'
+            '<linearGradient id="deck-skirt" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0d141d"/><stop offset="1" stop-color="#05080d"/></linearGradient>'
+            '<pattern id="deck-pleats" width="11" height="1000" patternUnits="userSpaceOnUse"><rect width="11" height="1000" fill="url(#deck-skirt)"/>'
+            '<rect x="7" width="4" height="1000" fill="#000" opacity=".45"/><rect x="2" width="2" height="1000" fill="#4a6175" opacity=".18"/></pattern>'
+            '<linearGradient id="deck-glare" x1="0" y1="0" x2="1" y2="0"><stop offset=".2" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff"/><stop offset=".8" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>'
+            f'<path class="deck-top" d="{top}"/><path class="deck-planks" d="{planks}"/><path class="deck-panels" d="{panels}"/>'
+            f'<path class="deck-glare" d="{shine}"/>'
+            f'<path class="deck-skirt" d="{skirt}"/>{nosing}<path class="deck-led" d="{led}"/>'
+            f'<g class="deck-stairs"><path class="deck-riser" d="{"".join(risers)}"/><path class="deck-tread" d="{"".join(treads)}"/>'
+            f'</g></svg>')
+
+
+def replace(html, pattern, svg, name):
+    updated, count = re.subn(pattern, lambda _: svg, html, count=1, flags=re.S)
+    if count != 1:
+        raise SystemExit(f'{name} not found in dist/index.html')
+    return updated
+
+
 def main():
     html = INDEX.read_text()
-    svg = build()
-    updated, count = re.subn(r'<svg class="stage-truss".*?</svg>', lambda _: svg, html, count=1, flags=re.S)
-    if count != 1:
-        raise SystemExit('stage-truss SVG not found in dist/index.html')
-    INDEX.write_text(updated)
-    print(f'Truss written to {INDEX.relative_to(ROOT)} ({len(svg)} bytes)')
+    html = replace(html, r'<svg class="stage-truss".*?</svg>', build(), 'stage-truss SVG')
+    html = replace(html, r'<svg class="stage-deck-svg".*?</svg>|(?<=<div class="stage-deck">)(?=<div class="stage-floor-spots")', deck(), 'stage-deck')
+    INDEX.write_text(html)
+    print(f'Truss and deck written to {INDEX.relative_to(ROOT)}')
 
 
 if __name__ == '__main__':

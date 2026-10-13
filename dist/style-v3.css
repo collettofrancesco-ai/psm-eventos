@@ -921,6 +921,38 @@ background-image:repeating-linear-gradient(180deg,transparent 0 9px,#1d2732 9px 
 }
 /* Phone: the stage is the desktop drawing (820x700) scaled to fit, so strobes, arrays and
    truss match the PC exactly. stage-show.js sets --stage-scale/-x/-y from the preview size. */
+/* Stage deck with volume: SVG drawn by scripts/build-truss.py in the truss perspective. */
+.stage-deck{inset:0;left:0;right:0;bottom:0;height:auto;transform:none;background:none;border:0;border-radius:0;box-shadow:none;pointer-events:none}
+.stage-deck::before,.stage-deck::after{content:none}
+.lights-on .stage-deck{background:none;box-shadow:none}
+.stage-deck-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.deck-top{fill:url(#deck-top);transition:filter .6s}
+.deck-planks{stroke:#000;stroke-opacity:.22;stroke-width:1;vector-effect:non-scaling-stroke}
+.deck-panels{stroke:#000;stroke-opacity:.4;stroke-width:1.2;vector-effect:non-scaling-stroke}
+.deck-skirt{fill:url(#deck-pleats)}
+.deck-nosing{fill:#5d7182}
+.deck-led{stroke:#1d3646;stroke-width:2;vector-effect:non-scaling-stroke;transition:stroke .5s,filter .5s}
+.deck-glare{fill:url(#deck-glare);opacity:0;mix-blend-mode:screen}
+.deck-tread{fill:#3a4b5a}.deck-riser{fill:#0a1119}
+.lights-on .deck-top{filter:brightness(1.7) saturate(1.2)}
+.lights-on .deck-nosing{fill:#9fc6d6}
+.lights-on .deck-led{stroke:#56d5ee;filter:drop-shadow(0 0 3px #19c2dc)}
+.lights-on .deck-tread{fill:#6b8597}
+.lights-on .deck-glare{opacity:.07}
+.stage-floor-spots{inset:auto;left:11.8%;right:11.8%;top:72.2%;height:6.8%;clip-path:polygon(0 100%,100% 100%,90% 0,10% 0)}
+.stage-floor-spots i{top:-20%;height:140%}
+.stage-reflection{left:29%;width:42%;top:72.4%;height:6.4%;transform:scaleY(-1);mask-image:linear-gradient(0deg,#000a,transparent)}
+/* Metal and LED nosing catch the beat. */
+.motion-ok .audio-reactive.music-playing.lights-on .deck-glare{opacity:calc(.05 + var(--bass,0)*.22)}
+.motion-ok .beat-sync.lights-on.hit-a .deck-glare{animation:deck-glare-a var(--beat-len) ease-out}
+.motion-ok .beat-sync.lights-on.hit-b .deck-glare{animation:deck-glare-b var(--beat-len) ease-out}
+.motion-ok .beat-sync.lights-on.hit-a .deck-led,.motion-ok .beat-sync.lights-on.hit-a .deck-nosing{animation:deck-led-a var(--beat-len) ease-out}
+.motion-ok .beat-sync.lights-on.hit-b .deck-led,.motion-ok .beat-sync.lights-on.hit-b .deck-nosing{animation:deck-led-b var(--beat-len) ease-out}
+.motion-ok .beat-sync.lights-on[data-light-effect="color"] .deck-glare{fill:#c79cff}
+@keyframes deck-glare-a{from{opacity:calc(.12 + var(--energy)*.3)}to{opacity:.05}}
+@keyframes deck-glare-b{from{opacity:calc(.12 + var(--energy)*.3)}to{opacity:.05}}
+@keyframes deck-led-a{from{filter:brightness(calc(1.4 + var(--energy))) drop-shadow(0 0 6px #19c2dc)}to{filter:none}}
+@keyframes deck-led-b{from{filter:brightness(calc(1.4 + var(--energy))) drop-shadow(0 0 6px #19c2dc)}to{filter:none}}
 .stage-canvas{position:absolute;inset:0;container-type:size}
 @media(max-width:760px){
   .stage-preview{aspect-ratio:820/700}
