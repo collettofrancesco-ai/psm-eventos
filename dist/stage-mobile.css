@@ -1,0 +1,23 @@
+/* Mobile: animate compact layers, keep the full stage and video on stable layers. */
+@keyframes mobile-beam-palette{
+  0%,100%{background:linear-gradient(180deg,#63c7ff70,#63c7ff12 70%,transparent)}
+  20%{background:linear-gradient(180deg,#bc86ff70,#bc86ff12 70%,transparent)}
+  40%{background:linear-gradient(180deg,#ef6bad70,#ef6bad12 70%,transparent)}
+  60%{background:linear-gradient(180deg,#ffbf6970,#ffbf6912 70%,transparent)}
+  80%{background:linear-gradient(180deg,#68deb070,#68deb012 70%,transparent)}
+}
+@media(max-width:760px),(pointer:coarse){
+  #stage-experience .stage-canvas{animation:none!important;scale:1;translate:0 0}
+  #stage-experience .stage-reflection{display:none}
+  #stage-experience .stage-movers{animation:none!important;filter:none!important}
+  #stage-experience .lights-on .mh-ledwash::after{filter:none!important;animation:wash-beam-circle 12s linear var(--wash-phase) infinite,mobile-beam-palette 15s steps(1) var(--wash-phase) infinite!important}
+  #stage-experience .stage-bloom,#stage-experience .crowd-spots{mix-blend-mode:normal;animation:none!important;opacity:.25;filter:none}
+  #stage-experience .stage-audience{animation:none!important;filter:none!important}
+  #stage-experience .crowd-layer:not(.foh-layer){will-change:transform}
+  #stage-experience .stage-truss{filter:none!important;animation:none!important}
+  #stage-experience .stage-deck-svg{filter:none!important}
+  #stage-experience .deck-led,#stage-experience .deck-nosing{filter:none!important}
+  #stage-experience .phone-screen{filter:none}
+  #stage-experience .stage-gobos i::before{filter:none}
+  header{backdrop-filter:none;-webkit-backdrop-filter:none;background:#fff}
+}

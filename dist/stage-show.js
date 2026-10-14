@@ -41,14 +41,20 @@
   var showRunning = false, intro = false, timers = [], showCycle = null;
   var context = null, analyser = null, frequencies = null;
   var inView = true, frame = 0, previousFrame = 0;
+  var mobileStage = matchMedia('(pointer: coarse)').matches || matchMedia('(max-width: 760px)').matches;
+  var crowdLayers = Array.from(stage.querySelectorAll('.crowd-layer:not(.foh-layer)'));
+  var previousVideoFrame = 0, previousSpectrumFrame = 0;
   var bars = Array.from(stage.querySelectorAll('.stage-equalizer i'));
   var surfaces = Array.from(stage.querySelectorAll('canvas')).map(function(canvas){
+    if (mobileStage && canvas.classList.contains('wing-video')) { canvas.width=64;canvas.height=128; }
     return {canvas:canvas, painter:canvas.getContext('2d'), reflection:canvas.classList.contains('stage-reflection')};
   });
   music.volume = .45;
   video.muted = true;
 
   function connectAudio(){
+    // Mobile uses the analyzed beat clock; avoid a second real-time audio pipeline.
+    if (mobileStage) { stage.classList.add('audio-reactive'); return; }
     if (context) { if (context.state === 'suspended') context.resume().catch(function(){}); return; }
     var AudioEngine = window.AudioContext || window.webkitAudioContext;
     if (!AudioEngine) return;
@@ -275,18 +281,25 @@
   function paint(time){
     frame=0;
     if (!inView || document.hidden) return;
-    if (time-previousFrame>=(matchMedia('(pointer: coarse)').matches ? 66 : 33)) {
+    if (time-previousFrame>=(mobileStage ? 16 : 32)) {
       previousFrame=time;
       if (state.sound && !music.paused && !music.muted && !reducedEffects()) {
         stage.classList.add('direct-crowd');
         var rhythm = trackBeats(), period = rhythm ? 60 / rhythm.bpm : .5;
-        Array.from(stage.querySelectorAll('.crowd-layer:not(.foh-layer)')).forEach(function(layer,index){
+        crowdLayers.forEach(function(layer,index){
           var amplitude = layer.classList.contains('back') ? 1.8 : layer.classList.contains('mid') ? 3 : 4.5;
           var offset = Math.sin(music.currentTime / period * Math.PI * 2 - index * .7) * amplitude;
           layer.style.setProperty('transform','translateY('+offset.toFixed(2)+'px)','important');
         });
       }
-      if (analyser && state.sound && !music.paused && !reducedEffects()) {
+      if (mobileStage && state.sound && !music.paused && time-previousSpectrumFrame>=100) {
+        previousSpectrumFrame=time;
+        var pulse=Math.max(0,Math.sin(music.currentTime/(period || .5)*Math.PI*2));
+        stage.style.setProperty('--bass',(pulse*.5).toFixed(2));
+        bars.forEach(function(bar,index){bar.style.setProperty('--level-live',(.12+Math.abs(Math.sin(music.currentTime*6-index*.7))*.65).toFixed(2));});
+      }
+      if (analyser && state.sound && !music.paused && !reducedEffects() && time-previousSpectrumFrame>=50) {
+        previousSpectrumFrame=time;
         analyser.getByteFrequencyData(frequencies);
         var bass=0;
         for(var b=1;b<8;b++) bass+=frequencies[b]/255;
@@ -296,10 +309,11 @@
           bar.style.setProperty('--level-live',Math.max(.04,frequencies[bin]/255).toFixed(3));
         });
       }
-      if (state.led && video.readyState>=2 && video.videoWidth) {
+      if (state.led && video.readyState>=2 && video.videoWidth && time-previousVideoFrame>=(mobileStage ? 80 : 32)) {
+        previousVideoFrame=time;
         surfaces.forEach(function(surface,index){
           var c=surface.canvas, ctx=surface.painter;
-          if (!ctx) return;
+          if (!ctx || (mobileStage && surface.reflection)) return;
           var ratio=surface.reflection ? 4/3 : c.width/c.height;
           var sourceHeight=Math.min(video.videoHeight,video.videoWidth/ratio);
           var sourceWidth=sourceHeight*ratio;
@@ -313,7 +327,7 @@
   }
   music.addEventListener('playing',function(){stage.classList.add('music-playing');scheduleFrame();});
   music.addEventListener('pause',function(){stage.classList.remove('music-playing','direct-crowd');
-    Array.from(stage.querySelectorAll('.crowd-layer:not(.foh-layer)')).forEach(function(layer){layer.style.removeProperty('transform');});stage.style.setProperty('--bass','0');});
+    crowdLayers.forEach(function(layer){layer.style.removeProperty('transform');});stage.style.setProperty('--bass','0');});
   video.addEventListener('playing',function(){stage.classList.add('led-playing');stage.classList.remove('led-fallback');scheduleFrame();});
   video.addEventListener('pause',function(){stage.classList.remove('led-playing');});
   reduced.addEventListener('change',function(){if(reducedEffects())stage.style.setProperty('--bass','0');scheduleFrame();});
