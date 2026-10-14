@@ -347,3 +347,10 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 @keyframes crowd-bob-b{0%,100%{transform:none}45%{transform:translateY(calc(1.5px*var(--amp,1)))}}
 @keyframes crowd-jump-a{0%,100%{transform:none}40%{transform:translateY(calc(-5px*var(--amp,1)))}}
 @keyframes crowd-jump-b{0%,100%{transform:none}50%{transform:translateY(calc(-3px*var(--amp,1)))}}
+/* Recording spectators: small screens and soft, restrained silhouette edges. */
+.recording-phone .phone-screen{fill:#b1c8da;filter:drop-shadow(0 0 .7px #91c9ef)}
+.crowd-layer.g1 .phone-screen{fill:#96b8d2}
+.crowd-layer.g2 .phone-screen{fill:#c6d3db}
+#stage-experience .lights-on .crowd-layer{--rim-o:.24}
+#stage-experience .crowd-layer .bodies{stroke-width:.55}
+#stage-experience .crowd-layer .arms{stroke-width:.55}

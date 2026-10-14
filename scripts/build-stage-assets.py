@@ -163,23 +163,51 @@ def raised_arms(rng, x, hy, s, shoulders, head_shift):
     return out
 
 
+def recording_pose(rng, x, hy, s, shoulders):
+    """Bent elbows and a phone above eye level; some film with both hands."""
+    side = rng.choice([-1, 1])
+    two_hands = rng.random() < .35
+    px, py = x + side * s * rng.uniform(7, 14), hy - s * rng.uniform(17, 27)
+    out = ''
+    for arm_side in ((-1, 1) if two_hands else (side,)):
+        sx = x + arm_side * s * (4.5 + 13.5 * shoulders[arm_side > 0])
+        sy = hy + 23 * s
+        ex, ey = sx + arm_side * s * rng.uniform(1, 6), hy + s * rng.uniform(6, 14)
+        wx, wy = px + arm_side * s * (5 if two_hands else 1), py + 5 * s
+        out += f'<path d="{limb([(sx, sy), (ex, ey), (wx, wy)], [8*s, 6*s, 4.6*s])}"/>'
+        out += f'<ellipse cx="{f(wx)}" cy="{f(wy)}" rx="{f(2.9*s)}" ry="{f(4*s)}"/>'
+    w, h = (12, 7) if two_hands else (6.8, 12)
+    angle = rng.uniform(-12, 12)
+    out += (f'<g class="recording-phone" transform="translate({f(px)} {f(py)}) rotate({f(angle)}) scale({f(s)})">'
+            f'<rect x="{f(-w/2)}" y="{f(-h/2)}" width="{w}" height="{h}" rx="1.1" fill="#060b12" stroke="#647889" stroke-width=".4"/>'
+            f'<rect class="phone-screen" x="{f(-w/2+.8)}" y="{f(-h/2+1)}" width="{f(w-1.6)}" height="{f(h-2)}" rx=".5"/>'
+            f'<circle cx="{f(w/2-1.5)}" cy="{f(h/2-1.7)}" r=".55" fill="#ef6280"/>'
+            f'<path d="M{f(-w/2+1.3)} 0h{f(w-2.6)}" stroke="#dae8f4" stroke-width=".35" opacity=".4"/></g>')
+    return out
+
+
 def person(rng, x, hy, s, bottom, arm_chance):
     """One rim-lit silhouette. Returns (body, arms, arms_always)."""
     shoulders = {False: rng.uniform(.8, 1.18), True: rng.uniform(.8, 1.18)}
-    head_shift = rng.uniform(-1.6, 1.6)
-    hs = s * rng.uniform(.94, 1.06)
+    head_shift = rng.uniform(-3, 3)
+    hs = s * rng.uniform(.86, 1.13)
     body = f'<path d="{bust(x, hy, hs, shoulders, head_shift, bottom)}"/>' + hair(rng, x, hy, hs, head_shift)
     arms = raised_arms(rng, x, hy, hs, shoulders, head_shift) if rng.random() < arm_chance else ''
     always = ''
-    if not arms and rng.random() < arm_chance * .3:
+    if rng.random() < .42:
+        arms = ''
+        always = recording_pose(rng, x, hy, hs, shoulders)
+    if not arms and not always and rng.random() < arm_chance * .3:
         always = raised_arms(rng, x, hy, hs, shoulders, head_shift)
+    # Subtle fabric creases and neckline, without neon outlines.
+    body += (f'<path d="M{f(x-5*hs)} {f(hy+15*hs)}q{f(5*hs)} {f(4*hs)} {f(10*hs)} 0M{f(x-12*hs)} {f(hy+25*hs)}l{f(3*hs)} {f(22*hs)}M{f(x+13*hs)} {f(hy+27*hs)}l{f(-2*hs)} {f(18*hs)}" fill="none" stroke="#617483" stroke-width=".5" opacity=".22"/>')
     return body, arms, always
 
 
 ROWS = [  # name, scale, head y range, people, layers (groups that move with their own phase), arm chance
-    ('back', .5, (52, 60), 40, 1, .12),
-    ('mid', .72, (65, 76), 26, 2, .3),
-    ('front', 1.0, (81, 99), 16, 3, .45),
+    ('back', .5, (49, 62), 48, 1, .12),
+    ('mid', .68, (63, 80), 32, 2, .3),
+    ('front', .92, (82, 107), 20, 3, .35),
 ]
 
 
@@ -224,7 +252,7 @@ def crowd(seed=11):
             layers.append(
                 f'<svg class="crowd-layer {name} g{g}" viewBox="0 0 {W} {H}" preserveAspectRatio="none" aria-hidden="true">'
                 f'<defs><linearGradient id="rim-{gid}" x1="0" y1="0" x2="0" y2="1">'
-                '<stop offset="0" style="stop-color:var(--rim);stop-opacity:min(1,calc(var(--rim-o) + var(--flash,0) * .9))"/>'
+                '<stop offset="0" style="stop-color:var(--rim);stop-opacity:min(1,calc(var(--rim-o) + var(--flash,0) * .25))"/>'
                 '<stop offset=".3" style="stop-color:var(--rim);stop-opacity:calc(var(--rim-o) * .25)"/>'
                 '<stop offset=".55" style="stop-color:var(--rim);stop-opacity:0"/></linearGradient></defs>'
                 f'<g class="arms always" stroke="url(#rim-{gid})">{"".join(always[g])}</g>'
