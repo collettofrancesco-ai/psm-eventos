@@ -2,7 +2,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const vm=require('node:vm');
 const fs=require('node:fs');
-function setup(reducedMotion=false){
+function setup(reducedMotion=false,beatMap=null){
  class Element{
   constructor(attrs={}){this.attrs={...attrs};this.dataset={};this.listeners={};this.style={setProperty(){}};this.textContent='';this.firstChild={textContent:''};this.hidden=false;this.classes=new Set();this.classList={add:(...a)=>a.forEach(x=>this.classes.add(x)),remove:(...a)=>a.forEach(x=>this.classes.delete(x)),contains:x=>this.classes.has(x),toggle:(x,on)=>{if(on===undefined)on=!this.classes.has(x);on?this.classes.add(x):this.classes.delete(x);return on;}};}
   getAttribute(k){return this.attrs[k]??null;} setAttribute(k,v){this.attrs[k]=String(v);}
@@ -24,7 +24,7 @@ function setup(reducedMotion=false){
  const doc=new Element();doc.hidden=false;doc.body=new Element();doc.getElementById=id=>elements[id];doc.querySelector=q=>q==='.stage-preview'?stage:null;
  doc.querySelectorAll=q=>({'[data-stage]':buttons,'[data-track]':tracks,'[data-preset]':presets}[q]||[]);
  let timerId=0;const timers=new Map();
- const context={document:doc,window:{},matchMedia:q=>({matches:q.includes('prefers-reduced-motion') && reducedMotion,addEventListener(){}}),addEventListener(){},requestAnimationFrame:()=>1,cancelAnimationFrame(){},setTimeout:f=>{timers.set(++timerId,f);return timerId;},clearTimeout:id=>timers.delete(id),setInterval:()=>++timerId,clearInterval(){},console};
+ const context={document:doc,window:{PSM_BEATS:beatMap},matchMedia:q=>({matches:q.includes('prefers-reduced-motion') && reducedMotion,addEventListener(){}}),addEventListener(){},requestAnimationFrame:()=>1,cancelAnimationFrame(){},setTimeout:f=>{timers.set(++timerId,f);return timerId;},clearTimeout:id=>timers.delete(id),setInterval:()=>++timerId,clearInterval(){},console};
  vm.runInNewContext(fs.readFileSync('dist/stage-show.js','utf8'),context);
  return {stage,video,music,buttons,tracks,presets,elements,timers,click:e=>e.emit('click')};
 }
@@ -74,4 +74,15 @@ test('blocked audio does not cancel the visual show',async()=>{
  s.click(s.elements['stage-show']);await new Promise(resolve=>setImmediate(resolve));
  assert.ok(s.stage.classList.contains('show-running'));
  assert.ok(s.timers.size>0);
+});
+
+test('media time updates recover beat sync after delayed mobile timers',()=>{
+ const map={'assets/stage-track-1.m4a':{bpm:120,beats:[0,.5,1,1.5,2],downbeat:0,bars:[.8,.8],strength:[1,1,1,1,1]}};
+ const s=setup(false,map);s.click(s.buttons[0]);
+ s.music.currentTime=.55;s.music.emit('timeupdate');
+ assert.ok(s.stage.classList.contains('beat-sync'));
+ assert.ok(s.stage.classList.contains('direct-strobes'));
+ const first=s.stage.classList.contains('hit-a');
+ s.music.currentTime=1.6;s.music.emit('timeupdate');
+ assert.notEqual(s.stage.classList.contains('hit-a'),first);
 });

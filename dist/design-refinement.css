@@ -354,3 +354,6 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 #stage-experience .lights-on .crowd-layer{--rim-o:.24}
 #stage-experience .crowd-layer .bodies{stroke-width:.55}
 #stage-experience .crowd-layer .arms{stroke-width:.55}
+/* Safari: pulse the strobes from the audio clock instead of restarting keyframes. */
+#stage-experience .direct-strobes.beat-sync.lights-on .stage-strobes b::after,#stage-experience .direct-strobes.beat-sync.lights-on .stage-strobes-side b::after{animation:none!important;opacity:var(--strobe-live,0)!important;background:#edfcff;box-shadow:0 0 14px #c7f4ff;transition:none!important}
+#stage-experience .direct-crowd .crowd-layer:not(.foh-layer){animation:none!important}

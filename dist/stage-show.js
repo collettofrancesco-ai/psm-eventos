@@ -180,6 +180,7 @@
     });
   }
   function render(){
+    if (state.sound || state.lights) experience.classList.add('stage-full-motion');
     var labels = {sound:ST('music','Música'), lights:ST('lights','Luces'), led:ST('led','Video LED')}, active = [];
     buttons.forEach(function(button){
       var key = button.dataset.stage;
@@ -276,6 +277,15 @@
     if (!inView || document.hidden) return;
     if (time-previousFrame>=(matchMedia('(pointer: coarse)').matches ? 66 : 33)) {
       previousFrame=time;
+      if (state.sound && !music.paused && !music.muted && !reducedEffects()) {
+        stage.classList.add('direct-crowd');
+        var rhythm = trackBeats(), period = rhythm ? 60 / rhythm.bpm : .5;
+        Array.from(stage.querySelectorAll('.crowd-layer:not(.foh-layer)')).forEach(function(layer,index){
+          var amplitude = layer.classList.contains('back') ? 1.8 : layer.classList.contains('mid') ? 3 : 4.5;
+          var offset = Math.sin(music.currentTime / period * Math.PI * 2 - index * .7) * amplitude;
+          layer.style.setProperty('transform','translateY('+offset.toFixed(2)+'px)','important');
+        });
+      }
       if (analyser && state.sound && !music.paused && !reducedEffects()) {
         analyser.getByteFrequencyData(frequencies);
         var bass=0;
@@ -302,7 +312,8 @@
     scheduleFrame();
   }
   music.addEventListener('playing',function(){stage.classList.add('music-playing');scheduleFrame();});
-  music.addEventListener('pause',function(){stage.classList.remove('music-playing');stage.style.setProperty('--bass','0');});
+  music.addEventListener('pause',function(){stage.classList.remove('music-playing','direct-crowd');
+    Array.from(stage.querySelectorAll('.crowd-layer:not(.foh-layer)')).forEach(function(layer){layer.style.removeProperty('transform');});stage.style.setProperty('--bass','0');});
   video.addEventListener('playing',function(){stage.classList.add('led-playing');stage.classList.remove('led-fallback');scheduleFrame();});
   video.addEventListener('pause',function(){stage.classList.remove('led-playing');});
   reduced.addEventListener('change',function(){if(reducedEffects())stage.style.setProperty('--bass','0');scheduleFrame();});
@@ -361,7 +372,7 @@
 
   // Beat sync: the lights hit on the beats precomputed by scripts/analyze-beats.py,
   // timed from music.currentTime so phones stay on the beat at any frame rate.
-  var beatMap = null, beatTimer = 0, lastBeat = -1, beatParity = false, lastEnergy = 0, showMode = 0, jumpBeats = 0;
+  var beatMap = window.PSM_BEATS || null, beatTimer = 0, lastBeat = -1, beatParity = false, lastEnergy = 0, showMode = 0, jumpBeats = 0;
   var showModes = ['cross','color','sweep','pulse'];
   var strobes = Array.from(stage.querySelectorAll('.stage-strobes b'));
   var sideStrobes = Array.from(stage.querySelectorAll('.stage-strobes-side b'));
@@ -369,7 +380,9 @@
   function lit(list, on){
     list.forEach(function(el, n){
       el.classList.remove('hit-a','hit-b');
-      if (on(n)) el.classList.add(beatParity ? 'hit-a' : 'hit-b');
+      var hit = on(n);
+      el.style.setProperty('--strobe-live', hit ? '1' : '0');
+      if (hit) el.classList.add(beatParity ? 'hit-a' : 'hit-b');
     });
   }
   function none(){ return false; }
@@ -388,13 +401,16 @@
     stage.classList.add('beat-sync');
     stage.style.setProperty('--beat-len', (60 / map.bpm).toFixed(3) + 's');
     var now = music.currentTime, beats = map.beats;
-    if (lastBeat >= beats.length || (lastBeat >= 0 && now < beats[lastBeat] - 1)) lastBeat = -1; // looped; small sync nudges keep the count
+    if (lastBeat >= beats.length || (lastBeat >= 0 && now < beats[lastBeat] - .5)) lastBeat = -1;
     var next = lastBeat + 1;
-    while (next < beats.length && beats[next] < now - .05) next++;
-    if (next >= beats.length) { beatTimer = setTimeout(scheduleBeat, 100); return; } // wait for the loop
-    beatTimer = setTimeout(function(){ lastBeat = next; fireBeat(map, next); scheduleBeat(); }, Math.max(0, (beats[next] - now) * 1000));
+    while (next < beats.length && beats[next] <= now + .025) next++;
+    if (next - 1 > lastBeat) { lastBeat = next - 1; fireBeat(map, lastBeat); }
+    // Read the media clock repeatedly: iOS can delay timers and media callbacks.
+    beatTimer = setTimeout(scheduleBeat, 40);
   }
   function fireBeat(map, i){
+    stage.classList.add('direct-strobes');
+    setTimeout(function(){ strobes.concat(sideStrobes).forEach(function(el){ el.style.setProperty('--strobe-live','0'); }); },90);
     beatParity = !beatParity;
     var fromDown = i - map.downbeat, inBar = ((fromDown % 4) + 4) % 4, bar = Math.floor(fromDown / 4);
     var energy = map.bars[Math.min(map.bars.length - 1, Math.max(0, bar))];
@@ -418,7 +434,7 @@
       }
       lastEnergy = energy;
     }
-    if (energy < .35) { lit(strobes, none); lit(sideStrobes, none); return; }
+    if (energy < .35) { lit(strobes, function(n){return n % 9 === i % 9;}); lit(sideStrobes, function(n){return n % 6 === i % 6;}); return; }
     var peak = energy > .7;
     if (peak && inBar === 0 && map.strength[i] > .5) {
       stage.classList.add(beatParity ? 'flash-a' : 'flash-b');
@@ -430,7 +446,7 @@
   }
   if (window.fetch) fetch('assets/beats.json').then(function(r){ return r.ok ? r.json() : null; }).then(function(map){ beatMap = map; scheduleBeat(); }).catch(function(){});
   music.addEventListener('loadstart', function(){ lastBeat = -1; });
-  ['playing','pause','seeked'].forEach(function(name){ music.addEventListener(name, scheduleBeat); });
+  ['playing','pause','seeked','timeupdate','volumechange'].forEach(function(name){ music.addEventListener(name, scheduleBeat); });
   reduced.addEventListener('change', scheduleBeat);
 
   // Event name: typed in the console, lit on the LED wall and scrolling on the LED wings,
