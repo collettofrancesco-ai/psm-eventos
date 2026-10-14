@@ -101,10 +101,10 @@
 .stage-full-motion .show-go .stage-strobe-flash{animation:go-flash .9s ease-out!important}
 .stage-full-motion .show-go .stage-strobes b::after,.stage-full-motion .show-go .stage-strobes-side b::after{animation:go-strobe .9s steps(1)!important}
 .stage-full-motion .stage-preview:not(.sound-on):not(.lights-on):not(.led-on):not(.show-running):not(.stage-intro) .stage-play{animation:play-in .6s ease-out both,play-glow 2.4s ease-in-out .6s infinite!important}
-.stage-full-motion .beat-sync.music-playing.hit-a .crowd-layer{animation:crowd-bob-a var(--beat-len) ease-out var(--phase)!important}
-.stage-full-motion .beat-sync.music-playing.hit-b .crowd-layer{animation:crowd-bob-b var(--beat-len) ease-out var(--phase)!important}
-.stage-full-motion .beat-sync.music-playing.crowd-jump.hit-a .crowd-layer{animation:crowd-jump-a var(--beat-len) cubic-bezier(.3,.7,.4,1) var(--phase)!important}
-.stage-full-motion .beat-sync.music-playing.crowd-jump.hit-b .crowd-layer{animation:crowd-jump-b var(--beat-len) cubic-bezier(.3,.7,.4,1) var(--phase)!important}
+.stage-full-motion .beat-sync.music-playing.hit-a .crowd-layer:not(.foh-layer){animation:crowd-bob-a var(--beat-len) ease-out var(--phase)!important}
+.stage-full-motion .beat-sync.music-playing.hit-b .crowd-layer:not(.foh-layer){animation:crowd-bob-b var(--beat-len) ease-out var(--phase)!important}
+.stage-full-motion .beat-sync.music-playing.crowd-jump.hit-a .crowd-layer:not(.foh-layer){animation:crowd-jump-a var(--beat-len) cubic-bezier(.3,.7,.4,1) var(--phase)!important}
+.stage-full-motion .beat-sync.music-playing.crowd-jump.hit-b .crowd-layer:not(.foh-layer){animation:crowd-jump-b var(--beat-len) cubic-bezier(.3,.7,.4,1) var(--phase)!important}
 .stage-full-motion .beat-sync.music-playing.hit-a .stage-props .bop{animation:dj-bop-a var(--beat-len) ease-out!important}
 .stage-full-motion .beat-sync.music-playing.hit-b .stage-props .bop{animation:dj-bop-b var(--beat-len) ease-out!important}
 .stage-full-motion .music-playing .stage-props .sway{animation:singer-sway 4s ease-in-out infinite alternate!important}

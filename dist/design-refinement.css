@@ -336,3 +336,14 @@ nav a.nav-link.active{color:#076577;background:#e6f1f3}
 .countdown .stage-movers .mh-ledwash{cursor:default}
 /* Light beams are visual effects, never equipment hover/click targets. */
 .stage-preview .stage-movers .mh::after,.stage-preview .stage-fixtures i s{pointer-events:none}
+/* Fixed equipment never follows the audience or the bass. */
+#stage-experience .crowd-layer.foh-layer{animation:none!important;transform:none!important}
+#stage-experience .stage-speaker i,#stage-experience .stage-sub::before{animation:none!important;transform:none!important}
+/* More restrained silhouettes and short, natural steps instead of whole-row jumps. */
+#stage-experience .lights-on .crowd-layer{--rim-o:.3}
+#stage-experience .crowd-layer .bodies{stroke-width:.75}
+#stage-experience .crowd-layer .arms{stroke-width:.7}
+@keyframes crowd-bob-a{0%,100%{transform:none}35%{transform:translateY(calc(2px*var(--amp,1)))}}
+@keyframes crowd-bob-b{0%,100%{transform:none}45%{transform:translateY(calc(1.5px*var(--amp,1)))}}
+@keyframes crowd-jump-a{0%,100%{transform:none}40%{transform:translateY(calc(-5px*var(--amp,1)))}}
+@keyframes crowd-jump-b{0%,100%{transform:none}50%{transform:translateY(calc(-3px*var(--amp,1)))}}
