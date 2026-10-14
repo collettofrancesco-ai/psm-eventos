@@ -2,7 +2,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const vm=require('node:vm');
 const fs=require('node:fs');
-function setup(){
+function setup(reducedMotion=false){
  class Element{
   constructor(attrs={}){this.attrs={...attrs};this.dataset={};this.listeners={};this.style={setProperty(){}};this.textContent='';this.firstChild={textContent:''};this.hidden=false;this.classes=new Set();this.classList={add:(...a)=>a.forEach(x=>this.classes.add(x)),remove:(...a)=>a.forEach(x=>this.classes.delete(x)),contains:x=>this.classes.has(x),toggle:(x,on)=>{if(on===undefined)on=!this.classes.has(x);on?this.classes.add(x):this.classes.delete(x);return on;}};}
   getAttribute(k){return this.attrs[k]??null;} setAttribute(k,v){this.attrs[k]=String(v);}
@@ -24,7 +24,7 @@ function setup(){
  const doc=new Element();doc.hidden=false;doc.body=new Element();doc.getElementById=id=>elements[id];doc.querySelector=q=>q==='.stage-preview'?stage:null;
  doc.querySelectorAll=q=>({'[data-stage]':buttons,'[data-track]':tracks,'[data-preset]':presets}[q]||[]);
  let timerId=0;const timers=new Map();
- const context={document:doc,window:{},matchMedia:()=>({matches:false,addEventListener(){}}),addEventListener(){},requestAnimationFrame:()=>1,cancelAnimationFrame(){},setTimeout:f=>{timers.set(++timerId,f);return timerId;},clearTimeout:id=>timers.delete(id),setInterval:()=>++timerId,clearInterval(){},console};
+ const context={document:doc,window:{},matchMedia:q=>({matches:q.includes('prefers-reduced-motion') && reducedMotion,addEventListener(){}}),addEventListener(){},requestAnimationFrame:()=>1,cancelAnimationFrame(){},setTimeout:f=>{timers.set(++timerId,f);return timerId;},clearTimeout:id=>timers.delete(id),setInterval:()=>++timerId,clearInterval(){},console};
  vm.runInNewContext(fs.readFileSync('dist/stage-show.js','utf8'),context);
  return {stage,video,music,buttons,tracks,presets,elements,timers,click:e=>e.emit('click')};
 }
@@ -60,4 +60,18 @@ test('the production page provides every wall control and the first small clip',
  const html=fs.readFileSync('dist/index.html','utf8');
  for(const id of ['wall-playback-status','wall-next','wall-retry'])assert.ok(html.includes('id="'+id+'"'));
  assert.ok(html.includes('src="assets/wall-mobile/clip-1.mp4"'));
+});
+
+test('explicit show starts the lights even when reduced motion is preferred',()=>{
+ const s=setup(true);s.click(s.elements['stage-show']);
+ assert.ok(s.elements['stage-experience'].classList.contains('stage-full-motion'));
+ const startup=Array.from(s.timers.values());startup[0]();startup[1]();
+ assert.ok(s.stage.classList.contains('lights-on'));
+ assert.ok(s.stage.classList.contains('led-on'));
+});
+test('blocked audio does not cancel the visual show',async()=>{
+ const s=setup();s.music.play=()=>Promise.reject(Object.assign(new Error('Blocked'),{name:'NotAllowedError'}));
+ s.click(s.elements['stage-show']);await new Promise(resolve=>setImmediate(resolve));
+ assert.ok(s.stage.classList.contains('show-running'));
+ assert.ok(s.timers.size>0);
 });

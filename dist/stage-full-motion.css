@@ -1,0 +1,151 @@
+/* Full stage choreography after the visitor explicitly starts the show. */
+.stage-full-motion .beam-two{animation-delay:-5s!important;animation-duration:15s!important}
+.stage-full-motion .beam-three{animation-delay:-8s!important;animation-duration:18s!important}
+.stage-full-motion .title-first{animation:title-arrive .85s cubic-bezier(.2,.65,.2,1) both!important}
+.stage-full-motion .title-second{animation:title-arrive .85s .18s cubic-bezier(.2,.65,.2,1) both!important}
+.stage-full-motion .lights-on .stage-strobes b::after{animation:strobe-flash 1.3s steps(1) infinite!important}
+.stage-full-motion .lights-on .stage-strobes b:nth-child(2)::after{animation-delay:.45s!important}
+.stage-full-motion .lights-on .stage-strobes b:nth-child(3)::after{animation-delay:.9s!important}
+.stage-full-motion .lights-on .stage-strobes b:nth-child(4)::after{animation-delay:.25s!important}
+.stage-full-motion .lights-on .stage-strobes b:nth-child(5)::after{animation-delay:.7s!important}
+.stage-full-motion .lights-on .stage-strobes b:nth-child(6)::after{animation-delay:.55s!important}
+.stage-full-motion .lights-on .stage-strobes b:nth-child(7)::after{animation-delay:1s!important}
+.stage-full-motion .lights-on .stage-strobes b:nth-child(8)::after{animation-delay:.35s!important}
+.stage-full-motion .lights-on .stage-strobes b:nth-child(9)::after{animation-delay:.8s!important}
+.stage-full-motion .lights-on .stage-strobes-side b::after{animation:strobe-flash 1.3s steps(1) infinite!important}
+.stage-full-motion .lights-on .stage-strobes-side b:nth-child(2)::after{animation-delay:.45s!important}
+.stage-full-motion .lights-on .stage-strobes-side b:nth-child(3)::after{animation-delay:.9s!important}
+.stage-full-motion .lights-on .stage-strobes-side b:nth-child(4)::after{animation-delay:.2s!important}
+.stage-full-motion .lights-on .stage-strobes-side b:nth-child(5)::after{animation-delay:.65s!important}
+.stage-full-motion .lights-on .stage-strobes-side b:nth-child(6)::after{animation-delay:1.1s!important}
+.stage-full-motion .lights-on .stage-strobes b:nth-child(10)::after{animation-delay:.5s!important}
+.stage-full-motion .lights-on .stage-strobes b:nth-child(11)::after{animation-delay:.95s!important}
+.stage-full-motion .lights-on .stage-strobe-flash{animation:flash-soft 1.3s steps(1) infinite!important}
+.stage-full-motion .lights-on .stage-fixtures i::before,.stage-full-motion .lights-on .stage-fixtures i::after{animation:mh-tilt-sm 4.6s ease-in-out infinite alternate!important}
+.stage-full-motion .lights-on .stage-fixtures i:nth-child(even)::before,.stage-full-motion .lights-on .stage-fixtures i:nth-child(even)::after{animation-delay:-2.3s!important;animation-direction:alternate-reverse!important}
+.stage-full-motion .lights-on .stage-fixtures i s{animation:mh-tilt-sm 4.6s ease-in-out infinite alternate!important}
+.stage-full-motion .lights-on .stage-fixtures i:nth-child(even) s{animation-delay:-2.3s!important;animation-direction:alternate-reverse!important}
+.stage-full-motion .lights-on .mh-beam::after{animation:mh-pan 3.4s ease-in-out infinite alternate!important}
+.stage-full-motion .lights-on .mh-wash::after{animation:mh-pan 5.6s ease-in-out infinite alternate-reverse!important}
+.stage-full-motion .stage-beams i{animation:stage-sweep 7s ease-in-out infinite alternate!important}
+.stage-full-motion .stage-beams i:nth-child(even){animation-delay:-3s!important;animation-direction:alternate-reverse!important}
+.stage-full-motion .led-on .led-art{animation:led-flow 10s ease-in-out infinite alternate!important}
+.stage-full-motion .sound-on .stage-speaker i{animation:speaker-pulse .7s ease-in-out infinite alternate!important}
+.stage-full-motion .sound-on .stage-equalizer i{animation:eq-dance calc(.45s + var(--bar)*.023s) ease-in-out infinite alternate!important;animation-delay:calc(var(--bar)*-.13s)!important}
+.stage-full-motion .led-on .stage-led-wing i{animation:led-wing-flow 3s linear infinite!important}
+.stage-full-motion .lights-on[data-light-effect="cross"] .stage-beams i{animation:stage-cross 5s ease-in-out infinite alternate!important}
+.stage-full-motion .lights-on[data-light-effect="cross"] .stage-beams i:nth-child(even){animation-direction:alternate-reverse!important;animation-delay:-2s!important}
+.stage-full-motion .lights-on[data-light-effect="pulse"] .stage-beams{animation:stage-light-switch 3.2s ease-in-out infinite!important}
+.stage-full-motion .lights-on[data-light-effect="pulse"] .stage-fixtures i{animation:stage-fixture-switch 3.2s ease-in-out infinite!important}
+.stage-full-motion .lights-on[data-light-effect="pulse"] .stage-room-glow{animation:stage-room-switch 3.2s ease-in-out infinite!important}
+.stage-full-motion .lights-on[data-light-effect="color"] .stage-beams{animation:stage-color-wave 9s linear infinite!important}
+.stage-full-motion .lights-on[data-light-effect="color"] .stage-room-glow{animation:stage-color-wave 9s linear infinite!important}
+.stage-full-motion .lights-on .stage-fixtures i{animation:head-sweep 7s ease-in-out infinite alternate!important}
+.stage-full-motion .lights-on .stage-fixtures i:nth-child(even){animation-direction:alternate-reverse!important;animation-delay:-3s!important}
+.stage-full-motion .lights-on[data-light-effect="cross"] .stage-fixtures i{animation:head-cross 5s ease-in-out infinite alternate!important}
+.stage-full-motion .lights-on[data-light-effect="cross"] .stage-fixtures i:nth-child(even){animation-direction:alternate-reverse!important;animation-delay:-2s!important}
+.stage-full-motion .lights-on .stage-fog i{animation:fog-drift 18s ease-in-out infinite alternate!important}
+.stage-full-motion .lights-on .stage-fog i:nth-child(2){animation-delay:-8s!important;animation-direction:alternate-reverse!important}
+.stage-full-motion .audio-reactive.music-playing .stage-speaker i{animation:none!important;transform:scale(calc(1 + var(--bass,0)*.08));box-shadow:0 0 calc(3px + var(--bass,0)*14px) #19c2dc35}
+.stage-full-motion .audio-reactive .stage-equalizer i{animation:none!important;height:100%;transform:scaleY(var(--level-live,.04))}
+.stage-full-motion .audio-reactive.music-playing.lights-on:not([data-light-effect="pulse"]) .stage-beams{opacity:calc(.32 + var(--bass,0)*.3)}
+.stage-full-motion .audio-reactive.music-playing.lights-on .stage-room-glow{filter:brightness(calc(.85 + var(--bass,0)*.5))}
+.stage-full-motion .lights-on .stage-fixtures i::before,.stage-full-motion .lights-on .stage-fixtures i::after,.stage-full-motion .lights-on .stage-fixtures i s{animation:none!important}
+.stage-full-motion .lights-on .stage-fixtures i,.stage-full-motion .lights-on .stage-fixtures i:nth-child(even){animation:optical-pan var(--timing) ease-in-out var(--delay) infinite alternate!important}
+.stage-full-motion .lights-on[data-light-effect="cross"] .stage-fixtures i,.stage-full-motion .lights-on[data-light-effect="cross"] .stage-fixtures i:nth-child(even){animation:optical-cross 6s ease-in-out var(--delay) infinite alternate!important}
+.stage-full-motion .lights-on[data-light-effect="pulse"] .stage-fixtures i{animation:optical-blackout 4.8s ease-in-out var(--delay) infinite!important}
+.stage-full-motion .lights-on[data-light-effect="color"] .stage-fixtures i{animation:optical-pan var(--timing) ease-in-out var(--delay) infinite alternate,optical-color 12s linear infinite!important}
+.stage-full-motion .lights-on .stage-floor-spots i{animation:floor-light-drift 8s ease-in-out infinite alternate!important}
+.stage-full-motion .lights-on .stage-floor-spots i:nth-child(2){animation-delay:-4s!important;animation-direction:alternate-reverse!important}
+.stage-full-motion .lights-on[data-light-effect="pulse"] .stage-floor-spots{animation:optical-blackout 4.8s ease-in-out infinite!important}
+.stage-full-motion .lights-on[data-light-effect="color"] .stage-floor-spots{animation:optical-color 12s linear infinite!important}
+.stage-full-motion .lights-on[data-light-effect="pulse"] .stage-room-glow,.stage-full-motion .lights-on[data-light-effect="pulse"] .stage-movers{animation:optical-blackout 4.8s ease-in-out infinite!important}
+.stage-full-motion .lights-on[data-light-effect="color"] .stage-movers{animation:optical-color 12s linear infinite!important}
+.stage-full-motion .audio-reactive.music-playing.lights-on .stage-fixtures i s{opacity:calc(.6 + var(--bass,0)*.2)}
+.stage-full-motion .lights-on[data-light-effect="pulse"] .stage-fixtures i{animation:none!important}
+.stage-full-motion .lights-on[data-light-effect="pulse"] .stage-fixtures i::before,.stage-full-motion .lights-on[data-light-effect="pulse"] .stage-fixtures i s{animation:optical-lamp-off 4.8s ease-in-out var(--delay) infinite!important}
+.stage-full-motion .beat-sync.lights-on .stage-strobes b::after,.stage-full-motion .beat-sync.lights-on .stage-strobes-side b::after{animation:none!important;opacity:.12;box-shadow:none}
+.stage-full-motion .beat-sync.lights-on .stage-strobes b.hit-a::after,.stage-full-motion .beat-sync.lights-on .stage-strobes-side b.hit-a::after{animation:beat-strobe-a .13s steps(1)!important}
+.stage-full-motion .beat-sync.lights-on .stage-strobes b.hit-b::after,.stage-full-motion .beat-sync.lights-on .stage-strobes-side b.hit-b::after{animation:beat-strobe-b .13s steps(1)!important}
+.stage-full-motion .beat-sync.lights-on .stage-strobe-flash{animation:none!important;opacity:0}
+.stage-full-motion .beat-sync.lights-on.flash-a .stage-strobe-flash{animation:beat-flash-a .4s ease-out!important}
+.stage-full-motion .beat-sync.lights-on.flash-b .stage-strobe-flash{animation:beat-flash-b .4s ease-out!important}
+.stage-full-motion .beat-sync.lights-on.hit-a:not([data-light-effect="pulse"]) .stage-fixtures i s{animation:beat-cone-a var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.lights-on.hit-b:not([data-light-effect="pulse"]) .stage-fixtures i s{animation:beat-cone-b var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.lights-on.hit-a:not([data-light-effect="pulse"]):not([data-light-effect="color"]) .stage-room-glow{animation:beat-glow-a var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.lights-on.hit-b:not([data-light-effect="pulse"]):not([data-light-effect="color"]) .stage-room-glow{animation:beat-glow-b var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.lights-on .stage-fixtures i,.stage-full-motion .beat-sync.lights-on .stage-fixtures i:nth-child(even){animation:none!important;transition:transform calc(var(--beat-len)*1.5) cubic-bezier(.45,0,.2,1)!important;transform:rotate(calc(var(--pan)*1.6))}
+.stage-full-motion .beat-sync.lights-on[data-bar="1"] .stage-fixtures i{transform:rotate(-24deg)}
+.stage-full-motion .beat-sync.lights-on[data-bar="2"] .stage-fixtures i{transform:rotate(calc(var(--pan)*-1.4))}
+.stage-full-motion .beat-sync.lights-on[data-bar="3"] .stage-fixtures i{transform:rotate(24deg)}
+.stage-full-motion .beat-sync.lights-on[data-light-effect="color"] .stage-fixtures i{animation:optical-color 12s linear infinite!important}
+.stage-full-motion .audio-reactive.music-playing.lights-on .deck-glare{opacity:calc(.05 + var(--bass,0)*.22)}
+.stage-full-motion .beat-sync.lights-on.hit-a .deck-glare{animation:deck-glare-a var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.lights-on.hit-b .deck-glare{animation:deck-glare-b var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.lights-on.hit-a .deck-led,.stage-full-motion .beat-sync.lights-on.hit-a .deck-nosing{animation:deck-led-a var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.lights-on.hit-b .deck-led,.stage-full-motion .beat-sync.lights-on.hit-b .deck-nosing{animation:deck-led-b var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.lights-on[data-light-effect="color"] .deck-glare{fill:#c79cff}
+.stage-full-motion .stage-intro .deck-led{transform-box:fill-box;transform-origin:center;animation:intro-led 3.8s ease-out!important}
+.stage-full-motion .stage-intro .stage-strobes b::after{animation:intro-strobe .42s calc(.55s + var(--i)*.1s) ease-out!important}
+.stage-full-motion .stage-intro .stage-strobes-side b::after{animation:intro-strobe .42s calc(1.5s + (5 - var(--i))*.1s) ease-out!important}
+.stage-full-motion .stage-intro .stage-fixtures i s{animation:intro-cone 1.3s calc(2.1s + var(--i)*.12s) ease-in-out!important}
+.stage-full-motion .stage-intro .led-brand{animation:intro-logo 1.5s 2.4s ease-out!important}
+.stage-full-motion .stage-intro .stage-led{animation:intro-wall 1.5s 2.4s ease-out!important}
+.stage-full-motion .finale .stage-flames i::after{animation:flame-burst 1.1s ease-out 3!important}
+.stage-full-motion .finale .stage-room-glow{animation:flame-glow 3.3s ease-out!important}
+.stage-full-motion .beat-sync.has-title.hit-a .led-title span{animation:title-beat-a var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.has-title.hit-b .led-title span{animation:title-beat-b var(--beat-len) ease-out!important}
+.stage-full-motion .has-title .wing-title span{animation:wing-ticker 16s linear infinite!important}
+.stage-full-motion .has-title .wing-right .wing-title span{animation-direction:reverse!important}
+.stage-full-motion .led-count b{animation:count-hit .8s cubic-bezier(.2,.8,.3,1) both!important}
+.stage-full-motion .show-go .stage-strobe-flash{animation:go-flash .9s ease-out!important}
+.stage-full-motion .show-go .stage-strobes b::after,.stage-full-motion .show-go .stage-strobes-side b::after{animation:go-strobe .9s steps(1)!important}
+.stage-full-motion .stage-preview:not(.sound-on):not(.lights-on):not(.led-on):not(.show-running):not(.stage-intro) .stage-play{animation:play-in .6s ease-out both,play-glow 2.4s ease-in-out .6s infinite!important}
+.stage-full-motion .beat-sync.music-playing.hit-a .crowd-layer{animation:crowd-bob-a var(--beat-len) ease-out var(--phase)!important}
+.stage-full-motion .beat-sync.music-playing.hit-b .crowd-layer{animation:crowd-bob-b var(--beat-len) ease-out var(--phase)!important}
+.stage-full-motion .beat-sync.music-playing.crowd-jump.hit-a .crowd-layer{animation:crowd-jump-a var(--beat-len) cubic-bezier(.3,.7,.4,1) var(--phase)!important}
+.stage-full-motion .beat-sync.music-playing.crowd-jump.hit-b .crowd-layer{animation:crowd-jump-b var(--beat-len) cubic-bezier(.3,.7,.4,1) var(--phase)!important}
+.stage-full-motion .beat-sync.music-playing.hit-a .stage-props .bop{animation:dj-bop-a var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.music-playing.hit-b .stage-props .bop{animation:dj-bop-b var(--beat-len) ease-out!important}
+.stage-full-motion .music-playing .stage-props .sway{animation:singer-sway 4s ease-in-out infinite alternate!important}
+.stage-full-motion .beat-sync.lights-on.hit-a :is(.stage-audience,.stage-props){animation:light-touch-a var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.lights-on.hit-b :is(.stage-audience,.stage-props){animation:light-touch-b var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.lights-on.flash-a :is(.stage-audience,.stage-props){animation:light-flash-a .45s ease-out!important}
+.stage-full-motion .beat-sync.lights-on.flash-b :is(.stage-audience,.stage-props){animation:light-flash-b .45s ease-out!important}
+.stage-full-motion .beat-sync.lights-on.flash-a .stage-truss{animation:truss-flash-a .4s ease-out!important}
+.stage-full-motion .beat-sync.lights-on.flash-b .stage-truss{animation:truss-flash-b .4s ease-out!important}
+.stage-full-motion .lights-on .crowd-spots{animation:spots-sweep 7s ease-in-out infinite alternate!important}
+.stage-full-motion .beat-sync.lights-on.hit-a .stage-bloom{animation:light-touch-a var(--beat-len) ease-out!important}
+.stage-full-motion .beat-sync.lights-on.hit-b .stage-bloom{animation:light-touch-b var(--beat-len) ease-out!important}
+.stage-full-motion .show-running .stage-canvas{animation:camera-drift 22s ease-in-out infinite alternate!important}
+.stage-full-motion .sound-on .stage-equalizer i{animation:led-chase 1.2s ease-in-out calc(var(--bar)*-.05s) infinite alternate!important}
+.stage-full-motion .audio-reactive .stage-equalizer i{animation:none!important;opacity:calc(.15 + var(--level-live,.04)*.85)}
+.stage-full-motion .beat-sync.music-playing.hit-a .stage-sub::before,.stage-full-motion .beat-sync.music-playing.hit-b .stage-sub::before{transform:scale(1.03)}
+.stage-full-motion .lights-on .stage-gobos i::before{animation:gobo-orbit 22s linear infinite!important}
+.stage-full-motion .lights-on .stage-gobos i:nth-child(2)::before{animation-direction:reverse!important;animation-duration:29s!important}
+.stage-full-motion .music-playing .psm-signature i{animation:signature-wave 2.4s ease-in-out infinite alternate!important}
+.stage-full-motion .music-playing .psm-signature i:nth-child(even){animation-delay:-1.2s!important}
+.stage-full-motion .music-playing .psm-signature i:nth-child(3){animation-delay:-.6s!important}
+.stage-full-motion .beat-sync.hit-a .psm-signature,.stage-full-motion .beat-sync.hit-b .psm-signature{filter:brightness(calc(1 + var(--energy,0)*.5))}
+.stage-full-motion .lights-on .mh-ledwash::after{animation:mh-pan 6s ease-in-out infinite alternate!important}
+.stage-full-motion .lights-on .mh-ledwash:nth-child(4)::after{animation-delay:-2s!important;animation-direction:alternate-reverse!important}
+.stage-full-motion .lights-on .mh-ledwash:nth-child(6)::after{animation-delay:-4s!important}
+.stage-full-motion .lights-on .wash-edge-left::after{animation-delay:-1s!important}
+.stage-full-motion .lights-on .wash-edge-right::after{animation-delay:-3s!important;animation-direction:alternate-reverse!important}
+.stage-full-motion .lights-on .mh-ledwash img{animation:wash-lens-colours 10s linear var(--wash-phase) infinite!important}
+.stage-full-motion .lights-on .stage-movers .mh-ledwash::after{animation:mh-pan 6s ease-in-out var(--wash-phase) infinite alternate,wash-beam-colours 10s linear var(--wash-phase) infinite!important;opacity:.45}
+.stage-full-motion .lights-on .mh-ledwash img{animation:wash-lens-colours 10s linear var(--wash-phase) infinite!important}
+.stage-full-motion .lights-on .stage-movers .mh-ledwash::after{animation:wash-beam-scan 8s ease-in-out var(--wash-phase) infinite,wash-beam-colours 10s linear var(--wash-phase) infinite!important}
+.stage-full-motion .lights-on .mh-ledwash .wash-yoke{animation:none!important}
+.stage-full-motion .lights-on .mh-ledwash .wash-head{animation:wash-lens-colours 10s linear var(--wash-phase) infinite,wash-head-aim 8s ease-in-out var(--wash-phase) infinite!important}
+.stage-full-motion .stage-deck-svg{animation:led-bar-concert 9s linear infinite!important}
+.stage-full-motion .stage-preview[data-preset="boda"] .stage-deck-svg{animation-name:led-bar-boda!important}
+.stage-full-motion .stage-preview[data-preset="corporativo"] .stage-deck-svg{animation-name:led-bar-corporativo!important}
+.stage-full-motion .show-running .stage-deck-svg{animation-duration:4.5s!important}
+.stage-full-motion .lights-on .stage-fixtures i,.stage-full-motion .lights-on .stage-fixtures i:nth-child(even),.stage-full-motion .lights-on[data-light-effect] .stage-fixtures i{animation:head-circle 16s linear var(--delay,0s) infinite!important;transition:none!important}
+.stage-full-motion .lights-on[data-light-effect="color"] .stage-fixtures i{animation:head-circle 16s linear var(--delay,0s) infinite,optical-color 12s linear infinite!important}
+.stage-full-motion .lights-on .mh-ledwash .wash-head{animation:wash-lens-colours 10s linear var(--wash-phase) infinite,wash-head-circle 12s linear var(--wash-phase) infinite!important}
+.stage-full-motion .lights-on .stage-movers .mh-ledwash::after{animation:wash-beam-circle 12s linear var(--wash-phase) infinite,wash-beam-colours 10s linear var(--wash-phase) infinite!important}
+.stage-full-motion .stage-preview.show-running *,.stage-full-motion .stage-preview.show-running *::before,.stage-full-motion .stage-preview.show-running *::after{animation-play-state:running!important}
+.stage-full-motion .show-running:not(.beat-sync) .crowd-layer:not(.foh-layer){--beat-len:.6s;animation:crowd-bob-a 1.2s ease-in-out var(--phase,0s) infinite!important}
+.stage-full-motion .show-running:not(.beat-sync) .crowd-layer .arms.always{opacity:1;transform:none}

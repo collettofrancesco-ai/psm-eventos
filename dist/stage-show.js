@@ -27,6 +27,7 @@
   var fullButton = document.getElementById('stage-fullscreen');
   var effect = document.getElementById('light-effect');
   var reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  function reducedEffects(){ return reduced.matches && !experience.classList.contains('stage-full-motion'); }
   function psmLang(){ return window.PSM_LANG || 'es'; }
   function ST(key, fallback){
     try {
@@ -69,7 +70,7 @@
     if (!music.paused) { scheduleFrame(); return; }
     music.play().catch(function(error){
       if (error.name === 'AbortError' || (!state.sound && !intro)) return;
-      cancelShow(); state.sound = false; render();
+      if (!showRunning) cancelShow(); state.sound = false; render();
       status.textContent = ST('musicErr', 'Pulsa Sonido para volver a iniciar la música.');
     });
   }
@@ -221,7 +222,7 @@
     if (showRunning) {cancelShow();state={sound:false,lights:false,led:false};render();return;}
     // The track is unlocked inside the tap (iOS needs the gesture) but muted, since iOS
     // ignores audio.volume; the clip only buffers. Both start from zero when the countdown ends.
-    cancelShow();manualTrack=false;showRunning=true;finaleDone=false;showStart=Date.now();
+    cancelShow();experience.classList.add('stage-full-motion');stage.classList.add('effects-in-view');manualTrack=false;showRunning=true;finaleDone=false;showStart=Date.now();
     selectTrackFile(wallTracks[ledIndex]);
     music.muted=true;
     state={sound:true,lights:false,led:false};render();
@@ -229,7 +230,7 @@
     var warm=video.play();
     if (warm && warm.then) warm.then(function(){ if (!state.led) { video.pause(); video.currentTime=0; } }).catch(function(){});
     stage.dataset.direction = 'quiet';
-    if (!reduced.matches) stage.classList.add('backstage');
+    if (!reducedEffects()) stage.classList.add('backstage');
     timers.push(setTimeout(function(){ stage.classList.remove('backstage'); }, entryDelay()));
     countdown();
     timers.push(setTimeout(function(){
@@ -238,7 +239,7 @@
       stage.dataset.direction='build';
       showMode=0;state.lights=true;state.led=true;stage.dataset.lightEffect='cross';effect.value='cross';render();
       // Tracks with a beat map change effect on the music (fireBeat); others on a timer.
-      if (trackBeats()) return;
+      if (trackBeats() && !music.paused) return;
       var modes=['cross','color','sweep','pulse'], index=0;
       showCycle=setInterval(function(){index=(index+1)%modes.length;stage.dataset.lightEffect=modes[index];effect.value=modes[index];stage.dataset.direction=['build','open','quiet','open'][index];},8000);
     },COUNT_STEP*3 + entryDelay()));
@@ -251,7 +252,7 @@
   if (playButton) playButton.addEventListener('click', function(event){ event.stopPropagation(); if (!showRunning) showButton.click(); });
   // Countdown on the blacked-out LED wall, then music, video and every light hit at once.
   var COUNT_STEP = 800;
-  function entryDelay(){ return reduced.matches ? 0 : 1400; }
+  function entryDelay(){ return reducedEffects() ? 0 : 1400; }
   var ledCount = stage.querySelector ? stage.querySelector('.led-count') : null;
   function countdown(){
     if (!ledCount) return;
@@ -275,7 +276,7 @@
     if (!inView || document.hidden) return;
     if (time-previousFrame>=(matchMedia('(pointer: coarse)').matches ? 66 : 33)) {
       previousFrame=time;
-      if (analyser && state.sound && !music.paused && !reduced.matches) {
+      if (analyser && state.sound && !music.paused && !reducedEffects()) {
         analyser.getByteFrequencyData(frequencies);
         var bass=0;
         for(var b=1;b<8;b++) bass+=frequencies[b]/255;
@@ -304,7 +305,7 @@
   music.addEventListener('pause',function(){stage.classList.remove('music-playing');stage.style.setProperty('--bass','0');});
   video.addEventListener('playing',function(){stage.classList.add('led-playing');stage.classList.remove('led-fallback');scheduleFrame();});
   video.addEventListener('pause',function(){stage.classList.remove('led-playing');});
-  reduced.addEventListener('change',function(){if(reduced.matches)stage.style.setProperty('--bass','0');scheduleFrame();});
+  reduced.addEventListener('change',function(){if(reducedEffects())stage.style.setProperty('--bass','0');scheduleFrame();});
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function(entries){inView=entries[0].isIntersecting;if(inView)scheduleFrame();else{cancelAnimationFrame(frame);frame=0;}}).observe(stage);
   }
@@ -326,7 +327,7 @@
     new IntersectionObserver(function(entries, observer){
       if (introDone || !entries[0].isIntersecting) return;
       introDone = true; observer.disconnect();
-      if (reduced.matches || state.sound || state.lights || state.led) return;
+      if (reducedEffects() || state.sound || state.lights || state.led) return;
       stage.classList.add('stage-intro');
       introTimer = setTimeout(endIntro, 3900);
     }, {threshold:.5}).observe(stage);
@@ -347,7 +348,7 @@
     });
     stage.classList.add('finale');
     timers.push(setTimeout(function(){ stage.classList.remove('finale'); if (confetti) confetti.innerHTML = ''; }, 5600));
-    if (!confetti || reduced.matches) return;
+    if (!confetti || reducedEffects()) return;
     var pieces = '';
     for (var n = 0; n < 80; n++) {
       pieces += '<i style="--x:' + (Math.random() * 100).toFixed(1) + '%;--dx:' + Math.round(Math.random() * 120 - 60) + 'px;--r:' + Math.round(Math.random() * 900 - 450) + 'deg;--s:' + (2.6 + Math.random() * 1.8).toFixed(2) + 's;--d:' + (Math.random() * .7).toFixed(2) + 's;--c:' + confettiColors[n % confettiColors.length] + '"></i>';
@@ -383,7 +384,7 @@
   function scheduleBeat(){
     clearTimeout(beatTimer); beatTimer = 0;
     var map = trackBeats();
-    if (!map || music.paused || music.muted || reduced.matches || document.hidden) { stopBeats(); return; } // lights rules also need .lights-on; the crowd moves with music alone
+    if (!map || music.paused || music.muted || reducedEffects() || document.hidden) { stopBeats(); return; } // lights rules also need .lights-on; the crowd moves with music alone
     stage.classList.add('beat-sync');
     stage.style.setProperty('--beat-len', (60 / map.bpm).toFixed(3) + 's');
     var now = music.currentTime, beats = map.beats;
