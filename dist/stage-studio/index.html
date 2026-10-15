@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#11151c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Diseña escenarios, visualiza tu show y prepara tu propuesta técnica con PSM Stage Studio.">
+  <title>PSM — Stage Studio</title>
+  <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
+  <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
+  <link rel="manifest" href="/stage-studio/manifest.webmanifest">
+  <script type="module" crossorigin src="/stage-studio/assets/index-B5NRaTP4.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Ct0ovA9j.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="PSM Stage Studio">
+      <img class="brand-logo" alt="PSM Production · Sound · Lighting">
+      <span class="brand-stage">STAGE STUDIO</span>
+    </a>
+    <label class="language-picker">
+      <span aria-hidden="true">◎</span>
+      <span class="sr-only" data-i18n="Language">Idioma</span>
+      <select id="language" aria-label="Idioma" title="Idioma">
+        <option value="es">Español</option>
+        <option value="en">English</option>
+        <option value="pt">Português</option>
+        <option value="it">Italiano</option>
+        <option value="de">Deutsch</option>
+        <option value="fr">Français</option>
+      </select>
+    </label>
+    <div class="project-heading">
+      <span class="status-dot"></span>
+      <input id="project-name" aria-label="Nombre del proyecto" maxlength="80" value="Main Stage · Live 2026">
+      <span id="save-status">Guardado local</span>
+    </div>
+    <div class="top-actions">
+      <button id="btn-pro" class="btn pro-entry" type="button" aria-haspopup="dialog" aria-controls="subscription-dialog"><span aria-hidden="true">✦</span><span data-i18n="Stage Studio Pro · 10 €/mes">Stage Studio Pro · 10 €/mes</span></button>
+      <button id="btn-load" class="btn ghost">Mis proyectos</button>
+      <button id="btn-save" class="btn ghost">Guardar proyecto</button>
+      <button id="btn-export" class="btn primary">Exportar propuesta ↗</button>
+    </div>
+  </header>
+  <nav class="workspace-bar">
+    <span><span class="workspace-label">WORKSPACE</span> / <b>Diseñador de escenarios</b></span>
+    <div class="history-actions"><button id="btn-undo" aria-label="Deshacer" title="Deshacer (Ctrl/⌘ Z)" disabled>↶</button><button id="btn-redo" aria-label="Rehacer" title="Rehacer (Ctrl/⌘ Shift Z)" disabled>↷</button><span class="history-divider"></span><span class="workspace-meta">PSM PRODUCTION TOOLS <span class="status-dot"></span> Motor 3D en tiempo real</span></div>
+  </nav>
+  <main class="layout">
+    <aside class="panel left">
+      <div class="panel-heading">
+        <div><span class="eyebrow">01 / CONFIGURACIÓN</span><h2>Construye tu escenario</h2></div>
+        <span class="panel-icon">⌘</span>
+      </div>
+      <label class="field-label" for="preset">TIPO DE PRODUCCIÓN</label>
+      <select id="preset">
+        <option value="concierto">Concierto · Main stage</option>
+        <option value="corporativo">Corporativo · Conference</option>
+        <option value="boda">Social · Wedding</option>
+        <option value="free">Costruisci da zero · modello vuoto</option>
+        <option value="custom">Personalizado</option>
+      </select>
+      <button id="btn-start-empty" class="btn empty-build-entry" type="button" aria-pressed="false">
+        <span class="empty-build-icon" aria-hidden="true">＋</span>
+        <span><strong>Costruisci il tuo palco</strong><small>Parti da un canvas vuoto e aggiungi ogni elemento</small></span>
+        <span class="empty-build-arrow" aria-hidden="true">→</span>
+      </button>
+      <button id="btn-reset-structure" class="btn ghost reset-structure-button" type="button"><span aria-hidden="true">↺</span><span>Restablecer estructura inicial</span></button>
+      <p class="hint reset-structure-hint">Vuelve a las medidas y al equipo del preset Concierto. Conserva los datos del cliente y del evento.</p>
+      <p id="free-build-hint" class="hint" hidden>Canvas vuoto: niente viene aggiunto automaticamente. Scegli un truss qui sotto oppure apri “Tutti i componenti”; poi trascina gli oggetti nella posizione desiderata.</p>
+      <section id="free-build-toolbox" class="free-build-toolbox" aria-labelledby="free-build-toolbox-title" hidden>
+        <div class="section-title"><h3 id="free-build-toolbox-title">Truss in alluminio</h3><span>SELEZIONE RAPIDA</span></div>
+        <p class="free-build-intro">Tocca una sezione per aggiungerla al canvas. Dopo puoi selezionarla, trascinarla e modificarne le coordinate.</p>
+        <div class="quick-truss-grid" aria-label="Sezioni truss disponibili">
+          <button type="button" data-add-model-element="truss30"><b>30 × 30</b><small>Sezione · 3 m</small></button>
+          <button type="button" data-add-model-element="truss40"><b>40 × 40</b><small>Sezione · 3 m</small></button>
+          <button type="button" data-add-model-element="truss6040"><b>60 × 40</b><small>Sezione · 3 m</small></button>
+          <button type="button" data-add-model-element="truss8652"><b>86 × 52</b><small>Sezione · 3 m</small></button>
+        </div>
+        <div class="quick-build-actions">
+          <button type="button" data-add-model-element="trussCornerF34">＋ Box corner F34</button>
+          <button type="button" data-add-model-element="trussCornerF54">＋ Box corner F54</button>
+          <button type="button" data-add-model-element="baseplate">＋ Baseplate 80 × 80</button>
+          <button id="btn-open-element-library" type="button">Tutti i componenti <span aria-hidden="true">↗</span></button>
+        </div>
+        <p class="hint quick-build-limit">Modelli geometrici indicativi: verifica compatibilità, portate e componenti con produttore e progettista.</p>
+        <section class="auto-frame-builder" aria-labelledby="auto-frame-title">
+          <div class="section-title"><h3 id="auto-frame-title">1 · Struttura</h3><span>UN CLIC</span></div>
+          <p class="free-build-intro">Crea un portale rettangolare chiuso: 4 montanti, truss superiore, box corner e baseplate.</p>
+          <div class="frame-builder-fields">
+            <label>Larghezza (m)<select id="frame-width"><option>6</option><option selected>9</option><option>12</option><option>15</option><option>18</option></select></label>
+            <label>Profondità (m)<select id="frame-depth"><option>6</option><option selected>6</option><option>9</option><option>12</option><option>15</option><option>18</option></select></label>
+            <label>Altezza (m)<select id="frame-height"><option>3</option><option>6</option><option selected>9</option><option>12</option><option>15</option><option>18</option></select></label>
+            <label>Profilo<select id="frame-profile"><option value="truss30">30 × 30</option><option value="truss40" selected>40 × 40</option><option value="truss6040">60 × 40</option><option value="truss8652">86 × 52</option></select></label>
+          </div>
+          <p id="frame-builder-status" class="hint frame-builder-status" aria-live="polite"></p>
+          <button id="btn-generate-frame" class="btn primary full" type="button">Crea telaio truss completo</button>
+        </section>
+        <section class="auto-frame-next-steps" aria-labelledby="stage-next-steps-title">
+          <div class="section-title"><h3 id="stage-next-steps-title">2 · Pedana e attrezzatura</h3><span>PASSO SUCCESSIVO</span></div>
+          <p class="free-build-intro">Imposta larghezza, profondità e altezza. La pedana si adatta al telaio; ogni modulo misura 2,57 × 2,57 m.</p>
+          <div class="frame-builder-fields stage-deck-fields">
+            <label>Larghezza pedana (m)<input id="stage-deck-width" type="number" min="2.57" step="2.57" value="7.71"></label>
+            <label>Profondità pedana (m)<input id="stage-deck-depth" type="number" min="2.57" step="2.57" value="7.71"></label>
+            <label>Altezza pedana (m)<input id="stage-deck-height" type="number" min="0.3" max="3" step="0.1" value="2.3"></label>
+          </div>
+          <p class="hint stage-deck-dimension-note">Le misure si aggiornano in metri. Larghezza e profondità avanzano a moduli di 2,57 m.</p>
+          <p id="stage-next-steps-status" class="hint frame-builder-status" aria-live="polite"></p>
+          <div class="quick-build-actions">
+            <button id="btn-add-stage-deck" class="next-step-action" type="button">＋ Crea pedana modulare</button>
+            <button id="btn-add-stage-lights" class="next-step-action" type="button">✦ Aggiungi 2 luci</button>
+            <button id="btn-open-stage-library" type="button">Aggiungi casse, subwoofer o LED</button>
+          </div>
+        </section>
+      </section>
+      <div class="design-modes" role="group" aria-label="Estilo de visualización"><button data-style="show" class="active" aria-pressed="true"><span aria-hidden="true">◈</span>&nbsp;<span>Show</span></button><button data-style="reference" aria-pressed="false"><span aria-hidden="true">⌗</span>&nbsp;<span>Referencia</span></button></div><button id="btn-reference" class="reference-preset">↗ Cargar medidas de referencia <span>15,42 × 10,28 m</span></button>
+      <div class="look-picker"><div class="section-title"><h3>Atmósfera del show</h3><span>LIGHT DESIGN</span></div><div class="look-options" role="group" aria-label="Atmósfera del show"><button data-look="aurora" class="active"><i class="look-swatch aurora"></i>Aurora</button><button data-look="electric"><i class="look-swatch electric"></i>Electric</button><button data-look="sunset"><i class="look-swatch sunset"></i>Sunset</button></div></div>
+      <div class="section-title"><h3>Dimensiones</h3><span>METROS</span></div>
+      <label>Ancho de tarima <output id="value-deck-w"></output><input id="deck-w" type="range" min="6" max="21" step="0.01" value="15.42"></label>
+      <label>Profundidad <output id="value-deck-d"></output><input id="deck-d" type="range" min="4" max="13" step="0.01" value="10.28"></label>
+      <div class="precise-dimensions"><label>Ancho exacto (m)<input id="exact-width" type="number" min="6" max="21" step="0.01" value="15.42"></label><label>Fondo exacto (m)<input id="exact-depth" type="number" min="4" max="13" step="0.01" value="10.28"></label></div><p id="module-status" class="hint"></p>
+      <div class="dimension-note"><span>Altura de tarima <b>2,30 m</b></span><label>Cota del truss (m)<input id="rig-height" type="number" min="7" max="14" step="0.1" value="12.3"></label><small id="rig-note"></small></div>
+      <label class="field-label" for="truss">SECCIÓN DE TRUSS</label>
+      <select id="truss">
+        <option value="Q40">Q40 · Cuadrado 40 × 40 cm</option>
+        <option value="Q30">Q30 · Cuadrado 30 × 30 cm</option>
+        <option value="Q60x40">Profilo rettangolare · 60 × 40 cm</option>
+        <option value="Q86x52">Profilo rettangolare · 86 × 52 cm</option>
+        <option value="T30">T30 · Triangular 30 cm</option>
+      </select>
+      <label class="scrim-control"><input id="scrims" type="checkbox"> Telones trasero y laterales</label>
+      <label class="scrim-control"><input id="roof-cover" type="checkbox" checked><span data-i18n="Copertura modulare in alluminio · 86 × 52 cm">Copertura modulare in alluminio · 86 × 52 cm</span></label>
+      <label>Pantalla LED <output id="value-led-m2"></output><input id="led-m2" type="range" min="0" max="40" step="0.01" value="24"></label>
+      <div class="section-title"><h3>Equipamiento</h3><span id="equipment-count"></span></div>
+      <div class="catalog-filters" role="group" aria-label="Filtrar equipamiento">
+        <button data-filter="all" class="active">Todo</button><button data-filter="audio">Audio</button><button data-filter="light">Iluminación</button><button data-filter="structure">Estructura</button>
+      </div>
+      <div id="catalog"></div>
+      <p class="hint reference-note">Geometría basada en módulos Layher de 2,57 m. Cantidades de referencia para planificación.</p>
+    </aside>
+    <section class="viewport-wrap" aria-label="Vista 3D interactiva del escenario">
+      <canvas id="scene" aria-label="Escenario 3D. Arrastra para orbitar y desplaza para acercar."></canvas>
+      <div id="graphics-recovery" class="graphics-recovery" hidden><h2>La vista gráfica necesita recuperarse.</h2><p>Tu proyecto se conserva. Recarga la escena para continuar.</p><button id="btn-reload-scene" class="btn primary">Recargar escena</button></div>
+      <div class="vignette" aria-hidden="true"></div>
+      <div class="viewport-hud">
+        <div class="scene-heading"><span class="eyebrow">THE STAGE IS YOURS</span><h1>Diseña lo inolvidable<span>.</span></h1><p id="hud-count"></p></div>
+        <span class="live-badge"><span class="status-dot"></span> LIVE 3D</span>
+      </div>
+      <div class="scene-toolbar">
+        <button id="btn-add-element" class="tool-btn add-element" aria-label="Aggiungi elemento 3D" title="Aggiungi elemento 3D">＋</button>
+        <div class="view-btns" aria-label="Vistas del escenario">
+          <button data-view="3d" class="active"><span aria-hidden="true">◈</span>&nbsp;<span>Perspectiva</span></button><button data-view="fronte">Frente</button><button data-view="pianta">Planta</button><button data-view="lato">Lateral</button>
+        </div>
+        <button id="btn-present" class="tool-btn" title="Modo presentación" aria-label="Modo presentación" aria-pressed="false">⛶</button>
+        <button id="btn-reset" class="tool-btn" title="Restablecer cámara" aria-label="Restablecer cámara">⟲</button>
+        <button id="btn-snapshot" class="tool-btn" title="Descargar imagen" aria-label="Descargar imagen del escenario">▣</button>
+      </div>
+      <div class="layer-tools" role="group" aria-label="Capas de la vista"><button data-layer="dimensions" class="active" aria-pressed="true">↔ <span>Medidas</span></button><button data-layer="grid" class="active" aria-pressed="true">▦ <span>Cuadrícula</span></button><button data-layer="structure" class="active" aria-pressed="true">⌗ <span>Estructura</span></button></div>
+      <div class="scene-caption"><span id="look-caption">AURORA</span><span>STAGE CONCEPT / 01</span></div>
+      <div class="scene-bottom">
+        <div class="scene-controls">
+          <label class="mode-toggle"><input id="night" type="checkbox" checked><span class="toggle-track"></span>Modo show</label>
+          <button id="btn-pause" class="quiet-btn" aria-pressed="false">Ⅱ Pausar luces</button>
+        </div>
+        <span class="orbit-hint">Arrastra para orbitar <span>·</span> Scroll para zoom</span>
+      </div>
+      <div class="axis"><span>Y</span><b>↟</b><i>Z ↙ &nbsp; ↘ X</i></div>
+    </section>
+    <aside class="panel right">
+      <div class="panel-heading">
+        <div><span class="eyebrow">02 / TU PRODUCCIÓN</span><h2>Resumen del proyecto</h2></div>
+        <span class="panel-icon">↗</span>
+      </div>
+      <section class="model-object-panel" aria-labelledby="model-object-title">
+        <div class="section-title"><h3 id="model-object-title">3 · Oggetti del modello</h3><button id="btn-add-model-object" class="btn ghost compact">＋ Aggiungi</button></div>
+        <div id="model-element-list" class="model-element-list" aria-live="polite"></div>
+        <p class="hint model-estimate-note">Gli oggetti modellati compaiono nella distinta, ma non hanno un prezzo nel preventivo.</p>
+      </section>
+      <section id="model-element-inspector" class="model-inspector" aria-labelledby="model-inspector-title" hidden>
+        <div class="inspector-heading"><h3 id="model-inspector-title">4 · Modifica oggetto</h3><span id="model-inspector-type"></span></div>
+        <div class="inspector-fields">
+          <label>X <span>(m)</span><input id="element-x" type="number" step="0.001"></label>
+          <label>Y <span>(m)</span><input id="element-y" type="number" step="0.001"></label>
+          <label>Z <span>(m)</span><input id="element-z" type="number" step="0.001"></label>
+          <label>Larghezza <span>(m)</span><input id="element-width" type="number" min="0.15" max="20" step="0.01"></label>
+          <label>Altezza <span>(m)</span><input id="element-height" type="number" min="0.15" max="30" step="0.01"></label>
+          <label>Profondità <span>(m)</span><input id="element-depth" type="number" min="0.15" max="20" step="0.01"></label>
+        </div>
+        <label class="snap-control" data-i18n="Precisione di posizionamento">Precisione di posizionamento
+          <select id="model-snap"><option value="0" data-i18n="Libero · senza griglia">Libero · senza griglia</option><option value="0.25">0,25 m</option><option value="0.5">0,50 m</option><option value="1">1 m</option><option value="2.57">2,57 m · Layher</option></select>
+        </label>
+        <div class="inspector-actions">
+          <button id="element-focus" class="btn ghost" type="button" data-i18n="Inquadra oggetto selezionato">◎ Inquadra oggetto selezionato</button>
+          <button id="element-rotate-left" class="btn ghost" type="button">↶ 15°</button>
+          <button id="element-rotate-right" class="btn ghost" type="button">↷ 15°</button>
+          <button id="element-stand-upright" class="btn stand-truss-action" type="button" hidden>↑ Metti in piedi</button>
+          <button id="element-lay-horizontal" class="btn stand-truss-action" type="button" hidden>↔ Metti orizzontale</button>
+          <label id="crossbeam-length-wrap" class="crossbeam-length-picker" hidden>Lunghezza traversa
+            <select id="crossbeam-length"><option value="3">3 m</option><option value="6">6 m</option><option value="9">9 m</option></select>
+          </label>
+          <button id="element-add-crossbeam-x" class="btn stand-truss-action" type="button" hidden>＋ Traverso X · 3 m</button>
+          <button id="element-add-crossbeam-z" class="btn stand-truss-action" type="button" hidden>＋ Traverso Z · 3 m</button>
+          <button id="element-add-side-section" class="btn stand-truss-action" type="button" hidden>＋ Aggiungi sezione laterale · 3 m</button>
+          <button id="element-add-above" class="btn stand-truss-action" type="button" hidden>＋ Aggiungi sezione sopra · 3 m</button>
+          <button id="element-duplicate" class="btn ghost" type="button">⧉ Duplica</button>
+          <button id="element-delete" class="btn danger" type="button">Elimina</button>
+        </div>
+        <p class="hint" data-i18n="Trascina liberamente l’elemento nella vista 3D; tieni premuto Maiusc per spostarlo in altezza. Puoi inserire X, Y e Z con precisione nei campi.">3 · Per dimensionare o spostare un componente, selezionalo nell’elenco sopra e modifica larghezza, altezza, profondità o coordinate. Puoi anche trascinarlo nella vista 3D. Per il truss usa “Metti in piedi” o “Metti orizzontale”.</p>
+      </section>
+      <div class="project-card">
+        <span class="project-tag">MAIN STAGE</span>
+        <h3 id="summary-name">Main Stage · Live 2026</h3>
+        <div class="project-metrics">
+          <div><b id="metric-area">158,5</b><span>m² de escenario</span></div>
+          <div><b id="metric-gear">0</b><span>equipos · pares incluidos</span></div>
+        </div>
+      </div>
+      <p id="footprint-note" class="footprint-note"></p><div id="stage-checks" aria-live="polite"></div>
+      <section class="audio-preview-card" aria-labelledby="audio-preview-heading">
+        <div class="section-title"><h3 id="audio-preview-heading">Copertura audio</h3><span>ANTEPRIMA</span></div>
+        <p class="hint">Verifica qualitativa della distribuzione PA configurata.</p>
+        <button id="btn-audio-coverage" class="btn ghost full" type="button">Visualizza copertura audio</button>
+      </section>
+      <details class="event-details"><summary>Detalles del evento <span>＋</span></summary><div class="event-fields"><label>Nombre del proyecto<input id="event-name" maxlength="80" placeholder="Mi próximo show"></label><label>Cliente<input id="event-client" maxlength="120" placeholder="Empresa o persona"></label><label>Lugar<input id="event-venue" maxlength="120" placeholder="Venue / ciudad"></label><label>Fecha<input id="event-date" type="date"></label><label>Presupuesto objetivo (USD)<input id="event-budget" type="number" min="0" max="10000000" step="1" placeholder="Sin límite definido"></label><label>Notas para la propuesta<textarea id="event-notes" maxlength="1000" rows="3" placeholder="Accesos, montaje, requerimientos…"></textarea></label></div></details>
+      <div class="section-title">
+        <h3>Presupuesto estimado</h3>
+        <select id="currency" aria-label="Moneda"><option value="USD">USD $</option><option value="BOB">BOB Bs</option></select>
+      </div>
+      <div id="quote-lines"></div>
+      <div class="total"><span>Total estimado<small>Alquiler de equipos y pantalla LED</small></span><b id="quote-total">$0</b></div>
+      <div id="budget-status" class="budget-status" hidden></div>
+      <p class="hint">Tarifas de referencia. Estructura por metro de frente. Excluye transporte, personal general e impuestos.</p>
+      <button id="btn-pdf" class="btn primary full">Exportar propuesta ↗</button>
+      <button id="btn-drawing" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Plano vectorial SVG</span></button>
+      <button id="btn-csv" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Descargar materiales CSV</span></button>
+      <button id="btn-wa" class="btn wa full">Solicitar por WhatsApp</button>
+      <div class="section-title bom-heading"><h3>Lista de materiales</h3><span>BOM</span></div>
+      <section id="reference-material-comparison" class="reference-comparison" aria-label="Comparación con la lámina de materiales"></section>
+      <div id="bom-table" class="bom"></div>
+      <div class="technical-note"><span>ⓘ</span><p>Propuesta de diseño. La estructura y las cargas deben ser verificadas por un técnico competente.</p></div>
+    </aside>
+  </main>
+  <nav class="mobile-workspace-nav" aria-label="Secciones del proyecto">
+    <button type="button" data-mobile-section="viewport-wrap" aria-pressed="true"><span aria-hidden="true">◈</span>Vista</button>
+    <button type="button" data-mobile-section="panel left" aria-pressed="false"><span aria-hidden="true">⌘</span>Diseño</button>
+    <button type="button" data-mobile-section="panel right" aria-pressed="false"><span aria-hidden="true">↗</span>Propuesta</button>
+  </nav>
+  <footer class="statusbar">
+    <span><span class="status-dot"></span> Proyectos guardados en este dispositivo</span>
+    <span id="footer-dimensions">LAYHER SYSTEM / Q40</span>
+    <span>PSM STAGE STUDIO <b>1.0</b></span>
+  </footer>
+  <dialog id="project-library" class="library-dialog" aria-labelledby="library-title"><div class="library-header"><div><span class="eyebrow">TU ESPACIO DE TRABAJO</span><h2 id="library-title">Cada gran show empieza aquí.</h2><p>Tu biblioteca privada en este navegador.</p></div><button id="library-close" class="tool-btn" aria-label="Cerrar biblioteca">×</button></div><div class="library-actions"><button id="library-save" class="btn primary">＋ Guardar proyecto actual</button><button id="library-new" class="btn ghost">Nuevo proyecto</button><button id="library-import" class="btn ghost">↑ Importar JSON</button></div><section class="proposal-compare" aria-labelledby="proposal-compare-title"><div><h3 id="proposal-compare-title">Comparar alternativas</h3><p>Duplica una propuesta y compara medidas, equipos y estimación antes de elegir.</p></div><div class="proposal-compare-selectors"><label>Alternativa A<select id="compare-project-a"></select></label><label>Alternativa B<select id="compare-project-b"></select></label><button id="compare-projects" class="btn ghost" type="button" disabled>Comparar</button></div><div id="proposal-comparison-result" class="proposal-comparison-result" aria-live="polite"></div></section><div id="library-list"></div><p class="hint">Los proyectos se sincronizan con tu cuenta cuando hay conexión. Conserva también una copia JSON independiente.</p></dialog>
+  <dialog id="subscription-dialog" class="library-dialog subscription-dialog" aria-labelledby="subscription-title">
+    <div class="library-header">
+      <div><span class="eyebrow" data-i18n="STAGE STUDIO PRO · SUSCRIPCIÓN MENSUAL">STAGE STUDIO PRO · SUSCRIPCIÓN MENSUAL</span><h2 id="subscription-title" data-i18n="Diseña gratis. Exporta y guarda tus proyectos con Pro.">Diseña gratis. Exporta y guarda tus proyectos con Pro.</h2><p data-i18n="El diseño 3D, los cambios y la vista previa de audio siguen siendo gratuitos.">El diseño 3D, los cambios y la vista previa de audio siguen siendo gratuitos.</p></div>
+      <button id="subscription-close" class="tool-btn" type="button" aria-label="Cerrar suscripción">×</button>
+    </div>
+    <div class="subscription-plan">
+      <div><span data-i18n="Stage Studio Pro">Stage Studio Pro</span><strong id="subscription-price" data-i18n="10 €/mes">10 €/mes</strong></div>
+      <span id="subscription-state" class="subscription-state" role="status" aria-live="polite" data-i18n="Vista previa gratuita">Vista previa gratuita</span>
+    </div>
+    <ul class="subscription-benefits">
+      <li data-i18n="Descarga propuestas PDF e imágenes del escenario">Descarga propuestas PDF e imágenes del escenario</li>
+      <li data-i18n="Exporta planos SVG y listas de materiales CSV">Exporta planos SVG y listas de materiales CSV</li>
+      <li data-i18n="Guarda y vuelve a abrir proyectos desde tu biblioteca">Guarda y vuelve a abrir proyectos desde tu biblioteca</li>
+    </ul>
+    <p id="subscription-message" class="subscription-message" aria-live="polite" data-i18n="Los pagos aún no están configurados. En esta vista previa no se cobra nada y las funciones siguen disponibles.">Los pagos aún no están configurados. En esta vista previa no se cobra nada y las funciones siguen disponibles.</p>
+    <div class="subscription-actions"><button id="subscription-buy" class="btn primary" type="button" disabled data-i18n="Suscripción no disponible">Suscripción no disponible</button><button id="subscription-restore" class="btn ghost" type="button" disabled data-i18n="Restaurar o verificar acceso">Restaurar o verificar acceso</button><button id="subscription-manage" class="btn ghost" type="button" hidden data-i18n="Gestionar suscripción">Gestionar suscripción</button></div>
+    <p class="subscription-terms" data-i18n="El precio final y la renovación mensual se mostrarán en la tienda antes de confirmar. Puedes cancelar desde los ajustes de tu cuenta.">El precio final y la renovación mensual se mostrarán en la tienda antes de confirmar. Puedes cancelar desde los ajustes de tu cuenta.</p>
+  </dialog>
+  <dialog id="model-element-library" class="library-dialog element-library" aria-labelledby="element-library-title">
+    <div class="library-header"><div><span class="eyebrow">MODELLAZIONE 3D</span><h2 id="element-library-title">Aggiungi al palco</h2><p>Le sezioni geometriche sono indicative. Global Truss: F34 = 29 cm, F42 = 40 cm, F52 = 62 cm; “baseplate 514” non identificata nel catalogo consultato. L’app non verifica compatibilità o portate: controlla con produttore e progettista.</p></div><button id="element-library-close" class="tool-btn" aria-label="Chiudi libreria elementi">×</button></div>
+    <div id="model-element-catalog" class="model-element-catalog"></div>
+  </dialog>
+  <dialog id="audio-coverage-dialog" class="library-dialog audio-coverage-dialog" aria-labelledby="audio-coverage-title">
+    <div class="library-header"><div><span class="eyebrow">ANALISI DEL SISTEMA PA</span><h2 id="audio-coverage-title">Anteprima di copertura</h2><p id="audio-coverage-summary"></p></div><button id="audio-coverage-close" class="tool-btn" aria-label="Chiudi anteprima audio">×</button></div>
+    <div id="audio-coverage-warnings" class="audio-coverage-warnings" aria-live="polite"></div>
+    <label class="audio-file-label" for="audio-demo-file">Traccia demo integrata · carica il tuo audio solo se vuoi</label>
+    <input id="audio-demo-file" class="audio-file-input" type="file" accept="audio/*">
+    <div class="audio-demo-track"><p id="audio-demo-file-status" class="hint audio-demo-note">Traccia demo PSM pronta. Il caricamento del tuo audio è facoltativo.</p><button id="audio-demo-use-default" class="btn ghost" type="button" hidden>Usa traccia demo</button></div>
+    <div class="audio-listener-controls">
+      <label>Posizione laterale del pubblico <output id="audio-listener-x-value">0%</output><input id="audio-listener-x" type="range" min="-100" max="100" step="1" value="0"></label>
+      <label>Distanza dal palco <output id="audio-listener-depth-value">50%</output><input id="audio-listener-depth" type="range" min="0" max="100" step="1" value="50"></label>
+    </div>
+    <p id="audio-listener-estimate" class="audio-listener-estimate" aria-live="polite"></p>
+    <div class="audio-demo-controls"><button id="btn-audio-demo" class="btn primary" type="button">Ascolta anteprima</button><button id="btn-audio-demo-stop" class="btn ghost" type="button" hidden>Interrompi audio</button><span id="audio-demo-status" role="status" aria-live="polite"></span></div>
+    <p class="hint audio-demo-note">L’audio resta sul dispositivo. Con le cuffie puoi percepire il panorama stereo; il risultato dipende dal file, dal dispositivo e dalle ipotesi semplificate della mappa.</p>
+    <canvas id="audio-coverage-map" class="audio-coverage-map" aria-label="Mappa qualitativa della copertura audio sul pubblico"></canvas>
+    <div class="audio-coverage-legend" aria-hidden="true"><span>Minore</span><i></i><span>Maggiore</span></div>
+    <div id="audio-coverage-text" class="audio-coverage-text" aria-live="polite"></div>
+    <p class="hint audio-coverage-limit">Stima qualitativa basata su una direttività generica e sulla disposizione mostrata. Non rappresenta livelli SPL in dB e non simula ambiente, riflessioni, subwoofer, delay o dati reali dei diffusori. Verificare il progetto con il tecnico audio e i dati del produttore.</p>
+  </dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <input id="project-file" type="file" accept=".json,application/json" hidden>
+</body>
+</html>
