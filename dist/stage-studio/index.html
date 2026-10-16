@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-B9SEU8Kh.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CoRbL6Fx.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-CqYKdKIV.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Cu_ZZwCi.css">
 </head>
 <body>
   <header class="topbar">
@@ -139,7 +139,14 @@
         <option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option>
       </select>
       <label class="scrim-control"><input id="pa-cantilever" type="checkbox"><span>Cantilever PA: line array colgados fuera de la estructura</span></label>
-      <label>Pantalla LED <output id="value-led-m2"></output><input id="led-m2" type="range" min="0" max="40" step="0.01" value="24"></label>
+      <div class="led-size">
+        <div class="led-size-heading"><span>Pantalla LED central</span><output id="value-led-m2"></output></div>
+        <label class="scrim-control"><input id="led-auto" type="checkbox" checked><span>Ajustar al escenario automáticamente</span></label>
+        <div class="led-size-fields">
+          <label>Ancho (m)<input id="led-width" type="number" min="0" max="20" step="0.5" inputmode="decimal"></label>
+          <label>Alto (m)<input id="led-height" type="number" min="0" max="12" step="0.5" inputmode="decimal"></label>
+        </div>
+      </div>
       <div class="section-title"><h3>Equipamiento</h3><span id="equipment-count"></span></div>
       <div class="catalog-filters" role="group" aria-label="Filtrar equipamiento">
         <button data-filter="all" class="active">Todo</button><button data-filter="audio">Audio</button><button data-filter="light">Iluminación</button><button data-filter="structure">Estructura</button>
