@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-ByjvHJ6F.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-C9CLsinV.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-BOm816cK.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CoRbL6Fx.css">
 </head>
 <body>
   <header class="topbar">
@@ -147,6 +147,11 @@
       <canvas id="scene" aria-label="Escenario 3D. Arrastra para orbitar y desplaza para acercar."></canvas>
       <div id="graphics-recovery" class="graphics-recovery" hidden><h2>La vista gráfica necesita recuperarse.</h2><p>Tu proyecto se conserva. Recarga la escena para continuar.</p><button id="btn-reload-scene" class="btn primary">Recargar escena</button></div>
       <div class="vignette" aria-hidden="true"></div>
+      <div id="placement-bar" class="placement-bar" role="status" aria-live="polite" hidden>
+        <span id="placement-text"></span>
+        <button id="placement-auto" class="btn ghost" type="button">Colocar automáticamente</button>
+        <button id="placement-done" class="btn primary" type="button">Listo</button>
+      </div>
       <div class="viewport-hud">
         <div class="scene-heading"><span class="eyebrow">THE STAGE IS YOURS</span><h1>Diseña lo inolvidable<span>.</span></h1><p id="hud-count"></p></div>
         <span class="live-badge"><span class="status-dot"></span> LIVE 3D</span>
