@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-B5NRaTP4.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Ct0ovA9j.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-2j9Itw45.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-B6rGlxtO.css">
 </head>
 <body>
   <header class="topbar">
@@ -38,7 +38,7 @@
       <span id="save-status">Guardado local</span>
     </div>
     <div class="top-actions">
-      <button id="btn-pro" class="btn pro-entry" type="button" aria-haspopup="dialog" aria-controls="subscription-dialog"><span aria-hidden="true">✦</span><span data-i18n="Stage Studio Pro · 10 €/mes">Stage Studio Pro · 10 €/mes</span></button>
+      <button id="btn-pro" class="btn pro-entry" type="button" aria-haspopup="dialog" aria-controls="subscription-dialog"><span aria-hidden="true">✦</span><span data-i18n="Stage Studio Pro">Stage Studio Pro</span></button>
       <button id="btn-load" class="btn ghost">Mis proyectos</button>
       <button id="btn-save" class="btn ghost">Guardar proyecto</button>
       <button id="btn-export" class="btn primary">Exportar propuesta ↗</button>
@@ -193,6 +193,7 @@
         </label>
         <div class="inspector-actions">
           <button id="element-focus" class="btn ghost" type="button" data-i18n="Inquadra oggetto selezionato">◎ Inquadra oggetto selezionato</button>
+          <button id="element-toggle-vertical-move" class="btn ghost" type="button" aria-pressed="false" data-i18n="↕ Sposta in altezza">↕ Sposta in altezza</button>
           <button id="element-rotate-left" class="btn ghost" type="button">↶ 15°</button>
           <button id="element-rotate-right" class="btn ghost" type="button">↷ 15°</button>
           <button id="element-stand-upright" class="btn stand-truss-action" type="button" hidden>↑ Metti in piedi</button>
@@ -204,10 +205,11 @@
           <button id="element-add-crossbeam-z" class="btn stand-truss-action" type="button" hidden>＋ Traverso Z · 3 m</button>
           <button id="element-add-side-section" class="btn stand-truss-action" type="button" hidden>＋ Aggiungi sezione laterale · 3 m</button>
           <button id="element-add-above" class="btn stand-truss-action" type="button" hidden>＋ Aggiungi sezione sopra · 3 m</button>
+          <button id="element-restore-drag-position" class="btn ghost" type="button" hidden data-i18n="Ripristina posizione precedente">↶ Ripristina posizione precedente</button>
           <button id="element-duplicate" class="btn ghost" type="button">⧉ Duplica</button>
           <button id="element-delete" class="btn danger" type="button">Elimina</button>
         </div>
-        <p class="hint" data-i18n="Trascina liberamente l’elemento nella vista 3D; tieni premuto Maiusc per spostarlo in altezza. Puoi inserire X, Y e Z con precisione nei campi.">3 · Per dimensionare o spostare un componente, selezionalo nell’elenco sopra e modifica larghezza, altezza, profondità o coordinate. Puoi anche trascinarlo nella vista 3D. Per il truss usa “Metti in piedi” o “Metti orizzontale”.</p>
+        <p id="model-inspector-hint" class="hint" data-i18n="Trascina l’oggetto nella vista 3D o modifica X, Y e Z. Usa Sposta in altezza prima di trascinare per regolare la quota; se sbagli, ripristina la posizione precedente o usa Annulla in alto.">3 · Modifica le coordinate o trascina l’oggetto. Se sbagli, ripristina la posizione precedente.</p>
       </section>
       <div class="project-card">
         <span class="project-tag">MAIN STAGE</span>
@@ -249,6 +251,7 @@
   </nav>
   <footer class="statusbar">
     <span><span class="status-dot"></span> Proyectos guardados en este dispositivo</span>
+    <button id="btn-legal" type="button" data-i18n="Privacy & licenses" aria-haspopup="dialog" aria-controls="legal-dialog">Privacidad y licencias</button>
     <span id="footer-dimensions">LAYHER SYSTEM / Q40</span>
     <span>PSM STAGE STUDIO <b>1.0</b></span>
   </footer>
@@ -259,7 +262,7 @@
       <button id="subscription-close" class="tool-btn" type="button" aria-label="Cerrar suscripción">×</button>
     </div>
     <div class="subscription-plan">
-      <div><span data-i18n="Stage Studio Pro">Stage Studio Pro</span><strong id="subscription-price" data-i18n="10 €/mes">10 €/mes</strong></div>
+      <div><span data-i18n="Stage Studio Pro">Stage Studio Pro</span><strong id="subscription-price" data-i18n="Precio de la tienda">Precio de la tienda</strong></div>
       <span id="subscription-state" class="subscription-state" role="status" aria-live="polite" data-i18n="Vista previa gratuita">Vista previa gratuita</span>
     </div>
     <ul class="subscription-benefits">
@@ -270,6 +273,37 @@
     <p id="subscription-message" class="subscription-message" aria-live="polite" data-i18n="Los pagos aún no están configurados. En esta vista previa no se cobra nada y las funciones siguen disponibles.">Los pagos aún no están configurados. En esta vista previa no se cobra nada y las funciones siguen disponibles.</p>
     <div class="subscription-actions"><button id="subscription-buy" class="btn primary" type="button" disabled data-i18n="Suscripción no disponible">Suscripción no disponible</button><button id="subscription-restore" class="btn ghost" type="button" disabled data-i18n="Restaurar o verificar acceso">Restaurar o verificar acceso</button><button id="subscription-manage" class="btn ghost" type="button" hidden data-i18n="Gestionar suscripción">Gestionar suscripción</button></div>
     <p class="subscription-terms" data-i18n="El precio final y la renovación mensual se mostrarán en la tienda antes de confirmar. Puedes cancelar desde los ajustes de tu cuenta.">El precio final y la renovación mensual se mostrarán en la tienda antes de confirmar. Puedes cancelar desde los ajustes de tu cuenta.</p>
+    <nav class="subscription-legal-links" aria-label="Informazioni legali">
+      <a id="subscription-privacy-link" data-legal-link="privacy" data-i18n="Privacy policy" hidden>Política de privacidad</a>
+      <a id="subscription-terms-link" data-legal-link="terms" data-i18n="Terms of use" hidden>Términos de uso</a>
+      <a id="subscription-support-link" data-legal-link="support" data-i18n="Support" hidden>Soporte</a>
+    </nav>
+  </dialog>
+  <dialog id="legal-dialog" class="library-dialog legal-dialog" aria-labelledby="legal-dialog-title">
+    <div class="library-header">
+      <div><span class="eyebrow">PSM · STAGE STUDIO</span><h2 id="legal-dialog-title" data-i18n="Legal information">Información legal</h2></div>
+      <button id="legal-close" class="tool-btn" type="button" aria-label="Cerrar información legal">×</button>
+    </div>
+    <nav class="legal-link-list" aria-label="Enlaces legales">
+      <a id="legal-privacy-link" data-legal-link="privacy" data-i18n="Privacy policy" hidden>Política de privacidad</a>
+      <a id="legal-terms-link" data-legal-link="terms" data-i18n="Terms of use" hidden>Términos de uso</a>
+      <a id="legal-support-link" data-legal-link="support" data-i18n="Support" hidden>Soporte</a>
+    </nav>
+    <p id="legal-link-status" class="hint" data-i18n="Legal links are not configured yet.">Los enlaces legales todavía no están configurados.</p>
+    <section class="license-section" aria-labelledby="licenses-title">
+      <h3 id="licenses-title" data-i18n="Licenses">Licencias</h3>
+      <ul>
+        <li>Three.js 0.170.0 · MIT · <a data-license-file="three-MIT.txt" target="_blank" rel="noopener noreferrer">LICENSE</a></li>
+        <li>@capacitor/core 8.5.3 · MIT · <a data-license-file="capacitor-MIT.txt" target="_blank" rel="noopener noreferrer">LICENSE</a></li>
+        <li>@capacitor/app 8.1.2, browser 8.0.5, filesystem 8.1.5, share 8.0.3 · MIT · <a data-license-file="capacitor-plugins-MIT.txt" target="_blank" rel="noopener noreferrer">LICENSE</a></li>
+        <li>@capgo/capacitor-printer 8.1.7 · MPL-2.0 · <a data-license-file="capgo-printer-MPL-2.0.txt" target="_blank" rel="noopener noreferrer">LICENSE</a></li>
+        <li>@revenuecat/purchases-capacitor 13.7.4 · MIT · <a data-license-file="revenuecat-MIT.txt" target="_blank" rel="noopener noreferrer">LICENSE</a></li>
+        <li>@revenuecat/purchases-js 1.71.0 · MIT · <a data-license-file="revenuecat-purchases-js-MIT.txt" target="_blank" rel="noopener noreferrer">LICENSE</a></li>
+        <li>@supabase/supabase-js, auth-js, functions-js, realtime-js, postgrest-js and storage-js 2.118.0 · MIT · <a data-license-file="supabase-MIT.txt" target="_blank" rel="noopener noreferrer">LICENSE</a>, <a data-license-file="supabase-auth-js-MIT.txt" target="_blank" rel="noopener noreferrer">auth</a>, <a data-license-file="supabase-functions-js-MIT.txt" target="_blank" rel="noopener noreferrer">functions</a>, <a data-license-file="supabase-realtime-js-MIT.txt" target="_blank" rel="noopener noreferrer">realtime</a>, <a data-license-file="supabase-postgrest-js-MIT.txt" target="_blank" rel="noopener noreferrer">postgrest</a>, <a data-license-file="supabase-storage-js-MIT.txt" target="_blank" rel="noopener noreferrer">storage</a>.</li>
+        <li>@supabase/phoenix 0.4.5 · MIT · <a data-license-file="supabase-phoenix-MIT.txt" target="_blank" rel="noopener noreferrer">LICENSE</a></li>
+      </ul>
+      <p class="hint">Inventario dei pacchetti runtime inclusi nel lockfile corrente. Ricontrolla l’elenco quando aggiorni dipendenze o integri altri SDK.</p>
+    </section>
   </dialog>
   <dialog id="model-element-library" class="library-dialog element-library" aria-labelledby="element-library-title">
     <div class="library-header"><div><span class="eyebrow">MODELLAZIONE 3D</span><h2 id="element-library-title">Aggiungi al palco</h2><p>Le sezioni geometriche sono indicative. Global Truss: F34 = 29 cm, F42 = 40 cm, F52 = 62 cm; “baseplate 514” non identificata nel catalogo consultato. L’app non verifica compatibilità o portate: controlla con produttore e progettista.</p></div><button id="element-library-close" class="tool-btn" aria-label="Chiudi libreria elementi">×</button></div>
