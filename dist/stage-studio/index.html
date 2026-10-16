@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-2j9Itw45.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-B6rGlxtO.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-JzB8Z324.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-B3W8yDXn.css">
 </head>
 <body>
   <header class="topbar">
@@ -69,6 +69,8 @@
       </button>
       <button id="btn-reset-structure" class="btn ghost reset-structure-button" type="button"><span aria-hidden="true">↺</span><span>Restablecer estructura inicial</span></button>
       <p class="hint reset-structure-hint">Vuelve a las medidas y al equipo del preset Concierto. Conserva los datos del cliente y del evento.</p>
+      <button id="btn-make-editable" class="btn primary full make-editable-button" type="button"><span aria-hidden="true">✎</span> <span>Modifica ogni elemento del palco</span></button>
+      <p id="make-editable-hint" class="hint">Trasforma questo palco in oggetti da selezionare, spostare, duplicare o eliminare uno per uno. Puoi annullare dall’icona in alto.</p>
       <p id="free-build-hint" class="hint" hidden>Canvas vuoto: niente viene aggiunto automaticamente. Scegli un truss qui sotto oppure apri “Tutti i componenti”; poi trascina gli oggetti nella posizione desiderata.</p>
       <section id="free-build-toolbox" class="free-build-toolbox" aria-labelledby="free-build-toolbox-title" hidden>
         <div class="section-title"><h3 id="free-build-toolbox-title">Truss in alluminio</h3><span>SELEZIONE RAPIDA</span></div>
@@ -184,9 +186,9 @@
           <label>X <span>(m)</span><input id="element-x" type="number" step="0.001"></label>
           <label>Y <span>(m)</span><input id="element-y" type="number" step="0.001"></label>
           <label>Z <span>(m)</span><input id="element-z" type="number" step="0.001"></label>
-          <label>Larghezza <span>(m)</span><input id="element-width" type="number" min="0.15" max="20" step="0.01"></label>
+          <label>Larghezza <span>(m)</span><input id="element-width" type="number" min="0.15" max="25" step="0.01"></label>
           <label>Altezza <span>(m)</span><input id="element-height" type="number" min="0.15" max="30" step="0.01"></label>
-          <label>Profondità <span>(m)</span><input id="element-depth" type="number" min="0.15" max="20" step="0.01"></label>
+          <label>Profondità <span>(m)</span><input id="element-depth" type="number" min="0.15" max="25" step="0.01"></label>
         </div>
         <label class="snap-control" data-i18n="Precisione di posizionamento">Precisione di posizionamento
           <select id="model-snap"><option value="0" data-i18n="Libero · senza griglia">Libero · senza griglia</option><option value="0.25">0,25 m</option><option value="0.5">0,50 m</option><option value="1">1 m</option><option value="2.57">2,57 m · Layher</option></select>
@@ -205,6 +207,12 @@
           <button id="element-add-crossbeam-z" class="btn stand-truss-action" type="button" hidden>＋ Traverso Z · 3 m</button>
           <button id="element-add-side-section" class="btn stand-truss-action" type="button" hidden>＋ Aggiungi sezione laterale · 3 m</button>
           <button id="element-add-above" class="btn stand-truss-action" type="button" hidden>＋ Aggiungi sezione sopra · 3 m</button>
+          <button id="element-structure-lock" class="btn ghost structure-lock" type="button" aria-pressed="true" hidden>🔒 Struttura bloccata · tocca per sbloccare</button>
+          <div id="speaker-column-controls" class="speaker-column-controls" hidden>
+            <span id="speaker-column-label">Colonna line array</span>
+            <button id="speaker-column-remove" class="btn ghost" type="button" aria-label="Togli il modulo più basso">−</button>
+            <button id="speaker-column-add" class="btn ghost" type="button" aria-label="Aggiungi un modulo sotto">＋</button>
+          </div>
           <button id="element-restore-drag-position" class="btn ghost" type="button" hidden data-i18n="Ripristina posizione precedente">↶ Ripristina posizione precedente</button>
           <button id="element-duplicate" class="btn ghost" type="button">⧉ Duplica</button>
           <button id="element-delete" class="btn danger" type="button">Elimina</button>
@@ -216,7 +224,7 @@
         <h3 id="summary-name">Main Stage · Live 2026</h3>
         <div class="project-metrics">
           <div><b id="metric-area">158,5</b><span>m² de escenario</span></div>
-          <div><b id="metric-gear">0</b><span>equipos · pares incluidos</span></div>
+          <div><b id="metric-gear">0</b><span id="metric-gear-label">equipos · pares incluidos</span></div>
         </div>
       </div>
       <p id="footprint-note" class="footprint-note"></p><div id="stage-checks" aria-live="polite"></div>
@@ -233,7 +241,7 @@
       <div id="quote-lines"></div>
       <div class="total"><span>Total estimado<small>Alquiler de equipos y pantalla LED</small></span><b id="quote-total">$0</b></div>
       <div id="budget-status" class="budget-status" hidden></div>
-      <p class="hint">Tarifas de referencia. Estructura por metro de frente. Excluye transporte, personal general e impuestos.</p>
+      <p id="quote-note" class="hint">Tarifas de referencia. Estructura por metro de frente. Excluye transporte, personal general e impuestos.</p>
       <button id="btn-pdf" class="btn primary full">Exportar propuesta ↗</button>
       <button id="btn-drawing" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Plano vectorial SVG</span></button>
       <button id="btn-csv" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Descargar materiales CSV</span></button>
@@ -251,11 +259,11 @@
   </nav>
   <footer class="statusbar">
     <span><span class="status-dot"></span> Proyectos guardados en este dispositivo</span>
-    <button id="btn-legal" type="button" data-i18n="Privacy & licenses" aria-haspopup="dialog" aria-controls="legal-dialog">Privacidad y licencias</button>
+    <button id="btn-legal" type="button" data-i18n="Privacy & licenses" aria-haspopup="dialog" aria-controls="legal-dialog">Privacy &amp; licenses</button>
     <span id="footer-dimensions">LAYHER SYSTEM / Q40</span>
-    <span>PSM STAGE STUDIO <b>1.0</b></span>
+    <span>PSM STAGE STUDIO <b>1.0</b> <small id="app-build"></small></span>
   </footer>
-  <dialog id="project-library" class="library-dialog" aria-labelledby="library-title"><div class="library-header"><div><span class="eyebrow">TU ESPACIO DE TRABAJO</span><h2 id="library-title">Cada gran show empieza aquí.</h2><p>Tu biblioteca privada en este navegador.</p></div><button id="library-close" class="tool-btn" aria-label="Cerrar biblioteca">×</button></div><div class="library-actions"><button id="library-save" class="btn primary">＋ Guardar proyecto actual</button><button id="library-new" class="btn ghost">Nuevo proyecto</button><button id="library-import" class="btn ghost">↑ Importar JSON</button></div><section class="proposal-compare" aria-labelledby="proposal-compare-title"><div><h3 id="proposal-compare-title">Comparar alternativas</h3><p>Duplica una propuesta y compara medidas, equipos y estimación antes de elegir.</p></div><div class="proposal-compare-selectors"><label>Alternativa A<select id="compare-project-a"></select></label><label>Alternativa B<select id="compare-project-b"></select></label><button id="compare-projects" class="btn ghost" type="button" disabled>Comparar</button></div><div id="proposal-comparison-result" class="proposal-comparison-result" aria-live="polite"></div></section><div id="library-list"></div><p class="hint">Los proyectos se sincronizan con tu cuenta cuando hay conexión. Conserva también una copia JSON independiente.</p></dialog>
+  <dialog id="project-library" class="library-dialog" aria-labelledby="library-title"><div class="library-header"><div><span class="eyebrow">TU ESPACIO DE TRABAJO</span><h2 id="library-title">Cada gran show empieza aquí.</h2><p>Tu biblioteca privada en este navegador.</p></div><button id="library-close" class="tool-btn" aria-label="Cerrar biblioteca">×</button></div><div class="library-actions"><button id="library-save" class="btn primary">＋ Guardar proyecto actual</button><button id="library-new" class="btn ghost">Nuevo proyecto</button><button id="library-import" class="btn ghost">↑ Importar JSON</button></div><section class="proposal-compare" aria-labelledby="proposal-compare-title"><div><h3 id="proposal-compare-title">Comparar alternativas</h3><p>Duplica una propuesta y compara medidas, equipos y estimación antes de elegir.</p></div><div class="proposal-compare-selectors"><label>Alternativa A<select id="compare-project-a"></select></label><label>Alternativa B<select id="compare-project-b"></select></label><button id="compare-projects" class="btn ghost" type="button" disabled>Comparar</button></div><div id="proposal-comparison-result" class="proposal-comparison-result" aria-live="polite"></div></section><div id="library-list"></div><p id="library-sync-hint" class="hint"></p></dialog>
   <dialog id="subscription-dialog" class="library-dialog subscription-dialog" aria-labelledby="subscription-title">
     <div class="library-header">
       <div><span class="eyebrow" data-i18n="STAGE STUDIO PRO · SUSCRIPCIÓN MENSUAL">STAGE STUDIO PRO · SUSCRIPCIÓN MENSUAL</span><h2 id="subscription-title" data-i18n="Diseña gratis. Exporta y guarda tus proyectos con Pro.">Diseña gratis. Exporta y guarda tus proyectos con Pro.</h2><p data-i18n="El diseño 3D, los cambios y la vista previa de audio siguen siendo gratuitos.">El diseño 3D, los cambios y la vista previa de audio siguen siendo gratuitos.</p></div>
