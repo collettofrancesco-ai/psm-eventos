@@ -1,7 +1,7 @@
 
-        const CACHE_NAME = "psm-stage-CGAUuN10-C-CNlyn1fV-BbePLJ7o-hiKMiEGl-HZAS3-nEI0BxgW-y7H9Ej9Y-CPUR9Egd-BON0Cick-dA-j6CLbwJS-Cu7Wrp85-DWRB0iZz";
+        const CACHE_NAME = "psm-stage-CGAUuN10-C-CNlyn1fV-BbePLJ7o-B27wA3Jl-7vrHMmgH-DKFwSdGh-y7H9Ej9Y-CJ78yEKZ-X-E_npqiHs-ZSF-D2t2cKOq-BJdSQag0";
         const CACHE_PREFIX = 'psm-stage-';
-        const PRECACHE_URLS = ["/","/manifest.webmanifest","/favicon.png","/assets/psm-logo-CGAUuN10.png","/assets/index-Do5RIM-C.css","/assets/three-engine-CNlyn1fV.js","/assets/three-tools-BbePLJ7o.js","/assets/index-hiKMiEGl.js","/assets/main-UG-HZAS3.js","/assets/index-nEI0BxgW.js","/assets/Purchases.es-y7H9Ej9Y.js","/assets/web-CPUR9Egd.js","/assets/web-BON0Cick.js","/assets/web-t0R7S-dA.js","/assets/web-j6CLbwJS.js","/assets/web-Cu7Wrp85.js","/assets/web-DWRB0iZz.js"];
+        const PRECACHE_URLS = ["/","/manifest.webmanifest","/favicon.png","/assets/psm-logo-CGAUuN10.png","/assets/index-Do5RIM-C.css","/assets/three-engine-CNlyn1fV.js","/assets/three-tools-BbePLJ7o.js","/assets/index-B27wA3Jl.js","/assets/main-7vrHMmgH.js","/assets/index-DKFwSdGh.js","/assets/Purchases.es-y7H9Ej9Y.js","/assets/web-CJ78yEKZ.js","/assets/web-CPbpYF-X.js","/assets/web-E_npqiHs.js","/assets/web-DQDy-ZSF.js","/assets/web-D2t2cKOq.js","/assets/web-BJdSQag0.js"];
 
         self.addEventListener('install', event => {
           event.waitUntil(
