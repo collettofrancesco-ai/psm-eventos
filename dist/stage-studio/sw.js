@@ -1,7 +1,7 @@
 
-        const CACHE_NAME = "psm-stage-CGAUuN10-C-CNlyn1fV-BbePLJ7o-B27wA3Jl-7vrHMmgH-DKFwSdGh-y7H9Ej9Y-CJ78yEKZ-X-E_npqiHs-ZSF-D2t2cKOq-BJdSQag0";
+        const CACHE_NAME = "psm-stage-CGAUuN10-C-CNlyn1fV-BbePLJ7o-C3pqy5ck-COHlB2mh-BSJqLGxJ-y7H9Ej9Y-2b-bthSa1sZ-h00I36iW-C6g4NG8f-Dn5S_17b-CsAiEgoW";
         const CACHE_PREFIX = 'psm-stage-';
-        const PRECACHE_URLS = ["/","/manifest.webmanifest","/favicon.png","/assets/psm-logo-CGAUuN10.png","/assets/index-Do5RIM-C.css","/assets/three-engine-CNlyn1fV.js","/assets/three-tools-BbePLJ7o.js","/assets/index-B27wA3Jl.js","/assets/main-7vrHMmgH.js","/assets/index-DKFwSdGh.js","/assets/Purchases.es-y7H9Ej9Y.js","/assets/web-CJ78yEKZ.js","/assets/web-CPbpYF-X.js","/assets/web-E_npqiHs.js","/assets/web-DQDy-ZSF.js","/assets/web-D2t2cKOq.js","/assets/web-BJdSQag0.js"];
+        const PRECACHE_URLS = ["/stage-studio/","/stage-studio/manifest.webmanifest","/stage-studio/favicon.png","/stage-studio/assets/psm-logo-CGAUuN10.png","/stage-studio/assets/index-Do5RIM-C.css","/stage-studio/assets/three-engine-CNlyn1fV.js","/stage-studio/assets/three-tools-BbePLJ7o.js","/stage-studio/assets/index-C3pqy5ck.js","/stage-studio/assets/main-COHlB2mh.js","/stage-studio/assets/index-BSJqLGxJ.js","/stage-studio/assets/Purchases.es-y7H9Ej9Y.js","/stage-studio/assets/web-VFN4l-2b.js","/stage-studio/assets/web-bthSa1sZ.js","/stage-studio/assets/web-h00I36iW.js","/stage-studio/assets/web-C6g4NG8f.js","/stage-studio/assets/web-Dn5S_17b.js","/stage-studio/assets/web-CsAiEgoW.js"];
 
         self.addEventListener('install', event => {
           event.waitUntil(
@@ -27,7 +27,7 @@
 
           if (request.mode === 'navigate') {
             event.respondWith((async () => {
-              const appEntry = new URL("/", self.location.origin).href;
+              const appEntry = new URL("/stage-studio/", self.location.origin).href;
               try {
                 const response = await fetch(request);
                 if (response.ok) {
