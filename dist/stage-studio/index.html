@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-Cb0fHOtV.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-D8EJShGW.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-CpttNUEE.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CyFXtxfN.css">
 </head>
 <body>
   <header class="topbar">
@@ -183,6 +183,15 @@
           <div class="led-size-fields">
             <label>Ancho (m)<input id="led-width" type="number" min="0" max="20" step="0.5" inputmode="decimal"></label>
             <label>Alto (m)<input id="led-height" type="number" min="0" max="12" step="0.5" inputmode="decimal"></label>
+          </div>
+          <div class="screen-video-controls">
+            <label class="btn full" for="screen-video-file"><span data-i18n="Cargar vídeo para las pantallas activas">Cargar vídeo para las pantallas activas</span></label>
+            <input id="screen-video-file" type="file" accept="video/mp4,video/quicktime,video/webm,video/x-m4v" hidden>
+            <div class="screen-video-status-row">
+              <output id="screen-video-status" class="hint" aria-live="polite">Ningún vídeo cargado · Máximo 250 MB</output>
+              <button id="screen-video-remove" class="btn" type="button" hidden>Quitar vídeo</button>
+            </div>
+            <p class="hint" data-i18n="El vídeo se reproduce en silencio en todas las pantallas LED activas mientras esta sesión está abierta; no se guarda en el proyecto ni en el PDF.">El vídeo se reproduce en silencio en todas las pantallas LED activas mientras esta sesión está abierta; no se guarda en el proyecto ni en el PDF.</p>
           </div>
         </div>
         </div>
