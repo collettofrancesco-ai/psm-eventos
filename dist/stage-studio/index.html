@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-Bueiirik.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-B2TlVa8w.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-BjnRJvY-.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-D8EJShGW.css">
 </head>
 <body>
   <header class="topbar">
@@ -193,6 +193,21 @@
         <p class="hint wizard-intro">Resumen de lo que has elegido. Toca un paso para cambiarlo.</p>
         <div id="wizard-review" class="wizard-review"></div>
         <p class="wizard-equipment"><span id="equipment-count"></span></p>
+        <div class="section-title"><h3>Tu empresa en la propuesta</h3><span>OPCIONAL</span></div>
+        <div class="brand-form">
+          <label class="field-label" for="brand-name">Nombre de tu empresa</label>
+          <input id="brand-name" maxlength="80" autocomplete="organization">
+          <label class="field-label" for="brand-contact">Contacto (teléfono, email, web)</label>
+          <input id="brand-contact" maxlength="160">
+          <div class="brand-logo-row">
+            <img id="brand-logo-preview" alt="" hidden>
+            <label class="btn full" for="brand-logo-file"><span>Subir tu logo (PNG o JPG)</span></label>
+            <input id="brand-logo-file" type="file" accept="image/png,image/jpeg" hidden>
+            <button id="brand-logo-remove" class="btn" type="button" hidden>Quitar logo</button>
+          </div>
+          <label class="scrim-control"><input id="brand-on-screens" type="checkbox"><span>Mostrar mi logo en las pantallas LED</span></label>
+          <p class="hint">Se guarda en este dispositivo y aparece en la propuesta PDF en lugar del logo PSM.</p>
+        </div>
         <div class="section-title"><h3>Modo avanzado</h3><span>OPCIONAL</span></div>
         <button id="btn-make-editable" class="btn primary full make-editable-button" type="button"><span aria-hidden="true">✎</span> <span>Modifica ogni elemento del palco</span></button>
         <p id="make-editable-hint" class="hint">Trasforma questo palco in oggetti da selezionare, spostare, duplicare o eliminare uno per uno. Puoi annullare dall’icona in alto.</p>
