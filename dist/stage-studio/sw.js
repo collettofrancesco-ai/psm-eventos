@@ -1,7 +1,7 @@
 
-        const CACHE_NAME = "psm-stage-CGAUuN10-B0fHSxQK-TsUT39QV-0CsZD-Ccy0njSi-C_qKnLR0-DamfFkV6-y7H9Ej9Y-DdfTG4d2-DWBybOBZ-CYFPjOHj-DsatS_Vw-_Ot-BIvN1VOp";
+        const CACHE_NAME = "psm-stage-CGAUuN10-MaRiHrLq-TsUT39QV-0CsZD-DgPprWIL-Cw78mLp1-GO3-y7H9Ej9Y-D4MjeuUA-uX8-C_Mb56yg-BvCy2dNs-CwSgRQL0-CJHnNdm1";
         const CACHE_PREFIX = 'psm-stage-';
-        const PRECACHE_URLS = ["/stage-studio/","/stage-studio/manifest.webmanifest","/stage-studio/favicon.png","/stage-studio/assets/psm-logo-CGAUuN10.png","/stage-studio/assets/index-B0fHSxQK.css","/stage-studio/assets/three-engine-TsUT39QV.js","/stage-studio/assets/three-tools-CO-0CsZD.js","/stage-studio/assets/index-Ccy0njSi.js","/stage-studio/assets/main-C_qKnLR0.js","/stage-studio/assets/index-DamfFkV6.js","/stage-studio/assets/Purchases.es-y7H9Ej9Y.js","/stage-studio/assets/web-DdfTG4d2.js","/stage-studio/assets/web-DWBybOBZ.js","/stage-studio/assets/web-CYFPjOHj.js","/stage-studio/assets/web-DsatS_Vw.js","/stage-studio/assets/web-DwIj-_Ot.js","/stage-studio/assets/web-BIvN1VOp.js"];
+        const PRECACHE_URLS = ["/stage-studio/","/stage-studio/manifest.webmanifest","/stage-studio/favicon.png","/stage-studio/assets/psm-logo-CGAUuN10.png","/stage-studio/assets/index-MaRiHrLq.css","/stage-studio/assets/three-engine-TsUT39QV.js","/stage-studio/assets/three-tools-CO-0CsZD.js","/stage-studio/assets/index-DgPprWIL.js","/stage-studio/assets/main-Cw78mLp1.js","/stage-studio/assets/index-CGry-GO3.js","/stage-studio/assets/Purchases.es-y7H9Ej9Y.js","/stage-studio/assets/web-D4MjeuUA.js","/stage-studio/assets/web-BfNb-uX8.js","/stage-studio/assets/web-C_Mb56yg.js","/stage-studio/assets/web-BvCy2dNs.js","/stage-studio/assets/web-CwSgRQL0.js","/stage-studio/assets/web-CJHnNdm1.js"];
 
         self.addEventListener('install', event => {
           event.waitUntil(

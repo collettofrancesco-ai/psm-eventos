@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-Ccy0njSi.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-B0fHSxQK.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-DgPprWIL.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-MaRiHrLq.css">
 </head>
 <body>
   <header class="topbar">
@@ -58,8 +58,9 @@
         <button type="button" role="tab" data-step="start" aria-selected="true"><b>1</b><span>Inicio</span></button>
         <button type="button" role="tab" data-step="structure" aria-selected="false"><b>2</b><span>Estructura</span></button>
         <button type="button" role="tab" data-step="lights" aria-selected="false"><b>3</b><span>Luces</span></button>
-        <button type="button" role="tab" data-step="audio" aria-selected="false"><b>4</b><span>Audio y video</span></button>
-        <button type="button" role="tab" data-step="review" aria-selected="false"><b>5</b><span>Revisar</span></button>
+        <button type="button" role="tab" data-step="audio" aria-selected="false"><b>4</b><span>Audio</span></button>
+        <button type="button" role="tab" data-step="video" aria-selected="false"><b>5</b><span>Video</span></button>
+        <button type="button" role="tab" data-step="review" aria-selected="false"><b>6</b><span>Revisar</span></button>
       </nav>
       <div class="wizard-search" role="search">
         <input id="wizard-search" type="search" autocomplete="off" placeholder="Buscar equipo u opción (ej. generador)" aria-label="Buscar equipo u opción" aria-controls="wizard-search-results">
@@ -174,9 +175,14 @@
         <div id="catalog-lights" class="wizard-catalog"></div>
       </section>
       <section class="wizard-step" data-step-panel="audio" role="tabpanel" aria-labelledby="wizard-title-audio" hidden>
-        <h3 id="wizard-title-audio" class="wizard-title">Sonido, pantallas y FOH</h3>
-        <p class="hint wizard-intro">Line array por lado colgados del cantilever, consola FOH y pantallas LED.</p>
-        <div id="preset-audio-controls">
+        <h3 id="wizard-title-audio" class="wizard-title">Sonido y FOH</h3>
+        <p class="hint wizard-intro">Line array por lado colgados del cantilever, refuerzos, consola FOH y energía.</p>
+        <div id="catalog-audio" class="wizard-catalog"></div>
+      </section>
+      <section class="wizard-step" data-step-panel="video" role="tabpanel" aria-labelledby="wizard-title-video" hidden>
+        <h3 id="wizard-title-video" class="wizard-title">Pantallas y video</h3>
+        <p class="hint wizard-intro">Pantalla LED central, pantallas laterales y tu video en las pantallas.</p>
+        <div id="preset-video-controls">
         <div class="led-size">
           <div class="led-size-heading"><span>Pantalla LED central</span><output id="value-led-m2"></output></div>
           <label class="scrim-control"><input id="led-auto" type="checkbox" checked><span>Ajustar al escenario automáticamente</span></label>
@@ -196,7 +202,7 @@
           </div>
         </div>
         </div>
-        <div id="catalog-audio" class="wizard-catalog"></div>
+        <div id="catalog-video" class="wizard-catalog"></div>
       </section>
       <section class="wizard-step" data-step-panel="review" role="tabpanel" aria-labelledby="wizard-title-review" hidden>
         <h3 id="wizard-title-review" class="wizard-title">Revisa tu escenario</h3>
