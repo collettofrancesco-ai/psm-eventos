@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-BNxoSqh1.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BRfRS7S1.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-D2e0ldQY.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-76NP5BC1.css">
 </head>
 <body>
   <header class="topbar">
@@ -61,6 +61,10 @@
         <button type="button" role="tab" data-step="audio" aria-selected="false"><b>4</b><span>Audio y video</span></button>
         <button type="button" role="tab" data-step="review" aria-selected="false"><b>5</b><span>Revisar</span></button>
       </nav>
+      <div class="wizard-search" role="search">
+        <input id="wizard-search" type="search" autocomplete="off" placeholder="Buscar equipo u opción (ej. generador)" aria-label="Buscar equipo u opción" aria-controls="wizard-search-results">
+        <ul id="wizard-search-results" class="wizard-search-results" role="listbox" hidden></ul>
+      </div>
       <section class="wizard-step" data-step-panel="start" role="tabpanel" aria-labelledby="wizard-title-start">
         <h3 id="wizard-title-start" class="wizard-title">Elige cómo empezar</h3>
         <p class="hint wizard-intro">Parte de un escenario PSM completo o de un lienzo vacío. Luego sigue los pasos: cada uno muestra solo lo que necesitas.</p>
@@ -79,7 +83,14 @@
         </button>
         <button id="btn-reset-structure" class="btn ghost reset-structure-button" type="button"><span aria-hidden="true">↺</span><span>Restablecer estructura inicial</span></button>
         <p class="hint reset-structure-hint">Vuelve a las medidas y al equipo del preset Concierto. Conserva los datos del cliente y del evento.</p>
-        <p id="free-build-hint" class="hint" hidden>Canvas vuoto: niente viene aggiunto automaticamente. Scegli un truss qui sotto oppure apri “Tutti i componenti”; poi trascina gli oggetti nella posizione desiderata.</p>
+        <p id="free-build-hint" class="hint" hidden>Lienzo vacío: no se añade nada automáticamente. Sigue los pasos: en Estructura creas el telar de truss y la tarima, en Luces y en Audio y video eliges los equipos. También puedes usar el buscador.</p>
+        <div class="section-title"><h3>Aspecto de la vista</h3><span>NO CAMBIA EL PROYECTO</span></div>
+        <div class="design-modes" role="group" aria-label="Estilo de visualización"><button data-style="show" class="active" aria-pressed="true"><span aria-hidden="true">◈</span>&nbsp;<span>Show</span></button><button data-style="reference" aria-pressed="false"><span aria-hidden="true">⌗</span>&nbsp;<span>Referencia</span></button></div><button id="btn-reference" class="reference-preset">↗ Cargar medidas de referencia <span>15,42 × 10,28 m</span></button>
+        <div class="look-picker"><div class="section-title"><h3>Atmósfera del show</h3><span>LIGHT DESIGN</span></div><div class="look-options" role="group" aria-label="Atmósfera del show"><button data-look="aurora" class="active"><i class="look-swatch aurora"></i>Aurora</button><button data-look="electric"><i class="look-swatch electric"></i>Electric</button><button data-look="sunset"><i class="look-swatch sunset"></i>Sunset</button></div></div>
+      </section>
+      <section class="wizard-step" data-step-panel="structure" role="tabpanel" aria-labelledby="wizard-title-structure" hidden>
+        <h3 id="wizard-title-structure" class="wizard-title">Medidas y estructura Layher</h3>
+        <p class="hint wizard-intro">Tamaño de la tarima, altura del truss y las partes del Layher: cuerpos laterales, techo, caja negra y escaleras.</p>
         <section id="free-build-toolbox" class="free-build-toolbox" aria-labelledby="free-build-toolbox-title" hidden>
           <div class="section-title"><h3 id="free-build-toolbox-title">Truss in alluminio</h3><span>SELEZIONE RAPIDA</span></div>
           <p class="free-build-intro">Tocca una sezione per aggiungerla al canvas. Dopo puoi selezionarla, trascinarla e modificarne le coordinate.</p>
@@ -125,13 +136,7 @@
             </div>
           </section>
         </section>
-        <div class="section-title"><h3>Aspecto de la vista</h3><span>NO CAMBIA EL PROYECTO</span></div>
-        <div class="design-modes" role="group" aria-label="Estilo de visualización"><button data-style="show" class="active" aria-pressed="true"><span aria-hidden="true">◈</span>&nbsp;<span>Show</span></button><button data-style="reference" aria-pressed="false"><span aria-hidden="true">⌗</span>&nbsp;<span>Referencia</span></button></div><button id="btn-reference" class="reference-preset">↗ Cargar medidas de referencia <span>15,42 × 10,28 m</span></button>
-        <div class="look-picker"><div class="section-title"><h3>Atmósfera del show</h3><span>LIGHT DESIGN</span></div><div class="look-options" role="group" aria-label="Atmósfera del show"><button data-look="aurora" class="active"><i class="look-swatch aurora"></i>Aurora</button><button data-look="electric"><i class="look-swatch electric"></i>Electric</button><button data-look="sunset"><i class="look-swatch sunset"></i>Sunset</button></div></div>
-      </section>
-      <section class="wizard-step" data-step-panel="structure" role="tabpanel" aria-labelledby="wizard-title-structure" hidden>
-        <h3 id="wizard-title-structure" class="wizard-title">Medidas y estructura Layher</h3>
-        <p class="hint wizard-intro">Tamaño de la tarima, altura del truss y las partes del Layher: cuerpos laterales, techo, caja negra y escaleras.</p>
+        <div id="preset-structure-controls">
         <div class="section-title"><h3>Dimensiones</h3><span>METROS</span></div>
         <label>Ancho de tarima <output id="value-deck-w"></output><input id="deck-w" type="range" min="6" max="21" step="0.01" value="15.42"></label>
         <label>Profundidad <output id="value-deck-d"></output><input id="deck-d" type="range" min="4" max="13" step="0.01" value="10.28"></label>
@@ -145,11 +150,13 @@
           <option value="Q86x52">Profilo rettangolare · 86 × 52 cm</option>
           <option value="T30">T30 · Triangular 30 cm</option>
         </select>
+        </div>
         <div id="catalog-structure" class="wizard-catalog"></div>
       </section>
       <section class="wizard-step" data-step-panel="lights" role="tabpanel" aria-labelledby="wizard-title-lights" hidden>
         <h3 id="wizard-title-lights" class="wizard-title">Puentes de luces</h3>
         <p class="hint wizard-intro">Elige cuántos puentes y qué luces van en cada uno. La vista pasa al frente para ver los puentes.</p>
+        <div id="preset-light-controls">
         <label class="field-label" for="lighting-bridge-count" data-i18n="Ponti luce trasversali">Ponti luce trasversali</label>
         <select id="lighting-bridge-count">
           <option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option>
@@ -163,11 +170,13 @@
         <label class="field-label" for="lighting-bridge-step" data-i18n="Desnivel entre puentes (m)">Desnivel entre puentes (m)</label>
         <input id="lighting-bridge-step" type="number" min="0" max="2" step="0.1" inputmode="decimal">
         <p class="hint" data-i18n="Cada puente cuelga más bajo que el de delante, para que el público los vea todos.">Cada puente cuelga más bajo que el de delante, para que el público los vea todos.</p>
+        </div>
         <div id="catalog-lights" class="wizard-catalog"></div>
       </section>
       <section class="wizard-step" data-step-panel="audio" role="tabpanel" aria-labelledby="wizard-title-audio" hidden>
         <h3 id="wizard-title-audio" class="wizard-title">Sonido, pantallas y FOH</h3>
         <p class="hint wizard-intro">Line array por lado colgados del cantilever, consola FOH y pantallas LED.</p>
+        <div id="preset-audio-controls">
         <div class="led-size">
           <div class="led-size-heading"><span>Pantalla LED central</span><output id="value-led-m2"></output></div>
           <label class="scrim-control"><input id="led-auto" type="checkbox" checked><span>Ajustar al escenario automáticamente</span></label>
@@ -175,6 +184,7 @@
             <label>Ancho (m)<input id="led-width" type="number" min="0" max="20" step="0.5" inputmode="decimal"></label>
             <label>Alto (m)<input id="led-height" type="number" min="0" max="12" step="0.5" inputmode="decimal"></label>
           </div>
+        </div>
         </div>
         <div id="catalog-audio" class="wizard-catalog"></div>
       </section>
