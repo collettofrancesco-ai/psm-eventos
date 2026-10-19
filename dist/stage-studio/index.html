@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-CNUigI0V.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CRJo0MI9.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-k58suYpN.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CuXuc6KU.css">
 </head>
 <body>
   <header class="topbar">
@@ -58,9 +58,10 @@
         <button type="button" role="tab" data-step="start" aria-selected="true"><b>1</b><span>Inicio</span></button>
         <button type="button" role="tab" data-step="structure" aria-selected="false"><b>2</b><span>Estructura</span></button>
         <button type="button" role="tab" data-step="lights" aria-selected="false"><b>3</b><span>Luces</span></button>
-        <button type="button" role="tab" data-step="audio" aria-selected="false"><b>4</b><span>Audio</span></button>
-        <button type="button" role="tab" data-step="video" aria-selected="false"><b>5</b><span>Video</span></button>
-        <button type="button" role="tab" data-step="review" aria-selected="false"><b>6</b><span>Revisar</span></button>
+        <button type="button" role="tab" data-step="pyro" aria-selected="false"><b>4</b><span>Pirotecnia</span></button>
+        <button type="button" role="tab" data-step="audio" aria-selected="false"><b>5</b><span>Audio</span></button>
+        <button type="button" role="tab" data-step="video" aria-selected="false"><b>6</b><span>Video</span></button>
+        <button type="button" role="tab" data-step="review" aria-selected="false"><b>7</b><span>Revisar</span></button>
       </nav>
       <div class="wizard-search" role="search">
         <input id="wizard-search" type="search" autocomplete="off" placeholder="Buscar equipo u opción (ej. generador)" aria-label="Buscar equipo u opción" aria-controls="wizard-search-results">
@@ -190,6 +191,11 @@
         <h3 id="wizard-title-audio" class="wizard-title">Sonido y FOH</h3>
         <p class="hint wizard-intro">Line array por lado colgados del cantilever, refuerzos, consola FOH y energía.</p>
         <div id="catalog-audio" class="wizard-catalog"></div>
+      </section>
+      <section class="wizard-step" data-step-panel="pyro" role="tabpanel" aria-labelledby="wizard-title-pyro" hidden>
+        <h3 id="wizard-title-pyro" class="wizard-title">Pirotecnia</h3>
+        <p class="hint wizard-intro">Máquinas de humo, llamas y CO₂ al frente de la tarima.</p>
+        <div id="catalog-pyro" class="wizard-catalog"></div>
       </section>
       <section class="wizard-step" data-step-panel="video" role="tabpanel" aria-labelledby="wizard-title-video" hidden>
         <h3 id="wizard-title-video" class="wizard-title">Pantallas y video</h3>
