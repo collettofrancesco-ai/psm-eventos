@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-fNUyB96Q.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-C6r4l835.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-UPvTTiLx.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-KTywh-W5.css">
 </head>
 <body>
   <header class="topbar">
@@ -92,22 +92,15 @@
       <section class="wizard-step" data-step-panel="structure" role="tabpanel" aria-labelledby="wizard-title-structure" hidden>
         <h3 id="wizard-title-structure" class="wizard-title">Medidas y estructura Layher</h3>
         <p class="hint wizard-intro">Tamaño de la tarima, altura del truss y las partes del Layher: cuerpos laterales, techo, caja negra y escaleras.</p>
-        <section id="free-build-toolbox" class="free-build-toolbox" aria-labelledby="free-build-toolbox-title" hidden>
-          <div class="section-title"><h3 id="free-build-toolbox-title">Truss in alluminio</h3><span>SELEZIONE RAPIDA</span></div>
-          <p class="free-build-intro">Tocca una sezione per aggiungerla al canvas. Dopo puoi selezionarla, trascinarla e modificarne le coordinate.</p>
-          <div class="quick-truss-grid" aria-label="Sezioni truss disponibili">
-            <button type="button" data-add-model-element="truss30"><b>30 × 30</b><small>Sezione · 3 m</small></button>
-            <button type="button" data-add-model-element="truss40"><b>40 × 40</b><small>Sezione · 3 m</small></button>
-            <button type="button" data-add-model-element="truss6040"><b>60 × 40</b><small>Sezione · 3 m</small></button>
-            <button type="button" data-add-model-element="truss8652"><b>86 × 52</b><small>Sezione · 3 m</small></button>
-          </div>
-          <div class="quick-build-actions">
-            <button type="button" data-add-model-element="trussCornerF34">＋ Box corner F34</button>
-            <button type="button" data-add-model-element="trussCornerF54">＋ Box corner F54</button>
-            <button type="button" data-add-model-element="baseplate">＋ Baseplate 80 × 80</button>
-            <button id="btn-open-element-library" type="button">Tutti i componenti <span aria-hidden="true">↗</span></button>
-          </div>
-          <p class="hint quick-build-limit">Modelli geometrici indicativi: verifica compatibilità, portate e componenti con produttore e progettista.</p>
+        <section id="free-build-toolbox" class="free-build-toolbox" aria-labelledby="quick-stage-title" hidden>
+          <section class="quick-stage-start" aria-labelledby="quick-stage-title">
+            <div class="section-title"><h3 id="quick-stage-title">Empieza aquí</h3><span>UN TOQUE</span></div>
+            <p class="free-build-intro">Elige el tamaño: se crean la estructura de truss y la tarima. Después añade luces, audio y video en los pasos siguientes.</p>
+            <div class="stage-size-grid" data-stage-size-grid></div>
+            <ol id="free-build-progress" class="free-build-progress" aria-label="Avance del escenario"></ol>
+          </section>
+          <details class="free-build-more">
+            <summary>Medidas personalizadas</summary>
           <section class="auto-frame-builder" aria-labelledby="auto-frame-title">
             <div class="section-title"><h3 id="auto-frame-title">1 · Struttura</h3><span>UN CLIC</span></div>
             <p class="free-build-intro">Crea un portale rettangolare chiuso: 4 montanti, truss superiore, box corner e baseplate.</p>
@@ -136,6 +129,25 @@
               <button id="btn-open-stage-library" type="button">Aggiungi casse, subwoofer o LED</button>
             </div>
           </section>
+          </details>
+          <details class="free-build-more">
+            <summary>Piezas sueltas · avanzado</summary>
+          <div class="section-title"><h3>Truss in alluminio</h3><span>SELEZIONE RAPIDA</span></div>
+          <p class="free-build-intro">Tocca una sezione per aggiungerla al canvas. Dopo puoi selezionarla, trascinarla e modificarne le coordinate.</p>
+          <div class="quick-truss-grid" aria-label="Sezioni truss disponibili">
+            <button type="button" data-add-model-element="truss30"><b>30 × 30</b><small>Sezione · 3 m</small></button>
+            <button type="button" data-add-model-element="truss40"><b>40 × 40</b><small>Sezione · 3 m</small></button>
+            <button type="button" data-add-model-element="truss6040"><b>60 × 40</b><small>Sezione · 3 m</small></button>
+            <button type="button" data-add-model-element="truss8652"><b>86 × 52</b><small>Sezione · 3 m</small></button>
+          </div>
+          <div class="quick-build-actions">
+            <button type="button" data-add-model-element="trussCornerF34">＋ Box corner F34</button>
+            <button type="button" data-add-model-element="trussCornerF54">＋ Box corner F54</button>
+            <button type="button" data-add-model-element="baseplate">＋ Baseplate 80 × 80</button>
+            <button id="btn-open-element-library" type="button">Tutti i componenti <span aria-hidden="true">↗</span></button>
+          </div>
+          <p class="hint quick-build-limit">Modelli geometrici indicativi: verifica compatibilità, portate e componenti con produttore e progettista.</p>
+          </details>
         </section>
         <div id="preset-structure-controls">
         <div class="section-title"><h3>Dimensiones</h3><span>METROS</span></div>
@@ -238,6 +250,11 @@
       <canvas id="scene" aria-label="Escenario 3D. Arrastra para orbitar y desplaza para acercar."></canvas>
       <div id="graphics-recovery" class="graphics-recovery" hidden><h2>La vista gráfica necesita recuperarse.</h2><p>Tu proyecto se conserva. Recarga la escena para continuar.</p><button id="btn-reload-scene" class="btn primary">Recargar escena</button></div>
       <div class="vignette" aria-hidden="true"></div>
+      <div id="empty-stage-hint" class="empty-stage-hint" hidden>
+        <b>El escenario está vacío</b>
+        <p>Elige un tamaño para empezar: se crean la estructura y la tarima.</p>
+        <div class="stage-size-grid" data-stage-size-grid></div>
+      </div>
       <div id="placement-bar" class="placement-bar" role="status" aria-live="polite" hidden>
         <span id="placement-text"></span>
         <button id="placement-auto" class="btn ghost" type="button">Colocar automáticamente</button>
