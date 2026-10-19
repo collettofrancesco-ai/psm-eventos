@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-C_o6l_l2.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BJEpDuga.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-DpEnTmxL.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CRJo0MI9.css">
 </head>
 <body>
   <header class="topbar">
@@ -449,9 +449,17 @@
   <dialog id="audio-coverage-dialog" class="library-dialog audio-coverage-dialog" aria-labelledby="audio-coverage-title">
     <div class="library-header"><div><span class="eyebrow">ANALISI DEL SISTEMA PA</span><h2 id="audio-coverage-title">Anteprima di copertura</h2><p id="audio-coverage-summary"></p></div><button id="audio-coverage-close" class="tool-btn" aria-label="Chiudi anteprima audio">×</button></div>
     <div id="audio-coverage-warnings" class="audio-coverage-warnings" aria-live="polite"></div>
+    <label class="audio-file-label" for="audio-demo-track">Traccia demo sintetica</label>
+    <select id="audio-demo-track" class="audio-demo-track-picker">
+      <option value="0" data-i18n="Traccia 1 · Pop">Traccia 1 · Pop</option>
+      <option value="1" data-i18n="Traccia 2 · Rock">Traccia 2 · Rock</option>
+      <option value="2" data-i18n="Traccia 3 · Elettronica">Traccia 3 · Elettronica</option>
+      <option value="3" data-i18n="Traccia 4 · Cinematica">Traccia 4 · Cinematica</option>
+    </select>
+    <p class="hint audio-demo-note" data-i18n="Tracce musicali demo originali · nessun brano commerciale">Tracce musicali demo originali · nessun brano commerciale</p>
     <label class="audio-file-label" for="audio-demo-file">Traccia demo integrata · carica il tuo audio solo se vuoi</label>
     <input id="audio-demo-file" class="audio-file-input" type="file" accept="audio/*">
-    <div class="audio-demo-track"><p id="audio-demo-file-status" class="hint audio-demo-note">Traccia demo PSM pronta. Il caricamento del tuo audio è facoltativo.</p><button id="audio-demo-use-default" class="btn ghost" type="button" hidden>Usa traccia demo</button></div>
+    <div class="audio-demo-track"><p id="audio-demo-file-status" class="hint audio-demo-note" data-i18n="Tracce demo musicali originali pronte. Il caricamento del tuo audio è facoltativo.">Tracce demo musicali originali pronte. Il caricamento del tuo audio è facoltativo.</p><button id="audio-demo-use-default" class="btn ghost" type="button" hidden>Usa traccia demo</button></div>
     <div class="audio-listener-controls">
       <label>Posizione laterale del pubblico <output id="audio-listener-x-value">0%</output><input id="audio-listener-x" type="range" min="-100" max="100" step="1" value="0"></label>
       <label>Distanza dal palco <output id="audio-listener-depth-value">50%</output><input id="audio-listener-depth" type="range" min="0" max="100" step="1" value="50"></label>
