@@ -11,10 +11,20 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-B_ag-N0Q.js"></script>
+  <style>
+    /* Loading screen, styled inline so it shows before the stylesheet and the scripts arrive;
+       main.js (or the startup error path in bootstrap.js) adds body.app-ready to remove it. */
+    #boot-splash { position: fixed; inset: 0; z-index: 1000; display: grid; place-content: center; gap: 16px; background: #0d131b; color: #c7f36b; font: 600 15px system-ui, -apple-system, sans-serif; letter-spacing: 0.08em; text-align: center; }
+    #boot-splash i { width: 34px; height: 34px; margin: 0 auto; border: 3px solid #2b3846; border-top-color: #c7f36b; border-radius: 50%; animation: boot-spin 0.9s linear infinite; }
+    @keyframes boot-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
+    body.app-ready #boot-splash { display: none; }
+  </style>
+  <script type="module" crossorigin src="/stage-studio/assets/index-Cd3pk7aP.js"></script>
   <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CSOiot3_.css">
 </head>
 <body>
+  <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
   <header class="topbar">
     <a class="brand" href="/" aria-label="PSM Stage Studio">
       <img class="brand-logo" alt="PSM Production · Sound · Lighting">
