@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-B6OupbsP.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-DfePSxnf.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-CRhCUuSi.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-DniodT3v.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -166,6 +166,12 @@
         <label>Profundidad <output id="value-deck-d"></output><input id="deck-d" type="range" min="4" max="13" step="0.01" value="10.28"></label>
         <div class="precise-dimensions"><label>Ancho exacto (m)<input id="exact-width" type="number" min="6" max="21" step="0.01" value="15.42"></label><label>Fondo exacto (m)<input id="exact-depth" type="number" min="4" max="13" step="0.01" value="10.28"></label></div><p id="module-status" class="hint"></p>
         <div class="dimension-note"><label>Altura de tarima (m)<input id="deck-height" type="number" min="0.6" max="3" step="0.1" value="2.3" inputmode="decimal"></label><label data-i18n="Altura Layher (m)">Altura Layher (m)<input id="rig-height" type="number" min="5" max="14" step="0.1" value="12.3"></label><small id="rig-note"></small></div>
+        <div id="riser-controls" class="riser-controls">
+          <span class="riser-title" data-i18n="Sobretarima · 2,44 × 1,22 m">Sobretarima · 2,44 × 1,22 m</span>
+          <label data-i18n="Cantidad">Cantidad<select id="riser-count"></select></label>
+          <label data-i18n="Altura">Altura<select id="riser-height"></select></label>
+          <small data-i18n="Para batería, congas, timbales o teclados. Toca una sobretarima en la vista 3D para moverla o eliminarla.">Para batería, congas, timbales o teclados. Toca una sobretarima en la vista 3D para moverla o eliminarla.</small>
+        </div>
         <label class="field-label" for="truss">SECCIÓN DE TRUSS</label>
         <select id="truss">
           <option value="Q40">Q40 · Cuadrado 40 × 40 cm</option>
@@ -285,6 +291,12 @@
         <span id="placement-text"></span>
         <button id="placement-auto" class="btn ghost" type="button">Colocar automáticamente</button>
         <button id="placement-done" class="btn primary" type="button">Listo</button>
+      </div>
+      <div id="selection-bar" class="selection-bar" role="group" aria-label="Oggetto selezionato" hidden>
+        <span id="selection-bar-name"></span>
+        <select id="selection-bar-riser-height" aria-label="Altura" hidden></select>
+        <button id="selection-bar-delete" class="btn danger" type="button" data-i18n="Elimina">🗑 Elimina</button>
+        <button id="selection-bar-close" class="btn ghost" type="button" aria-label="Deseleziona">✕</button>
       </div>
       <button id="btn-toggle-view-controls" class="tool-btn view-controls-toggle" type="button" aria-pressed="false"><span aria-hidden="true">▴</span> <span id="view-controls-label">Ocultar controles</span></button>
       <div class="viewport-hud">
