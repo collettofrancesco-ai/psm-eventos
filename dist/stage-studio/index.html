@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-DLHEuKdX.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BYHNMKxe.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-WpMXpSpa.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BwfTTF8i.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -70,8 +70,9 @@
         <button type="button" role="tab" data-step="lights" aria-selected="false"><b>3</b><span>Luces</span></button>
         <button type="button" role="tab" data-step="pyro" aria-selected="false"><b>4</b><span>Pirotecnia</span></button>
         <button type="button" role="tab" data-step="audio" aria-selected="false"><b>5</b><span>Audio</span></button>
-        <button type="button" role="tab" data-step="video" aria-selected="false"><b>6</b><span>Video</span></button>
-        <button type="button" role="tab" data-step="review" aria-selected="false"><b>7</b><span>Revisar</span></button>
+        <button type="button" role="tab" data-step="backline" aria-selected="false"><b>6</b><span>Backline</span></button>
+        <button type="button" role="tab" data-step="video" aria-selected="false"><b>7</b><span>Video</span></button>
+        <button type="button" role="tab" data-step="review" aria-selected="false"><b>8</b><span>Revisar</span></button>
       </nav>
       <div class="wizard-search" role="search">
         <input id="wizard-search" type="search" autocomplete="off" placeholder="Buscar equipo u opción (ej. generador)" aria-label="Buscar equipo u opción" aria-controls="wizard-search-results">
@@ -95,7 +96,7 @@
         </button>
         <button id="btn-reset-structure" class="btn ghost reset-structure-button" type="button"><span aria-hidden="true">↺</span><span>Restablecer estructura inicial</span></button>
         <p class="hint reset-structure-hint">Vuelve a las medidas y al equipo del preset Concierto. Conserva los datos del cliente y del evento.</p>
-        <p id="free-build-hint" class="hint" hidden>Lienzo vacío: no se añade nada automáticamente. Sigue los pasos: en Estructura creas el telar de truss y la tarima, en Luces y en Audio y video eliges los equipos. También puedes usar el buscador.</p>
+        <p id="free-build-hint" class="hint" data-i18n="Lienzo vacío: no se añade nada automáticamente. Sigue los pasos: en Estructura creas el telar de truss y la tarima; en Luces, Audio, Backline y Video eliges los equipos. También puedes usar el buscador." hidden>Lienzo vacío: no se añade nada automáticamente. Sigue los pasos: en Estructura creas el telar de truss y la tarima; en Luces, Audio, Backline y Video eliges los equipos. También puedes usar el buscador.</p>
         <div class="section-title"><h3>Aspecto de la vista</h3><span>NO CAMBIA EL PROYECTO</span></div>
         <div class="design-modes" role="group" aria-label="Estilo de visualización"><button data-style="show" class="active" aria-pressed="true"><span aria-hidden="true">◈</span>&nbsp;<span>Show</span></button><button data-style="reference" aria-pressed="false"><span aria-hidden="true">⌗</span>&nbsp;<span>Referencia</span></button></div><button id="btn-reference" class="reference-preset">↗ Cargar medidas de referencia <span>15,42 × 10,28 m</span></button>
         <div class="look-picker"><div class="section-title"><h3>Atmósfera del show</h3><span>LIGHT DESIGN</span></div><div class="look-options" role="group" aria-label="Atmósfera del show"><button data-look="aurora" class="active"><i class="look-swatch aurora"></i>Aurora</button><button data-look="electric"><i class="look-swatch electric"></i>Electric</button><button data-look="sunset"><i class="look-swatch sunset"></i>Sunset</button></div></div>
@@ -106,7 +107,7 @@
         <section id="free-build-toolbox" class="free-build-toolbox" aria-labelledby="quick-stage-title" hidden>
           <section class="quick-stage-start" aria-labelledby="quick-stage-title">
             <div class="section-title"><h3 id="quick-stage-title">Empieza aquí</h3><span>UN TOQUE</span></div>
-            <p class="free-build-intro">Elige el tamaño: se crean la estructura de truss y la tarima. Después añade luces, audio y video en los pasos siguientes.</p>
+            <p class="free-build-intro" data-i18n="Elige el tamaño: se crean la estructura de truss y la tarima. Después añade luces, audio, backline y video en los pasos siguientes.">Elige el tamaño: se crean la estructura de truss y la tarima. Después añade luces, audio, backline y video en los pasos siguientes.</p>
             <div class="stage-size-grid" data-stage-size-grid></div>
             <ol id="free-build-progress" class="free-build-progress" aria-label="Avance del escenario"></ol>
           </section>
@@ -213,6 +214,11 @@
         <h3 id="wizard-title-audio" class="wizard-title">Sonido y FOH</h3>
         <p class="hint wizard-intro">Line array por lado colgados del cantilever, refuerzos, consola FOH y energía.</p>
         <div id="catalog-audio" class="wizard-catalog"></div>
+      </section>
+      <section class="wizard-step" data-step-panel="backline" role="tabpanel" aria-labelledby="wizard-title-backline" hidden>
+        <h3 id="wizard-title-backline" class="wizard-title">Backline</h3>
+        <p class="hint wizard-intro">Añade o quita cada instrumento y accesorio por separado.</p>
+        <div id="catalog-backline" class="wizard-catalog"></div>
       </section>
       <section class="wizard-step" data-step-panel="pyro" role="tabpanel" aria-labelledby="wizard-title-pyro" hidden>
         <h3 id="wizard-title-pyro" class="wizard-title">Pirotecnia</h3>
