@@ -66,4 +66,12 @@ The model is included in the application bundle so the instrument can be rendere
 - Download route: Innerscene library's model download endpoint
 - Original unbranded folding stand, with bundled geometry bounds of approximately 0.414 × 0.716 × 0.434 m (width × height × depth).
 
+## Choir figures
+
+- Files: `choir-singer-amara-v1.glb` and `choir-singer-daniel-v1.glb`
+- Sources: [Amara, Innerscene](https://www.innerscene.com/tools/library/3d-parts/amara-3d-person-standing-office-2a16c294) and [Daniel, Innerscene](https://www.innerscene.com/tools/library/3d-parts/daniel-3d-person-standing-casual-f788af5a)
+- License: CC0 1.0 Universal, public domain dedication
+- Source meshes adapted from MakeHuman CC0 assets; embedded skin, hair, and clothing textures are downsampled to 1024 px maximum for mobile delivery.
+- Static posed figures at approximate real-world scale. No rig or animation is included.
+
 These models are included in the application bundle for offline rendering. Their dimensions support visualization only and do not represent manufacturing tolerances, acoustic performance, or certified product specifications.
