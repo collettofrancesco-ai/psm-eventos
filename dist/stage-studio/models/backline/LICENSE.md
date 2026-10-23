@@ -50,4 +50,20 @@ The model is included in the application bundle so the instrument can be rendere
 - Download route: Innerscene library's model download endpoint
 - Original unbranded combo amplifier with textured PBR materials; bundled bounds are approximately 0.400 × 0.667 × 0.235 m (width × height × depth).
 
+## Dreadnought acoustic guitar
+
+- File: `acoustic-guitar-v1.glb`
+- Source: [Innerscene 3D Parts Library](https://www.innerscene.com/tools/library/3d-parts/dreadnought-acoustic-guitar-39847fd7)
+- License: CC0 1.0 Universal, public domain dedication
+- Download route: Innerscene library's model download endpoint
+- Original unbranded model, with bundled geometry bounds of approximately 0.414 × 1.049 × 0.150 m (width × height × depth).
+
+## Guitar floor stand
+
+- File: `guitar-stand-v1.glb`
+- Source: [Innerscene 3D Parts Library](https://www.innerscene.com/tools/library/3d-parts/guitar-stand-d2890e7e)
+- License: CC0 1.0 Universal, public domain dedication
+- Download route: Innerscene library's model download endpoint
+- Original unbranded folding stand, with bundled geometry bounds of approximately 0.414 × 0.716 × 0.434 m (width × height × depth).
+
 These models are included in the application bundle for offline rendering. Their dimensions support visualization only and do not represent manufacturing tolerances, acoustic performance, or certified product specifications.
