@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-QOFcqJsi.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Bd0EqChw.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-G8-RJDJt.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Bz2kVJGQ.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -302,10 +302,19 @@
         <div class="selection-bar-heading">
           <span id="selection-bar-name"></span>
           <select id="selection-bar-riser-height" aria-label="Altura" hidden></select>
-          <button id="selection-bar-delete" class="btn danger" type="button" data-i18n="Elimina">🗑 Elimina</button>
+          <button id="selection-bar-delete" class="btn danger" type="button" aria-label="Elimina" data-i18n-aria-label="Elimina"><span aria-hidden="true">🗑</span> <span class="selection-delete-text" data-i18n="Elimina">Elimina</span></button>
           <button id="selection-bar-close" class="btn ghost" type="button" aria-label="Deseleziona">✕</button>
         </div>
-        <div class="selection-move-controls" role="group" aria-label="Sposta oggetto" data-i18n-aria-label="Sposta oggetto">
+        <p id="selection-bar-hint" class="selection-bar-hint" data-i18n="Arrastra el objeto para moverlo; arrastra el fondo para girar la vista.">Arrastra el objeto para moverlo; arrastra el fondo para girar la vista.</p>
+        <div class="selection-edit-actions">
+          <button id="selection-bar-rotate-left" class="btn ghost" type="button" aria-label="Ruota a sinistra di 15°" data-i18n-aria-label="Ruota a sinistra di 15°">↶ 15°</button>
+          <button id="selection-bar-rotate-right" class="btn ghost" type="button" aria-label="Ruota a destra di 15°" data-i18n-aria-label="Ruota a destra di 15°">↷ 15°</button>
+          <button id="selection-bar-duplicate" class="btn ghost" type="button" data-i18n="Duplica">Duplica</button>
+          <button id="selection-bar-height" class="btn ghost" type="button" aria-pressed="false">↕ <span data-i18n="Altura">Altura</span></button>
+        </div>
+        <details class="selection-position-panel">
+          <summary data-i18n="Ajustar posición">Ajustar posición</summary>
+          <div class="selection-move-controls" role="group" aria-label="Sposta oggetto" data-i18n-aria-label="Sposta oggetto">
           <label class="selection-step-label" for="selection-bar-step"><span data-i18n="Passo di spostamento">Passo</span>
             <select id="selection-bar-step" aria-label="Passo di spostamento" data-i18n-aria-label="Passo di spostamento">
               <option value="0.25">0,25 m</option><option value="0.5">0,5 m</option><option value="1">1 m</option><option value="2.57">2,57 m</option>
@@ -317,7 +326,8 @@
           <button class="selection-nudge" type="button" data-axis="z" data-direction="1" aria-label="Sposta sull’asse Z positivo" data-i18n-aria-label="Sposta sull’asse Z positivo">Z+</button>
           <button class="selection-nudge" type="button" data-axis="y" data-direction="1" aria-label="Alza oggetto" data-i18n-aria-label="Alza oggetto">↑</button>
           <button class="selection-nudge" type="button" data-axis="y" data-direction="-1" aria-label="Abbassa oggetto" data-i18n-aria-label="Abbassa oggetto">↓</button>
-        </div>
+          </div>
+        </details>
       </div>
       <button id="btn-toggle-view-controls" class="tool-btn view-controls-toggle" type="button" aria-pressed="false"><span aria-hidden="true">▴</span> <span id="view-controls-label">Ocultar controles</span></button>
       <div class="viewport-hud">
@@ -503,6 +513,8 @@
   </dialog>
   <dialog id="model-element-library" class="library-dialog element-library" aria-labelledby="element-library-title">
     <div class="library-header"><div><span class="eyebrow">MODELLAZIONE 3D</span><h2 id="element-library-title">Aggiungi al palco</h2><p>Le sezioni geometriche sono indicative. Global Truss: F34 = 29 cm, F42 = 40 cm, F52 = 62 cm; “baseplate 514” non identificata nel catalogo consultato. L’app non verifica compatibilità o portate: controlla con produttore e progettista.</p></div><button id="element-library-close" class="tool-btn" aria-label="Chiudi libreria elementi">×</button></div>
+    <input id="element-library-search" class="element-library-search" type="search" autocomplete="off" aria-label="Buscar en la biblioteca" placeholder="Buscar en la biblioteca" data-i18n-aria-label="Buscar en la biblioteca" data-i18n-placeholder="Buscar en la biblioteca" aria-controls="model-element-catalog">
+    <p id="element-library-results" class="hint" role="status"></p>
     <div id="model-element-catalog" class="model-element-catalog"></div>
   </dialog>
   <dialog id="audio-coverage-dialog" class="library-dialog audio-coverage-dialog" aria-labelledby="audio-coverage-title">
