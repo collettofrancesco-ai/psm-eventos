@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-DN99Z-Gp.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BhYh_6Pv.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-DpJZStv2.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BM92mCH8.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -499,6 +499,25 @@
     <span>PSM STAGE STUDIO <b>1.0</b> <small id="app-build"></small></span>
   </footer>
   <dialog id="project-library" class="library-dialog" aria-labelledby="library-title"><div class="library-header"><div><span class="eyebrow">TU ESPACIO DE TRABAJO</span><h2 id="library-title">Cada gran show empieza aquí.</h2><p>Tu biblioteca privada en este navegador.</p></div><button id="library-close" class="tool-btn" aria-label="Cerrar biblioteca">×</button></div><div class="library-actions"><button id="library-save" class="btn primary">＋ Guardar proyecto actual</button><button id="library-new" class="btn ghost">Nuevo proyecto</button><button id="library-import" class="btn ghost">↑ Importar JSON</button><button id="library-export" class="btn ghost" type="button" data-i18n="Esporta copia JSON">Esporta copia JSON</button></div><section class="template-section" aria-labelledby="template-section-title"><div class="template-section-heading"><div><span class="eyebrow">PUNTO DE PARTIDA</span><h3 id="template-section-title">Modelli di produzione</h3><p>Parti da una configurazione riutilizzabile. I dati del cliente e dell’evento non vengono copiati.</p></div></div><div id="starter-template-list" class="starter-template-list"></div><details class="custom-template-details"><summary>Salva il progetto attuale come modello</summary><form id="template-save-form" class="template-save-form"><label>Nome del modello<input id="template-name" name="name" maxlength="80" required placeholder="Es. Festival all'aperto"></label><label>Descrizione facoltativa<input id="template-description" name="description" maxlength="240" placeholder="Note sulla configurazione riutilizzabile"></label><button class="btn primary" type="submit">Salva modello</button></form></details><div id="custom-template-list" class="custom-template-list" aria-live="polite"></div><p id="template-storage-hint" class="hint"></p></section><section class="proposal-compare" aria-labelledby="proposal-compare-title"><div><h3 id="proposal-compare-title">Comparar alternativas</h3><p>Duplica una proposta y compara medidas, equipos y estimación antes de elegir.</p></div><div class="proposal-compare-selectors"><label>Alternativa A<select id="compare-project-a"></select></label><label>Alternativa B<select id="compare-project-b"></select></label><button id="compare-projects" class="btn ghost" type="button" disabled>Comparar</button></div><div id="proposal-comparison-result" class="proposal-comparison-result" aria-live="polite"></div></section><div id="library-list"></div><p id="library-sync-hint" class="hint"></p></dialog>
+  <dialog id="ar-preview-dialog" class="library-dialog ar-preview-dialog" aria-labelledby="ar-preview-title">
+    <div class="library-header">
+      <div><span class="eyebrow" data-i18n="REALTA AUMENTATA">REALTÀ AUMENTATA</span><h2 id="ar-preview-title" data-i18n="Prova il palco nel tuo spazio">Prova il palco nel tuo spazio</h2></div>
+      <button id="ar-preview-close" class="tool-btn" type="button" aria-label="Chiudi realtà aumentata" data-i18n-aria-label="Chiudi realtà aumentata">×</button>
+    </div>
+    <p class="ar-preview-copy" data-i18n="Inquadra il pavimento con iPhone o iPad, tocca per posizionare il modello e trascinalo nella stanza. Usa due dita per spostarlo o ridimensionarlo.">Inquadra il pavimento con iPhone o iPad, tocca per posizionare il modello e trascinalo nella stanza. Usa due dita per spostarlo o ridimensionarlo.</p>
+    <fieldset class="ar-scale-options">
+      <legend data-i18n="Dimensione del modello">Dimensione del modello</legend>
+      <label><input type="radio" name="ar-scale" value="0.02" checked><span><strong>1:50</strong><small data-i18n="Plastico completo · consigliato per una stanza">Plastico completo · consigliato per una stanza</small></span></label>
+      <label><input type="radio" name="ar-scale" value="0.01"><span><strong>1:100</strong><small data-i18n="Vista d’insieme · occupa meno spazio">Vista d’insieme · occupa meno spazio</small></span></label>
+      <label><input type="radio" name="ar-scale" value="0.05"><span><strong>1:20</strong><small data-i18n="Dettaglio · richiede più spazio">Dettaglio · richiede più spazio</small></span></label>
+      <label><input type="radio" name="ar-scale" value="1"><span><strong>1:1</strong><small data-i18n="Dimensione reale · adatta a singoli elementi">Dimensione reale · adatta a singoli elementi</small></span></label>
+    </fieldset>
+    <p id="ar-preview-status" class="hint" aria-live="polite"></p>
+    <div class="ar-preview-actions">
+      <button id="ar-preview-generate" class="btn primary" type="button" data-i18n="Prepara il modello">Prepara il modello</button>
+      <a id="ar-preview-open" class="btn primary" rel="ar" hidden><img id="ar-preview-poster" alt="" aria-hidden="true"><span data-i18n="Apri nel tuo spazio">Apri nel tuo spazio</span></a>
+    </div>
+  </dialog>
   <dialog id="subscription-dialog" class="library-dialog subscription-dialog" aria-labelledby="subscription-title">
     <div class="library-header">
       <div><span class="eyebrow" data-i18n="STAGE STUDIO PRO · SUSCRIPCIÓN MENSUAL">STAGE STUDIO PRO · SUSCRIPCIÓN MENSUAL</span><h2 id="subscription-title" data-i18n="Diseña gratis. Exporta y guarda tus proyectos con Pro.">Diseña gratis. Exporta y guarda tus proyectos con Pro.</h2><p data-i18n="El diseño 3D, los cambios y la vista previa de audio siguen siendo gratuitos.">El diseño 3D, los cambios y la vista previa de audio siguen siendo gratuitos.</p></div>
