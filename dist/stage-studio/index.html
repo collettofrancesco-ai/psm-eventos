@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-BXBALZSq.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Cwn2PTb3.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-BH3ljxuC.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-PEBKSWnQ.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -89,6 +89,7 @@
         <h3 id="wizard-title-start" class="wizard-title">Elige cómo empezar</h3>
         <p class="hint wizard-intro">Parte de un escenario PSM completo o de un lienzo vacío. Luego sigue los pasos: cada uno muestra solo lo que necesitas.</p>
         <button id="btn-quick-start" class="btn primary quick-start-entry" type="button">✦ <span data-i18n="Inicio rápido · 3 preguntas">Inicio rápido · 3 preguntas</span></button>
+        <button id="btn-my-templates" class="btn ghost full my-templates-entry" type="button">▤ <span data-i18n="Mis modelos guardados">Mis modelos guardados</span></button>
         <details id="venue-plan" class="venue-plan">
           <summary data-i18n="Plano del lugar">Plano del lugar</summary>
           <p class="hint" data-i18n="Sube el plano o una foto aérea del lugar y escribe cuánto mide de ancho: el escenario se dibuja encima, en escala.">Sube el plano o una foto aérea del lugar y escribe cuánto mide de ancho: el escenario se dibuja encima, en escala.</p>
@@ -324,6 +325,7 @@
         <button id="shared-view-copy" class="btn primary" type="button" data-i18n="Guardar una copia">Guardar una copia</button>
         <button id="shared-view-close" class="btn ghost" type="button" data-i18n="Volver a mi proyecto">Volver a mi proyecto</button>
       </div>
+      <p id="offline-notice" class="offline-notice" role="status" hidden><span data-i18n="Sin conexión: puedes seguir trabajando. Todo se guarda en este dispositivo.">Sin conexión: puedes seguir trabajando. Todo se guarda en este dispositivo.</span></p>
       <div id="selection-bar" class="selection-bar" role="group" aria-label="Oggetto selezionato" hidden>
         <div class="selection-bar-heading">
           <span id="selection-bar-name"></span>
@@ -469,8 +471,10 @@
       <button id="btn-pdf" class="btn primary full">Exportar propuesta ↗</button>
       <button id="btn-drawing" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Plano vectorial SVG</span></button>
       <button id="btn-csv" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Descargar materiales CSV</span></button>
+      <button id="btn-loading-list" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Lista de carga del camión (CSV)</span></button>
       <button id="btn-hires" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Imagen en alta resolución</span></button>
       <button id="btn-tour-video" class="btn ghost full"><span aria-hidden="true">●</span>&nbsp;<span id="tour-video-label">Video del recorrido · 30 s</span></button>
+      <button id="btn-ar" class="btn ghost full"><span aria-hidden="true">◎</span>&nbsp;<span id="ar-label">Descargar modelo 3D (GLB)</span></button>
       <button id="btn-share-view" class="btn ghost full"><span aria-hidden="true">↗</span>&nbsp;<span>Compartir vista 3D (enlace)</span></button>
       <button id="btn-wa" class="btn wa full">Solicitar por WhatsApp</button>
       <div class="section-title bom-heading"><h3>Lista de materiales</h3><span>BOM</span></div>
@@ -485,7 +489,7 @@
     <button type="button" data-mobile-section="panel right" aria-pressed="false"><span aria-hidden="true">↗</span>Propuesta</button>
   </nav>
   <footer class="statusbar">
-    <span><span class="status-dot"></span> Proyectos guardados en este dispositivo</span>
+    <span id="connection-status"><span class="status-dot"></span> <span id="connection-status-text">Proyectos guardados en este dispositivo</span></span>
     <button id="btn-legal" type="button" data-i18n="Privacy & licenses" aria-haspopup="dialog" aria-controls="legal-dialog">Privacy &amp; licenses</button>
     <span id="footer-dimensions">LAYHER SYSTEM / Q40</span>
     <span>PSM STAGE STUDIO <b>1.0</b> <small id="app-build"></small></span>
@@ -559,6 +563,7 @@
         <select id="quick-start-audience" name="audience" aria-label="Personas"></select>
       </fieldset>
       <div class="quick-start-actions">
+        <button id="quick-start-templates" class="btn ghost" type="button" data-i18n="Usar uno de mis modelos">Usar uno de mis modelos</button>
         <button id="quick-start-skip" class="btn ghost" type="button" data-i18n="Prefiero empezar solo">Prefiero empezar solo</button>
         <button class="btn primary" type="submit" data-i18n="Crear escenario">Crear escenario</button>
       </div>
