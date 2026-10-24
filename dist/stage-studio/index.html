@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-G8-RJDJt.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Bz2kVJGQ.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-pUuO4g47.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-DeG4DPvD.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -40,6 +40,13 @@
         <option value="it">Italiano</option>
         <option value="de">Deutsch</option>
         <option value="fr">Français</option>
+      </select>
+    </label>
+    <label class="language-picker unit-picker">
+      <span aria-hidden="true">⇔</span>
+      <select id="units" aria-label="Unidades de medida" title="Unidades de medida">
+        <option value="metric" data-i18n="Metros">Metros</option>
+        <option value="imperial" data-i18n="Pies">Pies</option>
       </select>
     </label>
     <div class="project-heading">
@@ -81,6 +88,7 @@
       <section class="wizard-step" data-step-panel="start" role="tabpanel" aria-labelledby="wizard-title-start">
         <h3 id="wizard-title-start" class="wizard-title">Elige cómo empezar</h3>
         <p class="hint wizard-intro">Parte de un escenario PSM completo o de un lienzo vacío. Luego sigue los pasos: cada uno muestra solo lo que necesitas.</p>
+        <button id="btn-quick-start" class="btn primary quick-start-entry" type="button">✦ <span data-i18n="Inicio rápido · 3 preguntas">Inicio rápido · 3 preguntas</span></button>
         <label class="field-label" for="preset">TIPO DE PRODUCCIÓN</label>
         <select id="preset">
           <option value="concierto" data-i18n="Concierto · Main stage">Concierto · Main stage</option>
@@ -165,8 +173,8 @@
         <div class="section-title"><h3>Dimensiones</h3><span>METROS</span></div>
         <label>Ancho de tarima <output id="value-deck-w"></output><input id="deck-w" type="range" min="6" max="21" step="0.01" value="15.42"></label>
         <label>Profundidad <output id="value-deck-d"></output><input id="deck-d" type="range" min="4" max="13" step="0.01" value="10.28"></label>
-        <div class="precise-dimensions"><label>Ancho exacto (m)<input id="exact-width" type="number" min="6" max="21" step="0.01" value="15.42"></label><label>Fondo exacto (m)<input id="exact-depth" type="number" min="4" max="13" step="0.01" value="10.28"></label></div><p id="module-status" class="hint"></p>
-        <div class="dimension-note"><label>Altura de tarima (m)<input id="deck-height" type="number" min="0.6" max="3" step="0.1" value="2.3" inputmode="decimal"></label><label data-i18n="Altura Layher (m)">Altura Layher (m)<input id="rig-height" type="number" min="5" max="14" step="0.1" value="12.3"></label><small id="rig-note"></small></div>
+        <div class="precise-dimensions"><label>Ancho exacto <span class="length-unit">(m)</span><input id="exact-width" type="number" min="6" max="21" step="0.01" value="15.42"></label><label>Fondo exacto <span class="length-unit">(m)</span><input id="exact-depth" type="number" min="4" max="13" step="0.01" value="10.28"></label></div><p id="module-status" class="hint"></p>
+        <div class="dimension-note"><label>Altura de tarima <span class="length-unit">(m)</span><input id="deck-height" type="number" min="0.6" max="3" step="0.1" value="2.3" inputmode="decimal"></label><label data-i18n="Altura Layher">Altura Layher <span class="length-unit">(m)</span><input id="rig-height" type="number" min="5" max="14" step="0.1" value="12.3"></label><small id="rig-note"></small></div>
         <div id="riser-controls" class="riser-controls">
           <span class="riser-title" data-i18n="Sobretarima · 2,44 × 1,22 m">Sobretarima · 2,44 × 1,22 m</span>
           <label data-i18n="Cantidad">Cantidad<select id="riser-count"></select></label>
@@ -421,7 +429,7 @@
         <span class="project-tag">MAIN STAGE</span>
         <h3 id="summary-name">Main Stage · Live 2026</h3>
         <div class="project-metrics">
-          <div><b id="metric-area">158,5</b><span>m² de escenario</span></div>
+          <div><b id="metric-area">158,5</b><span id="metric-area-label">m² de escenario</span></div>
           <div><b id="metric-gear">0</b><span id="metric-gear-label">equipos · pares incluidos</span></div>
         </div>
       </div>
@@ -443,6 +451,8 @@
       <button id="btn-pdf" class="btn primary full">Exportar propuesta ↗</button>
       <button id="btn-drawing" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Plano vectorial SVG</span></button>
       <button id="btn-csv" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Descargar materiales CSV</span></button>
+      <button id="btn-hires" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Imagen en alta resolución</span></button>
+      <button id="btn-tour-video" class="btn ghost full"><span aria-hidden="true">●</span>&nbsp;<span id="tour-video-label">Video del recorrido · 30 s</span></button>
       <button id="btn-wa" class="btn wa full">Solicitar por WhatsApp</button>
       <div class="section-title bom-heading"><h3>Lista de materiales</h3><span>BOM</span></div>
       <section id="reference-material-comparison" class="reference-comparison" aria-label="Comparación con la lámina de materiales"></section>
@@ -510,6 +520,30 @@
       </ul>
       <p class="hint">Inventario dei pacchetti runtime inclusi nel lockfile corrente. Ricontrolla l’elenco quando aggiorni dipendenze o integri altri SDK.</p>
     </section>
+  </dialog>
+  <dialog id="quick-start" class="library-dialog quick-start" aria-labelledby="quick-start-title">
+    <form id="quick-start-form" method="dialog">
+      <div class="library-header"><div><span class="eyebrow" data-i18n="INICIO RÁPIDO">INICIO RÁPIDO</span><h2 id="quick-start-title" data-i18n="Tu escenario en 3 preguntas">Tu escenario en 3 preguntas</h2><p data-i18n="Después puedes cambiar todo: medidas, equipos y público.">Después puedes cambiar todo: medidas, equipos y público.</p></div><button id="quick-start-close" class="tool-btn" type="button" aria-label="Cerrar">×</button></div>
+      <fieldset class="quick-start-question">
+        <legend data-i18n="1 · ¿Qué evento es?">1 · ¿Qué evento es?</legend>
+        <label class="quick-start-choice"><input type="radio" name="event" value="concierto" checked><span data-i18n="Concierto">Concierto</span></label>
+        <label class="quick-start-choice"><input type="radio" name="event" value="corporativo"><span data-i18n="Evento corporativo">Evento corporativo</span></label>
+        <label class="quick-start-choice"><input type="radio" name="event" value="boda"><span data-i18n="Boda o fiesta">Boda o fiesta</span></label>
+      </fieldset>
+      <fieldset class="quick-start-question">
+        <legend data-i18n="2 · ¿Dónde?">2 · ¿Dónde?</legend>
+        <label class="quick-start-choice"><input type="radio" name="venue" value="outdoor" checked><span data-i18n="Al aire libre">Al aire libre</span></label>
+        <label class="quick-start-choice"><input type="radio" name="venue" value="indoor"><span data-i18n="En un salón">En un salón</span></label>
+      </fieldset>
+      <fieldset class="quick-start-question">
+        <legend data-i18n="3 · ¿Cuántas personas?">3 · ¿Cuántas personas?</legend>
+        <select id="quick-start-audience" name="audience" aria-label="Personas"></select>
+      </fieldset>
+      <div class="quick-start-actions">
+        <button id="quick-start-skip" class="btn ghost" type="button" data-i18n="Prefiero empezar solo">Prefiero empezar solo</button>
+        <button class="btn primary" type="submit" data-i18n="Crear escenario">Crear escenario</button>
+      </div>
+    </form>
   </dialog>
   <dialog id="model-element-library" class="library-dialog element-library" aria-labelledby="element-library-title">
     <div class="library-header"><div><span class="eyebrow">MODELLAZIONE 3D</span><h2 id="element-library-title">Aggiungi al palco</h2><p>Le sezioni geometriche sono indicative. Global Truss: F34 = 29 cm, F42 = 40 cm, F52 = 62 cm; “baseplate 514” non identificata nel catalogo consultato. L’app non verifica compatibilità o portate: controlla con produttore e progettista.</p></div><button id="element-library-close" class="tool-btn" aria-label="Chiudi libreria elementi">×</button></div>
