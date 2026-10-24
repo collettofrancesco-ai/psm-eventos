@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-pUuO4g47.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-DeG4DPvD.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-BXBALZSq.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Cwn2PTb3.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -89,6 +89,19 @@
         <h3 id="wizard-title-start" class="wizard-title">Elige cómo empezar</h3>
         <p class="hint wizard-intro">Parte de un escenario PSM completo o de un lienzo vacío. Luego sigue los pasos: cada uno muestra solo lo que necesitas.</p>
         <button id="btn-quick-start" class="btn primary quick-start-entry" type="button">✦ <span data-i18n="Inicio rápido · 3 preguntas">Inicio rápido · 3 preguntas</span></button>
+        <details id="venue-plan" class="venue-plan">
+          <summary data-i18n="Plano del lugar">Plano del lugar</summary>
+          <p class="hint" data-i18n="Sube el plano o una foto aérea del lugar y escribe cuánto mide de ancho: el escenario se dibuja encima, en escala.">Sube el plano o una foto aérea del lugar y escribe cuánto mide de ancho: el escenario se dibuja encima, en escala.</p>
+          <label class="btn ghost full venue-plan-upload"><span data-i18n="Elegir imagen del plano">Elegir imagen del plano</span><input id="venue-plan-file" type="file" accept="image/png,image/jpeg,image/webp" hidden></label>
+          <div id="venue-plan-controls" class="venue-plan-controls" hidden>
+            <label><span data-i18n="Ancho real del plano">Ancho real del plano</span> <span class="length-unit">(m)</span><input id="venue-plan-width" type="number" step="any" inputmode="decimal"></label>
+            <label><span data-i18n="Mover a los lados">Mover a los lados</span> <span class="length-unit">(m)</span><input id="venue-plan-x" type="number" step="any" inputmode="decimal"></label>
+            <label><span data-i18n="Mover adelante/atrás">Mover adelante/atrás</span> <span class="length-unit">(m)</span><input id="venue-plan-z" type="number" step="any" inputmode="decimal"></label>
+            <label><span data-i18n="Opacidad">Opacidad</span><input id="venue-plan-opacity" type="range" min="0.2" max="1" step="0.05"></label>
+            <button id="venue-plan-rotate" class="btn ghost" type="button" data-i18n="↻ Girar 90°">↻ Girar 90°</button>
+            <button id="venue-plan-remove" class="btn danger" type="button" data-i18n="Quitar plano">Quitar plano</button>
+          </div>
+        </details>
         <label class="field-label" for="preset">TIPO DE PRODUCCIÓN</label>
         <select id="preset">
           <option value="concierto" data-i18n="Concierto · Main stage">Concierto · Main stage</option>
@@ -306,6 +319,11 @@
         <button id="placement-auto" class="btn ghost" type="button">Colocar automáticamente</button>
         <button id="placement-done" class="btn primary" type="button">Listo</button>
       </div>
+      <div id="shared-view-banner" class="shared-view-banner" role="status" hidden>
+        <span data-i18n="Escenario compartido: puedes mirarlo y moverte. Tus cambios aquí no se guardan.">Escenario compartido: puedes mirarlo y moverte. Tus cambios aquí no se guardan.</span>
+        <button id="shared-view-copy" class="btn primary" type="button" data-i18n="Guardar una copia">Guardar una copia</button>
+        <button id="shared-view-close" class="btn ghost" type="button" data-i18n="Volver a mi proyecto">Volver a mi proyecto</button>
+      </div>
       <div id="selection-bar" class="selection-bar" role="group" aria-label="Oggetto selezionato" hidden>
         <div class="selection-bar-heading">
           <span id="selection-bar-name"></span>
@@ -453,6 +471,7 @@
       <button id="btn-csv" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Descargar materiales CSV</span></button>
       <button id="btn-hires" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Imagen en alta resolución</span></button>
       <button id="btn-tour-video" class="btn ghost full"><span aria-hidden="true">●</span>&nbsp;<span id="tour-video-label">Video del recorrido · 30 s</span></button>
+      <button id="btn-share-view" class="btn ghost full"><span aria-hidden="true">↗</span>&nbsp;<span>Compartir vista 3D (enlace)</span></button>
       <button id="btn-wa" class="btn wa full">Solicitar por WhatsApp</button>
       <div class="section-title bom-heading"><h3>Lista de materiales</h3><span>BOM</span></div>
       <section id="reference-material-comparison" class="reference-comparison" aria-label="Comparación con la lámina de materiales"></section>
@@ -549,6 +568,27 @@
     <div class="library-header"><div><span class="eyebrow">MODELLAZIONE 3D</span><h2 id="element-library-title">Aggiungi al palco</h2><p>Le sezioni geometriche sono indicative. Global Truss: F34 = 29 cm, F42 = 40 cm, F52 = 62 cm; “baseplate 514” non identificata nel catalogo consultato. L’app non verifica compatibilità o portate: controlla con produttore e progettista.</p></div><button id="element-library-close" class="tool-btn" aria-label="Chiudi libreria elementi">×</button></div>
     <input id="element-library-search" class="element-library-search" type="search" autocomplete="off" aria-label="Buscar en la biblioteca" placeholder="Buscar en la biblioteca" data-i18n-aria-label="Buscar en la biblioteca" data-i18n-placeholder="Buscar en la biblioteca" aria-controls="model-element-catalog">
     <p id="element-library-results" class="hint" role="status"></p>
+    <section id="custom-equipment" class="custom-equipment" aria-labelledby="custom-equipment-title">
+      <h3 id="custom-equipment-title" data-i18n="Mi equipo">Mi equipo</h3>
+      <p class="hint" data-i18n="Tus equipos con medidas, peso y consumo reales. Se guardan en este dispositivo.">Tus equipos con medidas, peso y consumo reales. Se guardan en este dispositivo.</p>
+      <div id="custom-equipment-list" class="model-element-catalog"></div>
+      <details id="custom-equipment-new" class="custom-equipment-new">
+        <summary data-i18n="＋ Nuevo equipo">＋ Nuevo equipo</summary>
+        <form id="custom-equipment-form" class="custom-equipment-form">
+          <label class="wide"><span data-i18n="Nombre (marca y modelo)">Nombre (marca y modelo)</span><input name="name" maxlength="60" required autocomplete="off"></label>
+          <label><span data-i18n="Categoría">Categoría</span><select name="category">
+            <option value="audio" data-i18n="Audio">Audio</option><option value="lights" data-i18n="Luces">Luces</option><option value="video" data-i18n="Video">Video</option><option value="stage" data-i18n="Escenario">Escenario</option><option value="other" data-i18n="Otro">Otro</option>
+          </select></label>
+          <label><span data-i18n="Ancho">Ancho</span> <span class="length-unit">(m)</span><input name="width" type="number" step="any" min="0" required inputmode="decimal"></label>
+          <label><span data-i18n="Alto">Alto</span> <span class="length-unit">(m)</span><input name="height" type="number" step="any" min="0" required inputmode="decimal"></label>
+          <label><span data-i18n="Fondo">Fondo</span> <span class="length-unit">(m)</span><input name="depth" type="number" step="any" min="0" required inputmode="decimal"></label>
+          <label><span data-i18n="Peso (kg)">Peso (kg)</span><input name="kg" type="number" step="any" min="0" value="0" inputmode="decimal"></label>
+          <label><span data-i18n="Consumo (W)">Consumo (W)</span><input name="watts" type="number" step="1" min="0" value="0" inputmode="numeric"></label>
+          <button class="btn primary wide" type="submit" data-i18n="Guardar equipo">Guardar equipo</button>
+        </form>
+      </details>
+    </section>
+    <h3 class="library-section-title" data-i18n="Biblioteca">Biblioteca</h3>
     <div id="model-element-catalog" class="model-element-catalog"></div>
   </dialog>
   <dialog id="audio-coverage-dialog" class="library-dialog audio-coverage-dialog" aria-labelledby="audio-coverage-title">
