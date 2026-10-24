@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-C2X9tGZU.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-NMUKtjSI.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-D5CisGV-.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-DYdWX8mO.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -45,7 +45,7 @@
     <div class="project-heading">
       <span class="status-dot"></span>
       <input id="project-name" aria-label="Nombre del proyecto" maxlength="80" value="Main Stage · Live 2026">
-      <span id="save-status">Guardado local</span>
+      <span id="save-status" role="status" aria-live="polite" aria-atomic="true">Guardado local</span>
     </div>
     <div class="top-actions">
       <button id="btn-pro" class="btn pro-entry" type="button" aria-haspopup="dialog" aria-controls="subscription-dialog"><span aria-hidden="true">✦</span><span data-i18n="Stage Studio Pro">Stage Studio Pro</span></button>
@@ -299,10 +299,25 @@
         <button id="placement-done" class="btn primary" type="button">Listo</button>
       </div>
       <div id="selection-bar" class="selection-bar" role="group" aria-label="Oggetto selezionato" hidden>
-        <span id="selection-bar-name"></span>
-        <select id="selection-bar-riser-height" aria-label="Altura" hidden></select>
-        <button id="selection-bar-delete" class="btn danger" type="button" data-i18n="Elimina">🗑 Elimina</button>
-        <button id="selection-bar-close" class="btn ghost" type="button" aria-label="Deseleziona">✕</button>
+        <div class="selection-bar-heading">
+          <span id="selection-bar-name"></span>
+          <select id="selection-bar-riser-height" aria-label="Altura" hidden></select>
+          <button id="selection-bar-delete" class="btn danger" type="button" data-i18n="Elimina">🗑 Elimina</button>
+          <button id="selection-bar-close" class="btn ghost" type="button" aria-label="Deseleziona">✕</button>
+        </div>
+        <div class="selection-move-controls" role="group" aria-label="Sposta oggetto" data-i18n-aria-label="Sposta oggetto">
+          <label class="selection-step-label" for="selection-bar-step"><span data-i18n="Passo di spostamento">Passo</span>
+            <select id="selection-bar-step" aria-label="Passo di spostamento" data-i18n-aria-label="Passo di spostamento">
+              <option value="0.25">0,25 m</option><option value="0.5">0,5 m</option><option value="1">1 m</option><option value="2.57">2,57 m</option>
+            </select>
+          </label>
+          <button class="selection-nudge" type="button" data-axis="x" data-direction="-1" aria-label="Sposta sull’asse X negativo" data-i18n-aria-label="Sposta sull’asse X negativo">X−</button>
+          <button class="selection-nudge" type="button" data-axis="x" data-direction="1" aria-label="Sposta sull’asse X positivo" data-i18n-aria-label="Sposta sull’asse X positivo">X+</button>
+          <button class="selection-nudge" type="button" data-axis="z" data-direction="-1" aria-label="Sposta sull’asse Z negativo" data-i18n-aria-label="Sposta sull’asse Z negativo">Z−</button>
+          <button class="selection-nudge" type="button" data-axis="z" data-direction="1" aria-label="Sposta sull’asse Z positivo" data-i18n-aria-label="Sposta sull’asse Z positivo">Z+</button>
+          <button class="selection-nudge" type="button" data-axis="y" data-direction="1" aria-label="Alza oggetto" data-i18n-aria-label="Alza oggetto">↑</button>
+          <button class="selection-nudge" type="button" data-axis="y" data-direction="-1" aria-label="Abbassa oggetto" data-i18n-aria-label="Abbassa oggetto">↓</button>
+        </div>
       </div>
       <button id="btn-toggle-view-controls" class="tool-btn view-controls-toggle" type="button" aria-pressed="false"><span aria-hidden="true">▴</span> <span id="view-controls-label">Ocultar controles</span></button>
       <div class="viewport-hud">
