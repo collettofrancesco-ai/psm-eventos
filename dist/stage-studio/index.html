@@ -20,7 +20,7 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-Cgo1g-PK.js"></script>
+  <script type="module" crossorigin src="/stage-studio/assets/index-DiUErwqt.js"></script>
   <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-DqlnKcBP.css">
 </head>
 <body>
@@ -57,7 +57,7 @@
     <div class="top-actions">
       <button id="btn-pro" class="btn pro-entry" type="button" aria-haspopup="dialog" aria-controls="subscription-dialog"><span aria-hidden="true">✦</span><span data-i18n="Stage Studio Pro">Stage Studio Pro</span></button>
       <button id="btn-load" class="btn ghost">Mis proyectos</button>
-      <button id="btn-save" class="btn ghost" data-i18n="Salva progetto">Salva progetto</button>
+      <button id="btn-save" class="btn ghost" data-i18n="Guardar proyecto">Guardar proyecto</button>
       <button id="btn-export" class="btn primary">Exportar propuesta ↗</button>
     </div>
   </header>
@@ -189,7 +189,7 @@
         <label>Ancho de tarima <output id="value-deck-w"></output><input id="deck-w" type="range" min="6" max="21" step="0.01" value="15.42"></label>
         <label>Profundidad <output id="value-deck-d"></output><input id="deck-d" type="range" min="4" max="13" step="0.01" value="10.28"></label>
         <div class="precise-dimensions"><label>Ancho exacto <span class="length-unit">(m)</span><input id="exact-width" type="number" min="6" max="21" step="0.01" value="15.42"></label><label>Fondo exacto <span class="length-unit">(m)</span><input id="exact-depth" type="number" min="4" max="13" step="0.01" value="10.28"></label></div><p id="module-status" class="hint"></p>
-        <div class="dimension-note"><label>Altura de tarima <span class="length-unit">(m)</span><input id="deck-height" type="number" min="0.6" max="3" step="0.1" value="2.3" inputmode="decimal"></label><label data-i18n="Altura Layher">Altura Layher <span class="length-unit">(m)</span><input id="rig-height" type="number" min="5" max="14" step="0.1" value="12.3"></label><small id="rig-note"></small></div>
+        <div class="dimension-note"><label><span data-i18n="Altura de tarima">Altura de tarima</span> <span class="length-unit">(m)</span><input id="deck-height" type="number" min="0.6" max="3" step="0.1" value="2.3" inputmode="decimal"></label><label data-i18n="Altura Layher">Altura Layher <span class="length-unit">(m)</span><input id="rig-height" type="number" min="5" max="14" step="0.1" value="12.3"></label><small id="rig-note"></small></div>
         <div id="riser-controls" class="riser-controls">
           <span class="riser-title" data-i18n="Sobretarima · 2,44 × 1,22 m">Sobretarima · 2,44 × 1,22 m</span>
           <label data-i18n="Cantidad">Cantidad<select id="riser-count"></select></label>
@@ -479,7 +479,7 @@
       <button id="btn-loading-list" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Lista de carga del camión (CSV)</span></button>
       <button id="btn-hires" class="btn ghost full"><span aria-hidden="true">↓</span>&nbsp;<span>Imagen en alta resolución</span></button>
       <button id="btn-tour-video" class="btn ghost full"><span aria-hidden="true">●</span>&nbsp;<span id="tour-video-label">Video del recorrido · 30 s</span></button>
-      <button id="btn-ar" class="btn ghost full"><span aria-hidden="true">◎</span>&nbsp;<span id="ar-label">Descargar modelo 3D (GLB)</span></button>
+      <button id="btn-ar" class="btn ghost full"><span aria-hidden="true">◎</span>&nbsp;<span id="ar-label" data-i18n="Descargar modelo 3D (GLB)">Descargar modelo 3D (GLB)</span></button>
       <button id="btn-share-view" class="btn ghost full"><span aria-hidden="true">↗</span>&nbsp;<span>Compartir vista 3D (enlace)</span></button>
       <button id="btn-wa" class="btn wa full">Solicitar por WhatsApp</button>
       <div class="section-title bom-heading"><h3>Lista de materiales</h3><span>BOM</span></div>
