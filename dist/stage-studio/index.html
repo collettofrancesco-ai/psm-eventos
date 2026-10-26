@@ -20,7 +20,7 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-DztTSYCd.js"></script>
+  <script type="module" crossorigin src="/stage-studio/assets/index-BgSMPMue.js"></script>
   <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Ko-bmtam.css">
 </head>
 <body>
@@ -33,7 +33,7 @@
     <label class="language-picker">
       <span aria-hidden="true">◎</span>
       <span class="phone-menu-language-label" data-i18n="Language">Idioma</span>
-      <select id="language" aria-label="Idioma" title="Idioma">
+      <select id="language" aria-label="Language" title="Language">
         <option value="es">Español</option>
         <option value="en">English</option>
         <option value="pt">Português</option>
@@ -69,7 +69,7 @@
     <aside class="panel left">
       <div class="panel-heading">
         <div><span class="eyebrow">01 / CONFIGURACIÓN</span><h2>Construye tu escenario</h2></div>
-        <span class="panel-icon">⌘</span>
+        <span class="panel-icon" aria-hidden="true">⌘</span>
       </div>
       <nav class="wizard-steps" role="tablist" aria-label="Pasos para construir el escenario">
         <button type="button" role="tab" data-step="start" aria-selected="true"><b>1</b><span>Inicio</span></button>
@@ -390,7 +390,7 @@
     <aside class="panel right">
       <div class="panel-heading">
         <div><span class="eyebrow">02 / TU PRODUCCIÓN</span><h2>Resumen del proyecto</h2></div>
-        <span class="panel-icon">↗</span>
+        <span class="panel-icon" aria-hidden="true">↗</span>
       </div>
       <section class="model-object-panel" aria-labelledby="model-object-title">
         <div class="section-title"><h3 id="model-object-title">3 · Oggetti del modello</h3><button id="btn-add-model-object" class="btn ghost compact">＋ Aggiungi</button></div>
@@ -450,7 +450,7 @@
         </div>
         <p id="model-inspector-hint" class="hint" data-i18n="Trascina l’oggetto nella vista 3D o modifica X, Y e Z. Usa Sposta in altezza prima di trascinare per regolare la quota; se sbagli, ripristina la posizione precedente o usa Annulla in alto.">3 · Modifica le coordinate o trascina l’oggetto. Se sbagli, ripristina la posizione precedente.</p>
       </section>
-      <div class="project-card">
+      <div class="project-card" role="group" aria-labelledby="summary-name" aria-describedby="footprint-note">
         <span class="project-tag">MAIN STAGE</span>
         <h3 id="summary-name">Main Stage · Live 2026</h3>
         <div class="project-metrics">
@@ -570,7 +570,7 @@
   </dialog>
   <dialog id="quick-start" class="library-dialog quick-start" aria-labelledby="quick-start-title">
     <form id="quick-start-form" method="dialog">
-      <div class="library-header"><div><span class="eyebrow" data-i18n="INICIO RÁPIDO">INICIO RÁPIDO</span><h2 id="quick-start-title" data-i18n="Tu escenario en 3 preguntas">Tu escenario en 3 preguntas</h2><p data-i18n="Después puedes cambiar todo: medidas, equipos y público.">Después puedes cambiar todo: medidas, equipos y público.</p></div><button id="quick-start-close" class="tool-btn" type="button" aria-label="Cerrar">×</button></div>
+      <div class="library-header"><div><span class="eyebrow" data-i18n="INICIO RÁPIDO">INICIO RÁPIDO</span><h2 id="quick-start-title" data-i18n="Tu escenario en 3 preguntas">Tu escenario en 3 preguntas</h2><p data-i18n="Después puedes cambiar todo: medidas, equipos y público.">Después puedes cambiar todo: medidas, equipos y público.</p></div><button id="quick-start-close" class="tool-btn" type="button" aria-label="Close">×</button></div>
       <fieldset class="quick-start-question">
         <legend data-i18n="1 · ¿Qué evento es?">1 · ¿Qué evento es?</legend>
         <label class="quick-start-choice"><input type="radio" name="event" value="concierto" checked><span data-i18n="Concierto">Concierto</span></label>
