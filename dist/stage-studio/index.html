@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-bNiIeB3e.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Ko-bmtam.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-DmioOwEF.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BlSNKM-T.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -55,12 +55,190 @@
       <span id="save-status" role="status" aria-live="polite" aria-atomic="true">Guardado local</span>
     </div>
     <div class="top-actions">
+      <button id="btn-pricebook" class="btn ghost" type="button" aria-haspopup="dialog" aria-controls="pricebook-dialog" data-i18n="Il mio listino">Il mio listino</button>
       <button id="btn-pro" class="btn pro-entry" type="button" aria-haspopup="dialog" aria-controls="subscription-dialog"><span aria-hidden="true">✦</span><span data-i18n="Stage Studio Pro">Stage Studio Pro</span></button>
       <button id="btn-load" class="btn ghost">Mis proyectos</button>
       <button id="btn-save" class="btn ghost" data-i18n="Guardar proyecto">Guardar proyecto</button>
       <button id="btn-export" class="btn primary">Exportar propuesta ↗</button>
     </div>
   </header>
+  <dialog id="pricebook-dialog" class="library-dialog" aria-labelledby="pricebook-title">
+    <div class="library-header"><div><span class="eyebrow" data-i18n="PREZZI PER EVENTO">PREZZI PER EVENTO</span><h2 id="pricebook-title" data-i18n="Il mio listino">Il mio listino</h2><p id="pricebook-sync-note" class="hint"></p></div><button id="pricebook-close" class="tool-btn" type="button" aria-label="Chiudi listino">×</button></div>
+    <label class="field-label" for="pricebook-search" data-i18n="Cerca prodotti">Cerca prodotti</label><input id="pricebook-search" type="search" autocomplete="off">
+    <div id="pricebook-products" class="pricebook-products" aria-live="polite"></div>
+    <details class="pricebook-add"><summary data-i18n="Aggiungi prodotto">Aggiungi prodotto</summary><form id="pricebook-product-form" class="template-save-form">
+      <label data-i18n="Nome">Nome<input name="name" maxlength="80" required></label><label data-i18n="Categoría">Categoría<select name="category"><option value="audio" data-i18n="Audio">Audio</option><option value="lights" data-i18n="Luci">Luci</option><option value="video" data-i18n="Video">Video</option><option value="stage" data-i18n="Strutture">Strutture</option><option value="other" data-i18n="Otro">Altro</option></select></label>
+      <label data-i18n="Peso (kg)">Peso (kg)<input name="weightKg" type="number" min="0" max="5000" step="0.01" value="0"></label><label data-i18n="Larghezza (m)">Larghezza (m)<input name="width" type="number" min="0.05" max="20" step="0.01" value="0.6" required></label><label data-i18n="Altezza (m)">Altezza (m)<input name="height" type="number" min="0.05" max="20" step="0.01" value="0.6" required></label><label data-i18n="Profondità (m)">Profondità (m)<input name="depth" type="number" min="0.05" max="20" step="0.01" value="0.6" required></label><label data-i18n="Prezzo per evento">Prezzo per evento<input name="price" type="number" min="0" step="0.01" required inputmode="decimal"></label><label data-i18n="Unità">Unità<input name="unit" maxlength="24" value="unità" required></label><button class="btn primary" type="submit" data-i18n="Salva prodotto">Salva prodotto</button></form></details>
+    <section class="pricebook-adjustments"><h3 data-i18n="Servizi, sconto e tasse">Servizi, sconto e tasse</h3>
+      <div class="pricebook-grid"><label data-i18n="Trasporto">Trasporto<select data-service-mode="transport"><option value="fixed" data-i18n="Importo fisso">Importo fisso</option><option value="quantity" data-i18n="Quantità × prezzo">Quantità × prezzo</option></select><input data-service-quantity="transport" type="number" min="0" step="0.01" value="1"><input data-service-unit="transport" type="text" maxlength="24" value="viaggio"><input data-service="transport" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Prezzo unitario"></label><label data-i18n="Montaggio">Montaggio<select data-service-mode="setup"><option value="fixed" data-i18n="Importo fisso">Importo fisso</option><option value="quantity" data-i18n="Quantità × prezzo">Quantità × prezzo</option></select><input data-service-quantity="setup" type="number" min="0" step="0.01" value="1"><input data-service-unit="setup" type="text" maxlength="24" value="ora"><input data-service="setup" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Prezzo unitario"></label><label data-i18n="Personale">Personale<select data-service-mode="staff"><option value="fixed" data-i18n="Importo fisso">Importo fisso</option><option value="quantity" data-i18n="Quantità × prezzo">Quantità × prezzo</option></select><input data-service-quantity="staff" type="number" min="0" step="0.01" value="1"><input data-service-unit="staff" type="text" maxlength="24" value="ora"><input data-service="staff" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Prezzo unitario"></label>
+      <label data-i18n="Valuta aziendale">Valuta aziendale<select id="pricebook-currency">
+        <option>AED</option>
+        <option>AFN</option>
+        <option>ALL</option>
+        <option>AMD</option>
+        <option>ANG</option>
+        <option>AOA</option>
+        <option>ARS</option>
+        <option>AUD</option>
+        <option>AWG</option>
+        <option>AZN</option>
+        <option>BAM</option>
+        <option>BBD</option>
+        <option>BDT</option>
+        <option>BGN</option>
+        <option>BHD</option>
+        <option>BIF</option>
+        <option>BMD</option>
+        <option>BND</option>
+        <option>BOB</option>
+        <option>BOV</option>
+        <option>BRL</option>
+        <option>BSD</option>
+        <option>BTN</option>
+        <option>BWP</option>
+        <option>BYN</option>
+        <option>BZD</option>
+        <option>CAD</option>
+        <option>CDF</option>
+        <option>CHE</option>
+        <option>CHF</option>
+        <option>CHW</option>
+        <option>CLF</option>
+        <option>CLP</option>
+        <option>CNY</option>
+        <option>COP</option>
+        <option>COU</option>
+        <option>CRC</option>
+        <option>CUP</option>
+        <option>CVE</option>
+        <option>CZK</option>
+        <option>DJF</option>
+        <option>DKK</option>
+        <option>DOP</option>
+        <option>DZD</option>
+        <option>EGP</option>
+        <option>ERN</option>
+        <option>ETB</option>
+        <option>EUR</option>
+        <option>FJD</option>
+        <option>FKP</option>
+        <option>GBP</option>
+        <option>GEL</option>
+        <option>GHS</option>
+        <option>GIP</option>
+        <option>GMD</option>
+        <option>GNF</option>
+        <option>GTQ</option>
+        <option>GYD</option>
+        <option>HKD</option>
+        <option>HNL</option>
+        <option>HTG</option>
+        <option>HUF</option>
+        <option>IDR</option>
+        <option>ILS</option>
+        <option>INR</option>
+        <option>IQD</option>
+        <option>IRR</option>
+        <option>ISK</option>
+        <option>JMD</option>
+        <option>JOD</option>
+        <option>JPY</option>
+        <option>KES</option>
+        <option>KGS</option>
+        <option>KHR</option>
+        <option>KMF</option>
+        <option>KPW</option>
+        <option>KRW</option>
+        <option>KWD</option>
+        <option>KYD</option>
+        <option>KZT</option>
+        <option>LAK</option>
+        <option>LBP</option>
+        <option>LKR</option>
+        <option>LRD</option>
+        <option>LSL</option>
+        <option>LYD</option>
+        <option>MAD</option>
+        <option>MDL</option>
+        <option>MGA</option>
+        <option>MKD</option>
+        <option>MMK</option>
+        <option>MNT</option>
+        <option>MOP</option>
+        <option>MRU</option>
+        <option>MUR</option>
+        <option>MVR</option>
+        <option>MWK</option>
+        <option>MXN</option>
+        <option>MXV</option>
+        <option>MYR</option>
+        <option>MZN</option>
+        <option>NAD</option>
+        <option>NGN</option>
+        <option>NIO</option>
+        <option>NOK</option>
+        <option>NPR</option>
+        <option>NZD</option>
+        <option>OMR</option>
+        <option>PAB</option>
+        <option>PEN</option>
+        <option>PGK</option>
+        <option>PHP</option>
+        <option>PKR</option>
+        <option>PLN</option>
+        <option>PYG</option>
+        <option>QAR</option>
+        <option>RON</option>
+        <option>RSD</option>
+        <option>RUB</option>
+        <option>RWF</option>
+        <option>SAR</option>
+        <option>SBD</option>
+        <option>SCR</option>
+        <option>SDG</option>
+        <option>SEK</option>
+        <option>SGD</option>
+        <option>SHP</option>
+        <option>SLE</option>
+        <option>SOS</option>
+        <option>SRD</option>
+        <option>SSP</option>
+        <option>STN</option>
+        <option>SVC</option>
+        <option>SYP</option>
+        <option>SZL</option>
+        <option>THB</option>
+        <option>TJS</option>
+        <option>TMT</option>
+        <option>TND</option>
+        <option>TOP</option>
+        <option>TRY</option>
+        <option>TTD</option>
+        <option>TWD</option>
+        <option>TZS</option>
+        <option>UAH</option>
+        <option>UGX</option>
+        <option>USD</option>
+        <option>UYI</option>
+        <option>UYU</option>
+        <option>UZS</option>
+        <option>VED</option>
+        <option>VES</option>
+        <option>VND</option>
+        <option>VUV</option>
+        <option>WST</option>
+        <option>XAF</option>
+        <option>XCD</option>
+        <option>XOF</option>
+        <option>XPF</option>
+        <option>YER</option>
+        <option>ZAR</option>
+        <option>ZMW</option>
+        <option>ZWL</option>
+      </select></label><label><span data-i18n="Tipo di sconto">Tipo di sconto</span><select id="pricebook-discount-type"><option value="percent">%</option><option value="fixed" data-i18n="Importo">Importo</option></select></label><label data-i18n="Sconto percentuale">Sconto<input id="pricebook-discount" type="number" min="0" step="0.01"></label><label data-i18n="Etichetta tasse">Etichetta tasse<input id="pricebook-tax-label" maxlength="40" placeholder="IVA / VAT / Sales tax"></label><label data-i18n="Aliquota tasse (%)">Aliquota tasse (%)<input id="pricebook-tax-rate" type="number" min="0" max="100" step="0.01"></label></div>
+      <button id="pricebook-adjustments-save" class="btn primary" type="button" data-i18n="Salva condizioni">Salva condizioni</button><p class="hint" data-i18n="Prezzi netti; tassa aggiunta dopo lo sconto.">Prezzi netti; tassa aggiunta dopo lo sconto.</p><p class="hint" data-i18n="Cambiare valuta mantiene i valori numerici; non applica un cambio.">Cambiare valuta mantiene i valori numerici; non applica un cambio.</p>
+    </section>
+  </dialog>
   <nav class="workspace-bar">
     <span><span class="workspace-label">WORKSPACE</span> / <b>Diseñador de escenarios</b></span>
     <div class="history-actions"><button id="btn-undo" aria-label="Deshacer" title="Deshacer (Ctrl/⌘ Z)" disabled>↶</button><button id="btn-redo" aria-label="Rehacer" title="Rehacer (Ctrl/⌘ Shift Z)" disabled>↷</button><span class="history-divider"></span><span class="workspace-meta">PSM PRODUCTION TOOLS <span class="status-dot"></span> Motor 3D en tiempo real</span></div>
@@ -323,8 +501,10 @@
       </div>
       <div id="shared-view-banner" class="shared-view-banner" role="status" hidden>
         <span data-i18n="Escenario compartido: puedes mirarlo y moverte. Tus cambios aquí no se guardan.">Escenario compartido: puedes mirarlo y moverte. Tus cambios aquí no se guardan.</span>
+        <button id="shared-view-quote-button" class="btn ghost" type="button" data-i18n="Ver presupuesto">Ver presupuesto</button>
         <button id="shared-view-copy" class="btn primary" type="button" data-i18n="Guardar una copia">Guardar una copia</button>
         <button id="shared-view-close" class="btn ghost" type="button" data-i18n="Volver a mi proyecto">Volver a mi proyecto</button>
+        <section id="shared-view-quote" class="shared-view-quote" hidden aria-live="polite"></section>
       </div>
       <p id="offline-notice" class="offline-notice" role="status" hidden><span data-i18n="Sin conexión: puedes seguir trabajando. Todo se guarda en este dispositivo.">Sin conexión: puedes seguir trabajando. Todo se guarda en este dispositivo.</span></p>
       <div id="selection-bar" class="selection-bar" role="group" aria-label="Oggetto selezionato" hidden>
