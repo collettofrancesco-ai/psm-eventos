@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-BunJDvXe.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-lrFzPCSV.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-Dw5Q2pOW.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CuoinEcY.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -267,6 +267,7 @@
         <h3 id="wizard-title-start" class="wizard-title">Elige cómo empezar</h3>
         <p class="hint wizard-intro">Parte de un escenario PSM completo o de un lienzo vacío. Luego sigue los pasos: cada uno muestra solo lo que necesitas.</p>
         <button id="btn-quick-start" class="btn primary quick-start-entry" type="button">✦ <span data-i18n="Inicio rápido · 3 preguntas">Inicio rápido · 3 preguntas</span></button>
+        <button id="btn-first-run-guide" class="btn ghost full" type="button" data-i18n="Guía de inicio">Guía de inicio</button>
         <button id="btn-my-templates" class="btn ghost full my-templates-entry" type="button">▤ <span data-i18n="Mis modelos guardados">Mis modelos guardados</span></button>
         <label class="presenter-visibility-toggle"><input id="show-presenter" type="checkbox" checked><span data-i18n="Mostra figura del presentatore">Mostra figura del presentatore</span></label>
         <details id="venue-plan" class="venue-plan">
@@ -772,6 +773,19 @@
         <button class="btn primary" type="submit" data-i18n="Crear escenario">Crear escenario</button>
       </div>
     </form>
+  </dialog>
+  <dialog id="first-run-guide" class="library-dialog first-run-guide" aria-labelledby="first-run-guide-title" aria-describedby="first-run-guide-intro">
+    <div class="library-header">
+      <div><span class="eyebrow" data-i18n="PRIMEROS PASOS">PRIMEROS PASOS</span><h2 id="first-run-guide-title" data-i18n="Diseña tu escenario">Diseña tu escenario</h2><p id="first-run-guide-intro" data-i18n="Sigue estos pasos; puedes volver a esta guía desde Inicio cuando quieras.">Sigue estos pasos; puedes volver a esta guía desde Inicio cuando quieras.</p></div>
+      <button id="first-run-guide-close" class="tool-btn" type="button" data-i18n-aria-label="Cerrar guía" aria-label="Cerrar guía">×</button>
+    </div>
+    <ol class="first-run-guide-steps">
+      <li><h3 data-i18n="1 · Elige un preset">1 · Elige un preset</h3><p data-i18n="Empieza con un escenario PSM o con un lienzo vacío desde Inicio.">Empieza con un escenario PSM o con un lienzo vacío desde Inicio.</p></li>
+      <li><h3 data-i18n="2 · Modifica el palco">2 · Modifica el palco</h3><p data-i18n="En Estructura ajusta medidas, altura y opciones del escenario.">En Estructura ajusta medidas, altura y opciones del escenario.</p></li>
+      <li><h3 data-i18n="3 · Añade objetos">3 · Añade objetos</h3><p data-i18n="Abre la biblioteca para colocar equipos y objetos en el modelo.">Abre la biblioteca para colocar equipos y objetos en el modelo.</p></li>
+      <li><h3 data-i18n="4 · Crea la propuesta">4 · Crea la propuesta</h3><p data-i18n="Revisa el proyecto y prepara una propuesta para imprimir o compartir.">Revisa el proyecto y prepara una propuesta para imprimir o compartir.</p></li>
+    </ol>
+    <div class="first-run-guide-actions"><button id="first-run-guide-quick-start" class="btn ghost" type="button" data-i18n="Abrir inicio rápido">Abrir inicio rápido</button><button id="first-run-guide-done" class="btn primary" type="button" data-i18n="Empezar a diseñar">Empezar a diseñar</button></div>
   </dialog>
   <dialog id="model-element-library" class="library-dialog element-library" aria-labelledby="element-library-title">
     <div class="library-header"><div><span class="eyebrow">MODELLAZIONE 3D</span><h2 id="element-library-title">Aggiungi al palco</h2><p>Le sezioni geometriche sono indicative. Global Truss: F34 = 29 cm, F42 = 40 cm, F52 = 62 cm; “baseplate 514” non identificata nel catalogo consultato. L’app non verifica compatibilità o portate: controlla con produttore e progettista.</p></div><button id="element-library-close" class="tool-btn" aria-label="Chiudi libreria elementi">×</button></div>
