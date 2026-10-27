@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-DvsF6uc1.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CuoinEcY.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-CwzLMCVx.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BHetY0nb.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -483,7 +483,9 @@
       </div>
     </aside>
     <section class="viewport-wrap" aria-label="Vista 3D interactiva del escenario">
-      <canvas id="scene" aria-label="Escenario 3D. Un dedo orbita; arrastra o gira dos dedos para rotar la vista, y pellizca para acercar."></canvas>
+      <canvas id="scene" aria-label="Escenario 3D. Un dedo orbita; arrastra o gira dos dedos para rotar la vista, y pellizca para acercar." aria-describedby="scene-accessible-summary"></canvas>
+      <!-- Read on demand through aria-describedby, not announced at every edit. -->
+      <p id="scene-accessible-summary" class="sr-only"></p>
       <div class="touch-camera-controls" role="group" aria-label="Controles de zoom">
         <button id="btn-camera-zoom-in" type="button" aria-label="Acercar" title="Acercar">＋</button>
         <button id="btn-camera-zoom-out" type="button" aria-label="Alejar" title="Alejar">−</button>
@@ -844,6 +846,6 @@
     <p class="hint audio-coverage-limit">Stima qualitativa basata su una direttività generica e sulla disposizione mostrata. Non rappresenta livelli SPL in dB e non simula ambiente, riflessioni, subwoofer, delay o dati reali dei diffusori. Verificare il progetto con il tecnico audio e i dati del produttore.</p>
   </dialog>
   <div id="toast" role="status" aria-live="polite"></div>
-  <input id="project-file" type="file" accept=".json,application/json" hidden>
+  <input id="project-file" type="file" accept=".json,application/json" aria-label="Importar proyecto JSON" hidden>
 </body>
 </html>
