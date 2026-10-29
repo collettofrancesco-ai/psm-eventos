@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-DltyHUA6.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-siKausOi.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-CvdImTjc.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-DwrinucK.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -57,7 +57,13 @@
     <div class="top-actions">
       <button id="btn-pricebook" class="btn ghost" type="button" aria-haspopup="dialog" aria-controls="pricebook-dialog" data-i18n="Il mio listino">Il mio listino</button>
       <button id="btn-pro" class="btn pro-entry" type="button" aria-label="Stage Studio Pro" aria-haspopup="dialog" aria-controls="subscription-dialog"><span aria-hidden="true">✦</span><span data-i18n="Stage Studio Pro">Stage Studio Pro</span></button>
-      <button id="btn-account" class="btn ghost" type="button" aria-haspopup="dialog" data-i18n="Account" hidden>Account</button>
+      <button id="btn-account" class="btn ghost" type="button" aria-haspopup="dialog" aria-label="Account" title="Account" hidden>
+        <svg class="account-icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 21v-2a8 8 0 0 1 16 0v2" />
+        </svg>
+        <span class="account-label" data-i18n="Account">Account</span>
+      </button>
       <button id="btn-load" class="btn ghost">Mis proyectos</button>
       <button id="btn-save" class="btn ghost" data-i18n="Guardar proyecto">Guardar proyecto</button>
       <button id="btn-export" class="btn primary">Exportar propuesta ↗</button>
