@@ -20,7 +20,7 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-q3E4p33S.js"></script>
+  <script type="module" crossorigin src="/stage-studio/assets/index-DS7Kfw7k.js"></script>
   <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-DwrinucK.css">
 </head>
 <body>
@@ -55,7 +55,6 @@
       <span id="save-status" role="status" aria-live="polite" aria-atomic="true">Guardado local</span>
     </div>
     <div class="top-actions">
-      <button id="btn-venue-plan" class="btn ghost" type="button" data-i18n="Modificar plano" hidden>Modificar plano</button>
       <button id="btn-pricebook" class="btn ghost" type="button" aria-haspopup="dialog" aria-controls="pricebook-dialog" data-i18n="Il mio listino">Il mio listino</button>
       <button id="btn-pro" class="btn pro-entry" type="button" aria-label="Stage Studio Pro" aria-haspopup="dialog" aria-controls="subscription-dialog"><span aria-hidden="true">✦</span><span data-i18n="Stage Studio Pro">Stage Studio Pro</span></button>
       <button id="btn-account" class="btn ghost" type="button" aria-haspopup="dialog" aria-label="Account" title="Account" hidden>
@@ -72,10 +71,6 @@
   </header>
   <dialog id="pricebook-dialog" class="library-dialog" aria-labelledby="pricebook-title">
     <div class="library-header"><div><span class="eyebrow" data-i18n="PREZZI PER EVENTO">PREZZI PER EVENTO</span><h2 id="pricebook-title" data-i18n="Il mio listino">Il mio listino</h2><p id="pricebook-sync-note" class="hint"></p></div><button id="pricebook-close" class="tool-btn" type="button" aria-label="Chiudi listino">×</button></div>
-    <section id="pricebook-recovery" hidden>
-      <p id="pricebook-recovery-message" role="status"></p>
-      <button id="pricebook-recovery-export" class="btn ghost" type="button" data-i18n="Descargar listino original">Descargar listino original</button>
-    </section>
     <label class="field-label" for="pricebook-search" data-i18n="Cerca prodotti">Cerca prodotti</label><input id="pricebook-search" type="search" autocomplete="off">
     <div id="pricebook-products" class="pricebook-products" aria-live="polite"></div>
     <details class="pricebook-add"><summary data-i18n="Aggiungi prodotto">Aggiungi prodotto</summary><form id="pricebook-product-form" class="template-save-form">
@@ -522,14 +517,6 @@
         <section id="shared-view-quote" class="shared-view-quote" hidden aria-live="polite"></section>
       </div>
       <p id="offline-notice" class="offline-notice" role="status" hidden><span data-i18n="Sin conexión: puedes seguir trabajando. Todo se guarda en este dispositivo.">Sin conexión: puedes seguir trabajando. Todo se guarda en este dispositivo.</span></p>
-      <div id="venue-plan-selection" class="selection-bar" role="group" aria-label="Plano del lugar" data-i18n-aria-label="Plano del lugar" hidden>
-        <div class="selection-bar-heading">
-          <span data-i18n="Plano del lugar">Plano del lugar</span>
-          <button id="venue-plan-edit" class="btn ghost" type="button" data-i18n="Modificar plano">Modificar plano</button>
-          <button id="venue-plan-selection-remove" class="btn danger" type="button" data-i18n="Quitar plano">Quitar plano</button>
-          <button id="venue-plan-selection-close" class="btn ghost" type="button" aria-label="Cerrar" data-i18n-aria-label="Cerrar">×</button>
-        </div>
-      </div>
       <div id="selection-bar" class="selection-bar" role="group" aria-label="Oggetto selezionato" hidden>
         <div class="selection-bar-heading">
           <span id="selection-bar-name"></span>
