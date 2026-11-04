@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-CyIKDT1C.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Cx195cDR.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-B9_G8Qx0.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Gq4T_e7n.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -262,20 +262,20 @@
         <span class="panel-icon" aria-hidden="true">⌘</span>
       </div>
       <nav class="wizard-steps" role="tablist" aria-label="Pasos para construir el escenario">
-        <button type="button" role="tab" data-step="start" aria-selected="true"><b>1</b><span>Inicio</span></button>
-        <button type="button" role="tab" data-step="structure" aria-selected="false"><b>2</b><span>Estructura</span></button>
-        <button type="button" role="tab" data-step="lights" aria-selected="false"><b>3</b><span>Luces</span></button>
-        <button type="button" role="tab" data-step="pyro" aria-selected="false"><b>4</b><span>Pirotecnia</span></button>
-        <button type="button" role="tab" data-step="audio" aria-selected="false"><b>5</b><span>Audio</span></button>
-        <button type="button" role="tab" data-step="backline" aria-selected="false"><b>6</b><span>Backline</span></button>
-        <button type="button" role="tab" data-step="video" aria-selected="false"><b>7</b><span>Video</span></button>
-        <button type="button" role="tab" data-step="review" aria-selected="false"><b>8</b><span>Revisar</span></button>
+        <button type="button" role="tab" id="wizard-tab-start" aria-controls="wizard-panel-start" tabindex="0" data-step="start" aria-selected="true"><b>1</b><span>Inicio</span></button>
+        <button type="button" role="tab" id="wizard-tab-structure" aria-controls="wizard-panel-structure" tabindex="-1" data-step="structure" aria-selected="false"><b>2</b><span>Estructura</span></button>
+        <button type="button" role="tab" id="wizard-tab-lights" aria-controls="wizard-panel-lights" tabindex="-1" data-step="lights" aria-selected="false"><b>3</b><span>Luces</span></button>
+        <button type="button" role="tab" id="wizard-tab-pyro" aria-controls="wizard-panel-pyro" tabindex="-1" data-step="pyro" aria-selected="false"><b>4</b><span>Pirotecnia</span></button>
+        <button type="button" role="tab" id="wizard-tab-audio" aria-controls="wizard-panel-audio" tabindex="-1" data-step="audio" aria-selected="false"><b>5</b><span>Audio</span></button>
+        <button type="button" role="tab" id="wizard-tab-backline" aria-controls="wizard-panel-backline" tabindex="-1" data-step="backline" aria-selected="false"><b>6</b><span>Backline</span></button>
+        <button type="button" role="tab" id="wizard-tab-video" aria-controls="wizard-panel-video" tabindex="-1" data-step="video" aria-selected="false"><b>7</b><span>Video</span></button>
+        <button type="button" role="tab" id="wizard-tab-review" aria-controls="wizard-panel-review" tabindex="-1" data-step="review" aria-selected="false"><b>8</b><span>Revisar</span></button>
       </nav>
       <div class="wizard-search" role="search">
         <input id="wizard-search" type="search" autocomplete="off" placeholder="Buscar equipo u opción (ej. generador)" aria-label="Buscar equipo u opción" aria-controls="wizard-search-results">
         <ul id="wizard-search-results" class="wizard-search-results" role="listbox" hidden></ul>
       </div>
-      <section class="wizard-step" data-step-panel="start" role="tabpanel" aria-labelledby="wizard-title-start">
+      <section class="wizard-step" id="wizard-panel-start" data-step-panel="start" role="tabpanel" aria-labelledby="wizard-tab-start">
         <h3 id="wizard-title-start" class="wizard-title">Elige cómo empezar</h3>
         <p class="hint wizard-intro">Parte de un escenario PSM completo o de un lienzo vacío. Luego sigue los pasos: cada uno muestra solo lo que necesitas.</p>
         <button id="btn-quick-start" class="btn primary quick-start-entry" type="button">✦ <span data-i18n="Inicio rápido · 3 preguntas">Inicio rápido · 3 preguntas</span></button>
@@ -315,7 +315,7 @@
         <div class="design-modes" role="group" aria-label="Estilo de visualización"><button data-style="show" class="active" aria-pressed="true"><span aria-hidden="true">◈</span>&nbsp;<span>Show</span></button><button data-style="reference" aria-pressed="false"><span aria-hidden="true">⌗</span>&nbsp;<span>Referencia</span></button></div><button id="btn-reference" class="reference-preset">↗ Cargar medidas de referencia <span>15,42 × 10,28 m</span></button>
         <div class="look-picker"><div class="section-title"><h3>Atmósfera del show</h3><span>LIGHT DESIGN</span></div><div class="look-options" role="group" aria-label="Atmósfera del show"><button data-look="aurora" class="active"><i class="look-swatch aurora"></i>Aurora</button><button data-look="electric"><i class="look-swatch electric"></i>Electric</button><button data-look="sunset"><i class="look-swatch sunset"></i>Sunset</button></div></div>
       </section>
-      <section class="wizard-step" data-step-panel="structure" role="tabpanel" aria-labelledby="wizard-title-structure" hidden>
+      <section class="wizard-step" id="wizard-panel-structure" data-step-panel="structure" role="tabpanel" aria-labelledby="wizard-tab-structure" hidden>
         <h3 id="wizard-title-structure" class="wizard-title">Medidas y estructura Layher</h3>
         <p class="hint wizard-intro">Tamaño de la tarima, altura del truss y las partes del Layher: cuerpos laterales, techo, caja negra y escaleras.</p>
         <section id="free-build-toolbox" class="free-build-toolbox" aria-labelledby="quick-stage-title" hidden>
@@ -398,7 +398,7 @@
         </div>
         <div id="catalog-structure" class="wizard-catalog"></div>
       </section>
-      <section class="wizard-step" data-step-panel="lights" role="tabpanel" aria-labelledby="wizard-title-lights" hidden>
+      <section class="wizard-step" id="wizard-panel-lights" data-step-panel="lights" role="tabpanel" aria-labelledby="wizard-tab-lights" hidden>
         <h3 id="wizard-title-lights" class="wizard-title">Puentes de luces</h3>
         <p class="hint wizard-intro">Elige cuántos puentes y qué luces van en cada uno. La vista pasa al frente para ver los puentes.</p>
         <div id="preset-light-controls">
@@ -424,22 +424,22 @@
         </div>
         <div id="catalog-lights" class="wizard-catalog"></div>
       </section>
-      <section class="wizard-step" data-step-panel="audio" role="tabpanel" aria-labelledby="wizard-title-audio" hidden>
+      <section class="wizard-step" id="wizard-panel-audio" data-step-panel="audio" role="tabpanel" aria-labelledby="wizard-tab-audio" hidden>
         <h3 id="wizard-title-audio" class="wizard-title">Sonido y FOH</h3>
         <p class="hint wizard-intro">Line array por lado colgados del cantilever, refuerzos, consola FOH y energía.</p>
         <div id="catalog-audio" class="wizard-catalog"></div>
       </section>
-      <section class="wizard-step" data-step-panel="backline" role="tabpanel" aria-labelledby="wizard-title-backline" hidden>
+      <section class="wizard-step" id="wizard-panel-backline" data-step-panel="backline" role="tabpanel" aria-labelledby="wizard-tab-backline" hidden>
         <h3 id="wizard-title-backline" class="wizard-title">Backline</h3>
         <p class="hint wizard-intro">Añade o quita cada instrumento y accesorio por separado.</p>
         <div id="catalog-backline" class="wizard-catalog"></div>
       </section>
-      <section class="wizard-step" data-step-panel="pyro" role="tabpanel" aria-labelledby="wizard-title-pyro" hidden>
+      <section class="wizard-step" id="wizard-panel-pyro" data-step-panel="pyro" role="tabpanel" aria-labelledby="wizard-tab-pyro" hidden>
         <h3 id="wizard-title-pyro" class="wizard-title">Pirotecnia</h3>
         <p class="hint wizard-intro">Máquinas de humo, llamas y CO₂ al frente de la tarima.</p>
         <div id="catalog-pyro" class="wizard-catalog"></div>
       </section>
-      <section class="wizard-step" data-step-panel="video" role="tabpanel" aria-labelledby="wizard-title-video" hidden>
+      <section class="wizard-step" id="wizard-panel-video" data-step-panel="video" role="tabpanel" aria-labelledby="wizard-tab-video" hidden>
         <h3 id="wizard-title-video" class="wizard-title">Pantallas y video</h3>
         <p class="hint wizard-intro">Pantalla LED central, pantallas laterales y tu video en las pantallas.</p>
         <div id="preset-video-controls">
@@ -464,7 +464,7 @@
         </div>
         <div id="catalog-video" class="wizard-catalog"></div>
       </section>
-      <section class="wizard-step" data-step-panel="review" role="tabpanel" aria-labelledby="wizard-title-review" hidden>
+      <section class="wizard-step" id="wizard-panel-review" data-step-panel="review" role="tabpanel" aria-labelledby="wizard-tab-review" hidden>
         <h3 id="wizard-title-review" class="wizard-title">Revisa tu escenario</h3>
         <p class="hint wizard-intro">Resumen de lo que has elegido. Toca un paso para cambiarlo.</p>
         <div id="wizard-review" class="wizard-review"></div>
@@ -502,7 +502,7 @@
         <button id="btn-camera-zoom-in" type="button" aria-label="Acercar" title="Acercar">＋</button>
         <button id="btn-camera-zoom-out" type="button" aria-label="Alejar" title="Alejar">−</button>
       </div>
-      <div id="graphics-recovery" class="graphics-recovery" hidden><h2>La vista gráfica necesita recuperarse.</h2><p>Tu proyecto se conserva. Recarga la escena para continuar.</p><button id="btn-reload-scene" class="btn primary">Recargar escena</button></div>
+      <div id="graphics-recovery" class="graphics-recovery" hidden><h2>La vista gráfica necesita recuperarse.</h2><p>Tu proyecto se conserva. Recarga la escena para continuar.</p><button id="btn-reload-scene" class="btn primary">Recargar escena</button><button id="btn-recover-project" class="btn ghost" type="button" data-i18n="Esporta copia JSON" hidden>Esporta copia JSON</button></div>
       <div class="vignette" aria-hidden="true"></div>
       <div id="empty-stage-hint" class="empty-stage-hint" hidden>
         <b>El escenario está vacío</b>

@@ -1,7 +1,20 @@
 
-        const CACHE_NAME = "psm-stage-CGAUuN10-Cx195cDR-BtCAaDxU-D59qk2hx-CyIKDT1C-8OwFoFrF-BKq5THfK-y7H9Ej9Y-CT8ejbsi-CjTA_bBc-D6zJ7T0y-C25l4UxM-DXbIJ8G_-BVoF3VhZ";
+        const CACHE_NAME = "psm-stage-v2-CGAUuN10-Gq4T_e7n-BtCAaDxU-D59qk2hx-B9_G8Qx0-B_91ROrA-BxWFA4N3-y7H9Ej9Y-6EaJxeED-CXgg6Qbx-ZLchT2Sh-CuLKTSNg-dXN-BQEZrdOm";
         const CACHE_PREFIX = 'psm-stage-';
-        const PRECACHE_URLS = ["/stage-studio/","/stage-studio/manifest.webmanifest","/stage-studio/favicon.png","/stage-studio/models/backline/electric-guitar-v1.glb","/stage-studio/models/backline/bass-guitar-four-string-v1.glb","/stage-studio/models/backline/guitar-combo-amp-v1.glb","/stage-studio/models/backline/acoustic-guitar-v1.glb","/stage-studio/models/backline/guitar-stand-v1.glb","/stage-studio/models/backline/drum-kit-five-piece-v1.glb","/stage-studio/models/backline/keyboard-88-v1.glb","/stage-studio/models/backline/microphone-stand-v1.glb","/stage-studio/assets/psm-logo-CGAUuN10.png","/stage-studio/assets/index-Cx195cDR.css","/stage-studio/assets/three-engine-BtCAaDxU.js","/stage-studio/assets/three-tools-D59qk2hx.js","/stage-studio/assets/index-CyIKDT1C.js","/stage-studio/assets/main-8OwFoFrF.js","/stage-studio/assets/index-BKq5THfK.js","/stage-studio/assets/Purchases.es-y7H9Ej9Y.js","/stage-studio/assets/web-CT8ejbsi.js","/stage-studio/assets/web-CjTA_bBc.js","/stage-studio/assets/web-D6zJ7T0y.js","/stage-studio/assets/web-C25l4UxM.js","/stage-studio/assets/web-DXbIJ8G_.js","/stage-studio/assets/web-BVoF3VhZ.js"];
+        const PRECACHE_URLS = ["/stage-studio/","/stage-studio/manifest.webmanifest","/stage-studio/favicon.png","/stage-studio/models/backline/electric-guitar-v1.glb","/stage-studio/models/backline/bass-guitar-four-string-v1.glb","/stage-studio/models/backline/guitar-combo-amp-v1.glb","/stage-studio/models/backline/acoustic-guitar-v1.glb","/stage-studio/models/backline/guitar-stand-v1.glb","/stage-studio/models/backline/drum-kit-five-piece-v1.glb","/stage-studio/models/backline/keyboard-88-v1.glb","/stage-studio/models/backline/microphone-stand-v1.glb","/stage-studio/assets/psm-logo-CGAUuN10.png","/stage-studio/assets/index-Gq4T_e7n.css","/stage-studio/assets/three-engine-BtCAaDxU.js","/stage-studio/assets/three-tools-D59qk2hx.js","/stage-studio/assets/index-B9_G8Qx0.js","/stage-studio/assets/main-B_91ROrA.js","/stage-studio/assets/index-BxWFA4N3.js","/stage-studio/assets/Purchases.es-y7H9Ej9Y.js","/stage-studio/assets/web-6EaJxeED.js","/stage-studio/assets/web-CXgg6Qbx.js","/stage-studio/assets/web-ZLchT2Sh.js","/stage-studio/assets/web-CuLKTSNg.js","/stage-studio/assets/web-xGNN-dXN.js","/stage-studio/assets/web-BQEZrdOm.js"];
+
+        async function readCached(request) {
+          try { return await caches.match(request); }
+          catch { return undefined; }
+        }
+        async function remember(request, response) {
+          try {
+            const cache = await caches.open(CACHE_NAME);
+            await cache.put(request, response.clone());
+          } catch {
+            // Cache denial or quota must never discard a successful network response.
+          }
+        }
 
         self.addEventListener('install', event => {
           event.waitUntil(
@@ -33,25 +46,24 @@
                 // an older deployment visible after the site has already been updated.
                 const response = await fetch(request, { cache: "no-cache" });
                 if (response.ok) {
-                  const cache = await caches.open(CACHE_NAME);
-                  await cache.put(appEntry, response.clone());
+                  await remember(appEntry, response);
                 }
                 return response;
               } catch {
-                return (await caches.match(request)) || caches.match(appEntry);
+                return (await readCached(request)) || (await readCached(appEntry)) ||
+                  new Response('Offline app shell unavailable.', { status: 503 });
               }
             })());
             return;
           }
 
           event.respondWith((async () => {
-            const cached = await caches.match(request);
+            const cached = await readCached(request);
             if (cached) return cached;
 
             const response = await fetch(request);
             if (response.ok) {
-              const cache = await caches.open(CACHE_NAME);
-              await cache.put(request, response.clone());
+              await remember(request, response);
             }
             return response;
           })());
