@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-ZnISQNl_.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Gq4T_e7n.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-CFQKv42E.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CiVb_mQ9.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -399,6 +399,7 @@
         <div id="catalog-structure" class="wizard-catalog"></div>
       </section>
       <section class="wizard-step" id="wizard-panel-lights" data-step-panel="lights" role="tabpanel" aria-labelledby="wizard-tab-lights" hidden>
+        <article class="dmx-entry-card"><h3 data-i18n="Plot y patch DMX">Plot y patch DMX</h3><p data-i18n="Plan de luminarias y direccionamiento por universo.">Plan de luminarias y direccionamiento por universo.</p><button id="open-dmx-patch" class="btn primary" type="button" data-i18n="Abrir plot de iluminación">Abrir plot de iluminación</button></article>
         <h3 id="wizard-title-lights" class="wizard-title">Puentes de luces</h3>
         <p class="hint wizard-intro">Elige cuántos puentes y qué luces van en cada uno. La vista pasa al frente para ver los puentes.</p>
         <div id="preset-light-controls">
@@ -468,6 +469,7 @@
         <h3 id="wizard-title-review" class="wizard-title">Revisa tu escenario</h3>
         <p class="hint wizard-intro">Resumen de lo que has elegido. Toca un paso para cambiarlo.</p>
         <div id="wizard-review" class="wizard-review"></div>
+        <button id="open-dmx-patch-review" class="btn ghost full" type="button" data-i18n="Abrir plot de iluminación">Abrir plot de iluminación</button>
         <p class="wizard-equipment"><span id="equipment-count"></span></p>
         <div class="section-title"><h3>Tu empresa en la propuesta</h3><span>OPCIONAL</span></div>
         <div class="brand-form">
@@ -592,9 +594,11 @@
     </section>
     <aside class="panel right">
       <div class="panel-heading">
-        <div><span class="eyebrow">02 / TU PRODUCCIÓN</span><h2>Resumen del proyecto</h2></div>
+        <div class="summary-heading-copy"><span class="eyebrow">02 / TU PRODUCCIÓN</span><h2>Resumen del proyecto</h2></div>
+        <button id="summary-collapse-toggle" class="summary-collapse-toggle" type="button" aria-expanded="true" aria-controls="summary-panel-content" data-i18n-aria-label="Contraer resumen" aria-label="Contraer resumen"><span aria-hidden="true">›</span><span class="summary-toggle-label">Contraer resumen</span></button>
         <span class="panel-icon" aria-hidden="true">↗</span>
       </div>
+      <div id="summary-panel-content" class="summary-panel-content">
       <section class="model-object-panel" aria-labelledby="model-object-title">
         <div class="section-title"><h3 id="model-object-title">3 · Oggetti del modello</h3><button id="btn-add-model-object" class="btn ghost compact">＋ Aggiungi</button></div>
         <div id="model-element-list" class="model-element-list" aria-live="polite"></div>
@@ -689,6 +693,7 @@
       <section id="reference-material-comparison" class="reference-comparison" aria-label="Comparación con la lámina de materiales"></section>
       <div id="bom-table" class="bom"></div>
       <div class="technical-note"><span>ⓘ</span><p>Propuesta de diseño. La estructura y las cargas deben ser verificadas por un técnico competente.</p></div>
+      </div>
     </aside>
   </main>
   <nav class="mobile-workspace-nav" aria-label="Secciones del proyecto">
@@ -722,6 +727,7 @@
       <a id="ar-preview-open" class="btn primary" rel="ar" hidden><img id="ar-preview-poster" alt="" aria-hidden="true"><span data-i18n="Apri nel tuo spazio">Apri nel tuo spazio</span></a>
     </div>
   </dialog>
+  <dialog id="dmx-patch-dialog" class="dmx-dialog" aria-labelledby="dmx-patch-title"><header class="dialog-header"><div><h2 id="dmx-patch-title" data-i18n="Plot y patch DMX">Plot y patch DMX</h2><p class="hint" data-i18n="Valor inicial: verificar con el manual del equipo">Valor inicial: verificar con el manual del equipo</p></div><button id="dmx-patch-close" class="tool-btn" type="button" aria-label="Cerrar">×</button></header><div id="dmx-patch-content"></div><footer class="dmx-actions"><button id="dmx-patch-csv" class="btn primary" type="button" data-i18n="Exportar patch CSV">Exportar patch CSV</button><button id="dmx-patch-print" class="btn ghost" type="button" data-i18n="Imprimir plot">Imprimir plot</button></footer></dialog>
   <dialog id="subscription-dialog" class="library-dialog subscription-dialog" aria-labelledby="subscription-title">
     <div class="library-header">
       <div><span class="eyebrow" data-i18n="Suscripción mensual · renovación automática">Suscripción mensual · renovación automática</span><h2 id="subscription-title" data-i18n="Diseña gratis. Exporta y guarda tus proyectos con Pro.">Diseña gratis. Exporta y guarda tus proyectos con Pro.</h2><p data-i18n="El diseño 3D, los cambios y la vista previa de audio siguen siendo gratuitos.">El diseño 3D, los cambios y la vista previa de audio siguen siendo gratuitos.</p></div>
