@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-D188Y11W.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-B84fMffS.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-B6Tt9z55.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-INi_sjAc.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -310,7 +310,7 @@
         </button>
         <button id="btn-reset-structure" class="btn ghost reset-structure-button" type="button"><span aria-hidden="true">↺</span><span>Restablecer estructura inicial</span></button>
         <p class="hint reset-structure-hint">Vuelve a las medidas y al equipo del preset Concierto. Conserva los datos del cliente y del evento.</p>
-        <p id="free-build-hint" class="hint" data-i18n="Lienzo vacío: no se añade nada automáticamente. Sigue los pasos: en Estructura creas el telar de truss y la tarima; en Luces, Audio, Backline y Video eliges los equipos. También puedes usar el buscador." hidden>Lienzo vacío: no se añade nada automáticamente. Sigue los pasos: en Estructura creas el telar de truss y la tarima; en Luces, Audio, Backline y Video eliges los equipos. También puedes usar el buscador.</p>
+        <div id="free-build-hint" class="hint free-build-context-hint" hidden><span data-i18n="Lienzo vacío: no se añade nada automáticamente. Sigue los pasos: en Estructura creas el telar de truss y la tarima; en Luces, Audio, Backline y Video eliges los equipos. También puedes usar el buscador.">Lienzo vacío: no se añade nada automáticamente. Sigue los pasos: en Estructura creas el telar de truss y la tarima; en Luces, Audio, Backline y Video eliges los equipos. También puedes usar el buscador.</span><button id="free-build-hint-dismiss" type="button" aria-label="Cerrar esta ayuda" data-i18n-aria-label="Cerrar esta ayuda">×</button></div>
         <div class="section-title"><h3>Aspecto de la vista</h3><span>NO CAMBIA EL PROYECTO</span></div>
         <div class="design-modes" role="group" aria-label="Estilo de visualización"><button data-style="show" class="active" aria-pressed="true"><span aria-hidden="true">◈</span>&nbsp;<span>Show</span></button><button data-style="reference" aria-pressed="false"><span aria-hidden="true">⌗</span>&nbsp;<span>Referencia</span></button></div><button id="btn-reference" class="reference-preset">↗ Cargar medidas de referencia <span>15,42 × 10,28 m</span></button>
         <div class="look-picker"><div class="section-title"><h3>Atmósfera del show</h3><span>LIGHT DESIGN</span></div><div class="look-options" role="group" aria-label="Atmósfera del show"><button data-look="aurora" class="active"><i class="look-swatch aurora"></i>Aurora</button><button data-look="electric"><i class="look-swatch electric"></i>Electric</button><button data-look="sunset"><i class="look-swatch sunset"></i>Sunset</button></div></div>
@@ -324,6 +324,7 @@
             <p class="free-build-intro" data-i18n="Elige el tamaño: se crean la estructura de truss y la tarima. Después añade luces, audio, backline y video en los pasos siguientes.">Elige el tamaño: se crean la estructura de truss y la tarima. Después añade luces, audio, backline y video en los pasos siguientes.</p>
             <div class="stage-size-grid" data-stage-size-grid></div>
             <ol id="free-build-progress" class="free-build-progress" aria-label="Avance del escenario"></ol>
+            <button id="free-build-next-action" class="btn primary full free-build-next-action" type="button" aria-label="Siguiente paso de construcción" data-i18n-aria-label="Siguiente paso de construcción">Siguiente</button>
           </section>
           <details class="free-build-more">
             <summary>Medidas personalizadas</summary>
@@ -707,7 +708,29 @@
     <span id="footer-dimensions">LAYHER SYSTEM / Q40</span>
     <span>PSM STAGE STUDIO <b>1.0</b> <small id="app-build"></small></span>
   </footer>
-  <dialog id="project-library" class="library-dialog" aria-labelledby="library-title"><div class="library-header"><div><span class="eyebrow">TU ESPACIO DE TRABAJO</span><h2 id="library-title">Cada gran show empieza aquí.</h2><p>Tu biblioteca privada en este navegador.</p></div><button id="library-close" class="tool-btn" aria-label="Cerrar biblioteca">×</button></div><div class="library-actions"><button id="library-save" class="btn primary">＋ Guardar proyecto actual</button><button id="library-new" class="btn ghost">Nuevo proyecto</button><button id="library-import" class="btn ghost">↑ Importar JSON</button><button id="library-export" class="btn ghost" type="button" data-i18n="Esporta copia JSON">Esporta copia JSON</button></div><section class="template-section" aria-labelledby="template-section-title"><div class="template-section-heading"><div><span class="eyebrow">PUNTO DE PARTIDA</span><h3 id="template-section-title">Modelli di produzione</h3><p>Parti da una configurazione riutilizzabile. I dati del cliente e dell’evento non vengono copiati.</p></div></div><div id="starter-template-list" class="starter-template-list"></div><details class="custom-template-details"><summary>Salva il progetto attuale come modello</summary><form id="template-save-form" class="template-save-form"><label>Nome del modello<input id="template-name" name="name" maxlength="80" required placeholder="Es. Festival all'aperto"></label><label>Descrizione facoltativa<input id="template-description" name="description" maxlength="240" placeholder="Note sulla configurazione riutilizzabile"></label><button class="btn primary" type="submit">Salva modello</button></form></details><div id="custom-template-list" class="custom-template-list" aria-live="polite"></div><p id="template-storage-hint" class="hint"></p></section><section class="proposal-compare" aria-labelledby="proposal-compare-title"><div><h3 id="proposal-compare-title">Comparar alternativas</h3><p>Duplica una proposta y compara medidas, equipos y estimación antes de elegir.</p></div><div class="proposal-compare-selectors"><label>Alternativa A<select id="compare-project-a"></select></label><label>Alternativa B<select id="compare-project-b"></select></label><button id="compare-projects" class="btn ghost" type="button" disabled>Comparar</button></div><div id="proposal-comparison-result" class="proposal-comparison-result" aria-live="polite"></div></section><div id="library-list"></div><p id="library-sync-hint" class="hint"></p></dialog>
+  <dialog id="project-save-dialog" class="project-save-dialog" aria-labelledby="project-save-title">
+    <form id="project-save-form" method="dialog">
+      <h2 id="project-save-title" data-i18n="Guardar proyecto">Guardar proyecto</h2>
+      <label for="project-save-name" data-i18n="Nombre del proyecto">Nombre del proyecto</label>
+      <input id="project-save-name" maxlength="80" autocomplete="off" aria-describedby="project-save-error">
+      <p id="project-save-error" class="project-save-error" role="alert" aria-live="polite"></p>
+      <div class="project-save-actions">
+        <button id="project-save-cancel" class="btn ghost" type="button" data-i18n="Cancelar">Cancelar</button>
+        <button class="btn primary" type="submit" data-i18n="Guardar proyecto">Guardar proyecto</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog id="project-name-conflict" class="project-save-dialog" aria-labelledby="project-name-conflict-title">
+    <form method="dialog">
+      <h2 id="project-name-conflict-title" data-i18n="Ya existe un proyecto con este nombre. ¿Reemplazarlo o guardar como copia?">Ya existe un proyecto con este nombre. ¿Reemplazarlo o guardar como copia?</h2>
+      <div class="project-save-actions">
+        <button id="project-replace" class="btn primary" type="button" data-i18n="Reemplazar">Reemplazar</button>
+        <button id="project-save-copy" class="btn ghost" type="button" data-i18n="Guardar como copia">Guardar como copia</button>
+        <button id="project-conflict-cancel" class="btn ghost" type="button" data-i18n="Cancelar">Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog id="project-library" class="library-dialog" aria-labelledby="library-title"><div class="library-header"><div><span class="eyebrow">TU ESPACIO DE TRABAJO</span><h2 id="library-title">Cada gran show empieza aquí.</h2><p>Tu biblioteca privada en este navegador.</p></div><button id="library-close" class="tool-btn" aria-label="Cerrar biblioteca">×</button></div><div class="library-actions"><button id="library-save" class="btn primary" data-i18n="Guardar proyecto actual">Guardar proyecto actual</button><button id="library-new" class="btn ghost">Nuevo proyecto</button><button id="library-import" class="btn ghost">↑ Importar JSON</button><button id="library-export" class="btn ghost" type="button" data-i18n="Esporta copia JSON">Esporta copia JSON</button></div><section class="template-section" aria-labelledby="template-section-title"><div class="template-section-heading"><div><span class="eyebrow">PUNTO DE PARTIDA</span><h3 id="template-section-title">Modelli di produzione</h3><p>Parti da una configurazione riutilizzabile. I dati del cliente e dell’evento non vengono copiati.</p></div></div><div id="starter-template-list" class="starter-template-list"></div><details class="custom-template-details"><summary>Salva il progetto attuale come modello</summary><form id="template-save-form" class="template-save-form"><label>Nome del modello<input id="template-name" name="name" maxlength="80" required placeholder="Es. Festival all'aperto"></label><label>Descrizione facoltativa<input id="template-description" name="description" maxlength="240" placeholder="Note sulla configurazione riutilizzabile"></label><button class="btn primary" type="submit">Salva modello</button></form></details><div id="custom-template-list" class="custom-template-list" aria-live="polite"></div><p id="template-storage-hint" class="hint"></p></section><section class="proposal-compare" aria-labelledby="proposal-compare-title"><div><h3 id="proposal-compare-title">Comparar alternativas</h3><p>Duplica una proposta y compara medidas, equipos y estimación antes de elegir.</p></div><div class="proposal-compare-selectors"><label>Alternativa A<select id="compare-project-a"></select></label><label>Alternativa B<select id="compare-project-b"></select></label><button id="compare-projects" class="btn ghost" type="button" disabled>Comparar</button></div><div id="proposal-comparison-result" class="proposal-comparison-result" aria-live="polite"></div></section><div id="library-list"></div><p id="library-sync-hint" class="hint"></p></dialog>
   <dialog id="ar-preview-dialog" class="library-dialog ar-preview-dialog" aria-labelledby="ar-preview-title">
     <div class="library-header">
       <div><span class="eyebrow" data-i18n="REALTA AUMENTATA">REALTÀ AUMENTATA</span><h2 id="ar-preview-title" data-i18n="Prova il palco nel tuo spazio">Prova il palco nel tuo spazio</h2></div>
