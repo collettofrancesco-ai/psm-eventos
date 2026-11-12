@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-2KmHjrJa.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BZx6xp6a.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-BERvURUh.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-D03YEDXv.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -402,6 +402,7 @@
       </section>
       <section class="wizard-step" id="wizard-panel-lights" data-step-panel="lights" role="tabpanel" aria-labelledby="wizard-tab-lights" hidden>
         <article class="dmx-entry-card"><h3 data-i18n="Plot y patch DMX">Plot y patch DMX</h3><p data-i18n="Plan de luminarias y direccionamiento por universo.">Plan de luminarias y direccionamiento por universo.</p><button id="open-dmx-patch" class="btn primary" type="button" data-i18n="Abrir plot de iluminación">Abrir plot de iluminación</button></article>
+        <article class="dmx-entry-card"><h3 data-i18n="Predicción de sonido">Predicción de sonido</h3><p data-i18n="Estimación SPL basada en cifras publicadas y patrones aproximados, no en globos de fabricante.">Estimación SPL basada en cifras publicadas y patrones aproximados, no en globos de fabricante.</p><button id="open-sound-prediction-review" class="btn ghost" type="button" data-i18n="Abrir predicción de sonido">Abrir predicción de sonido</button></article>
         <h3 id="wizard-title-lights" class="wizard-title">Puentes de luces</h3>
         <p class="hint wizard-intro">Elige cuántos puentes y qué luces van en cada uno. La vista pasa al frente para ver los puentes.</p>
         <div id="preset-light-controls">
@@ -894,6 +895,16 @@
     <div class="audio-coverage-legend" aria-hidden="true"><span>Minore</span><i></i><span>Maggiore</span></div>
     <div id="audio-coverage-text" class="audio-coverage-text" aria-live="polite"></div>
     <p class="hint audio-coverage-limit">Stima qualitativa basata su una direttività generica e sulla disposizione mostrata. Non rappresenta livelli SPL in dB e non simula ambiente, riflessioni, subwoofer, delay o dati reali dei diffusori. Verificare il progetto con il tecnico audio e i dati del produttore.</p>
+  </dialog>
+  <dialog id="sound-prediction-dialog" class="library-dialog sound-prediction-dialog" aria-labelledby="sound-prediction-title">
+    <div class="library-header"><div><span class="eyebrow" data-i18n="ESTIMACIÓN SPL">ESTIMACIÓN SPL</span><h2 id="sound-prediction-title" data-i18n="Predicción de sonido">Predicción de sonido</h2></div><button id="sound-prediction-close" class="tool-btn" type="button" aria-label="Cerrar">×</button></div>
+    <div class="sound-prediction-controls">
+      <label data-i18n="Altura de oyente (m)">Altura de oyente (m)<input id="sound-listener-height" type="number" min="0.5" max="2.5" step="0.1"></label>
+      <label data-i18n="Banda de frecuencia">Banda de frecuencia<select id="sound-band"><option value="broadband" data-i18n="Banda ancha">Banda ancha</option><option value="63">63 Hz</option><option value="1k">1 kHz</option><option value="4k">4 kHz</option></select></label>
+    </div>
+    <div id="sound-array-controls" class="sound-array-controls"></div>
+    <div id="sound-prediction-content" class="sound-prediction-content"></div>
+    <p class="hint" data-i18n="Estimación SPL por fuente puntual: caída aproximada de 6 dB al duplicar distancia; suma de potencia incoherente. Directividad y cifras publicadas simplificadas. No simula reflexiones, subwoofer, delay ni balloon data del fabricante.">Estimación SPL por fuente puntual: caída aproximada de 6 dB al duplicar distancia; suma de potencia incoherente. Directividad y cifras publicadas simplificadas. No simula reflexiones, subwoofer, delay ni balloon data del fabricante.</p>
   </dialog>
   <div id="toast" role="status" aria-live="polite"></div>
   <input id="project-file" type="file" accept=".json,application/json" aria-label="Importar proyecto JSON" hidden>
