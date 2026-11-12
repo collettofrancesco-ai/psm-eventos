@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-BERvURUh.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-D03YEDXv.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-NihOALQu.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Bl2uHa0q.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -900,9 +900,11 @@
     <div class="library-header"><div><span class="eyebrow" data-i18n="ESTIMACIÓN SPL">ESTIMACIÓN SPL</span><h2 id="sound-prediction-title" data-i18n="Predicción de sonido">Predicción de sonido</h2></div><button id="sound-prediction-close" class="tool-btn" type="button" aria-label="Cerrar">×</button></div>
     <div class="sound-prediction-controls">
       <label data-i18n="Altura de oyente (m)">Altura de oyente (m)<input id="sound-listener-height" type="number" min="0.5" max="2.5" step="0.1"></label>
+      <label data-i18n="Nota de sonido">Nota de sonido<textarea id="sound-note" maxlength="1000" rows="2"></textarea></label>
       <label data-i18n="Banda de frecuencia">Banda de frecuencia<select id="sound-band"><option value="broadband" data-i18n="Banda ancha">Banda ancha</option><option value="63">63 Hz</option><option value="1k">1 kHz</option><option value="4k">4 kHz</option></select></label>
     </div>
     <div id="sound-array-controls" class="sound-array-controls"></div>
+    <div id="sound-sub-controls" class="sound-array-controls"></div>
     <div id="sound-prediction-content" class="sound-prediction-content"></div>
     <p class="hint" data-i18n="Estimación SPL por fuente puntual: caída aproximada de 6 dB al duplicar distancia; suma de potencia incoherente. Directividad y cifras publicadas simplificadas. No simula reflexiones, subwoofer, delay ni balloon data del fabricante.">Estimación SPL por fuente puntual: caída aproximada de 6 dB al duplicar distancia; suma de potencia incoherente. Directividad y cifras publicadas simplificadas. No simula reflexiones, subwoofer, delay ni balloon data del fabricante.</p>
   </dialog>
