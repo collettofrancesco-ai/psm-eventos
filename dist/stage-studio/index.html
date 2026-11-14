@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-BIvG1Pch.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-95gJ8itH.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-Ihf1uCoH.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-DCIp4kZ5.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -842,6 +842,14 @@
       <li><h3 data-i18n="4 · Crea la propuesta">4 · Crea la propuesta</h3><p data-i18n="Revisa el proyecto y prepara una propuesta para imprimir o compartir.">Revisa el proyecto y prepara una propuesta para imprimir o compartir.</p></li>
     </ol>
     <div class="first-run-guide-actions"><button id="first-run-guide-quick-start" class="btn ghost" type="button" data-i18n="Abrir inicio rápido">Abrir inicio rápido</button><button id="first-run-guide-done" class="btn primary" type="button" data-i18n="Empezar a diseñar">Empezar a diseñar</button></div>
+  </dialog>
+  <dialog id="release-notes" class="release-notes-dialog" aria-labelledby="release-notes-title" aria-describedby="release-notes-date">
+    <div class="library-header">
+      <div><span class="eyebrow" data-i18n="NOVEDADES">NOVEDADES</span><h2 id="release-notes-title" data-i18n="Novedades">Novedades</h2><p id="release-notes-date"></p></div>
+      <button id="release-notes-close" class="tool-btn" type="button" data-i18n-aria-label="Cerrar novedades" aria-label="Cerrar novedades">×</button>
+    </div>
+    <ul id="release-notes-items" class="release-notes-items"></ul>
+    <div class="release-notes-actions"><button id="release-notes-done" class="btn primary" type="button" data-i18n="Entendido">Entendido</button></div>
   </dialog>
   <dialog id="model-element-library" class="library-dialog element-library" aria-labelledby="element-library-title">
     <div class="library-header"><div><span class="eyebrow">MODELLAZIONE 3D</span><h2 id="element-library-title">Aggiungi al palco</h2><p>Le sezioni geometriche sono indicative. Global Truss: F34 = 29 cm, F42 = 40 cm, F52 = 62 cm; “baseplate 514” non identificata nel catalogo consultato. L’app non verifica compatibilità o portate: controlla con produttore e progettista.</p></div><button id="element-library-close" class="tool-btn" aria-label="Chiudi libreria elementi">×</button></div>
