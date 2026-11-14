@@ -20,8 +20,8 @@
     @media (prefers-reduced-motion: reduce) { #boot-splash i { animation: none; } }
     body.app-ready #boot-splash { display: none; }
   </style>
-  <script type="module" crossorigin src="/stage-studio/assets/index-CMiwsUYg.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BBCfysaA.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-QuHiPPtD.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-Z1cIVmMV.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -730,6 +730,24 @@
       </div>
     </form>
   </dialog>
+  <dialog id="stage-assistant" class="library-dialog stage-assistant" aria-labelledby="stage-assistant-title">
+    <div class="library-header"><div><span class="eyebrow" data-i18n="BORRADOR SIN CONEXIÓN">BORRADOR SIN CONEXIÓN</span><h2 id="stage-assistant-title" data-i18n="Asistente de escenario">Asistente de escenario</h2><p data-i18n="Describe el evento. El resultado es una propuesta para revisar, no una verificación técnica.">Describe el evento. El resultado es una propuesta para revisar, no una verificación técnica.</p></div><button id="stage-assistant-close" class="tool-btn" type="button" data-i18n-aria-label="Cerrar asistente" aria-label="Cerrar asistente">×</button></div>
+    <section id="stage-assistant-input">
+      <label class="field-label" for="stage-assistant-brief" data-i18n="Cuéntanos qué necesitas">Cuéntanos qué necesitas</label>
+      <textarea id="stage-assistant-brief" rows="5" maxlength="5000" data-i18n-placeholder="Ej.: concierto al aire libre para 800 personas, escenario de 12 × 8 m y presupuesto de 20.000 USD" placeholder="Ej.: concierto al aire libre para 800 personas, escenario de 12 × 8 m y presupuesto de 20.000 USD"></textarea>
+      <div class="stage-assistant-input-actions"><button id="stage-assistant-dictate" class="btn ghost" type="button" data-i18n="Dictar brief">Dictar brief</button><label class="btn ghost venue-plan-upload"><span data-i18n="Adjuntar foto o plano">Adjuntar foto o plano</span><input id="stage-assistant-image" type="file" accept="image/png,image/jpeg,image/webp" hidden></label></div>
+      <p id="stage-assistant-image-name" class="hint" aria-live="polite"></p>
+      <label id="stage-assistant-consent-row" class="assistant-consent" hidden><input id="stage-assistant-image-consent" type="checkbox"><span data-i18n="Autorizo el envío de esta imagen a Anthropic para interpretar el plano. Se reduce a un máximo de 1600 px.">Autorizo el envío de esta imagen a Anthropic para interpretar el plano. Se reduce a un máximo de 1600 px.</span></label>
+      <p id="stage-assistant-mode" class="hint" data-i18n="El análisis funciona sin conexión; las imágenes quedan como referencia y no se interpretan automáticamente.">El análisis funciona sin conexión; las imágenes quedan como referencia y no se interpretan automáticamente.</p>
+      <button id="stage-assistant-analyze" class="btn primary full" type="button" data-i18n="Preparar borrador">Preparar borrador</button>
+    </section>
+    <section id="stage-assistant-review" hidden aria-live="polite">
+      <h3 data-i18n="Lo que entendí">Lo que entendí</h3><ul id="stage-assistant-fields" class="stage-assistant-fields"></ul>
+      <h3 data-i18n="Falta o requiere revisión">Falta o requiere revisión</h3><ul id="stage-assistant-missing" class="stage-assistant-missing"></ul>
+      <p class="hint" data-i18n="Borrador: las medidas y la estructura no están verificadas. Revisa y edita el proyecto antes de usarlo.">Borrador: las medidas y la estructura no están verificadas. Revisa y edita el proyecto antes de usarlo.</p>
+      <div class="quick-start-actions"><button id="stage-assistant-edit" class="btn ghost" type="button" data-i18n="Editar brief">Editar brief</button><button id="stage-assistant-apply" class="btn primary" type="button" data-i18n="Aplicar borrador">Aplicar borrador</button></div>
+    </section>
+  </dialog>
   <dialog id="project-name-conflict" class="project-save-dialog" aria-labelledby="project-name-conflict-title">
     <form method="dialog">
       <h2 id="project-name-conflict-title" data-i18n="Ya existe un proyecto con este nombre. ¿Reemplazarlo o guardar como copia?">Ya existe un proyecto con este nombre. ¿Reemplazarlo o guardar como copia?</h2>
@@ -832,6 +850,7 @@
         <select id="quick-start-audience" name="audience" aria-label="Personas"></select>
       </fieldset>
       <div class="quick-start-actions">
+        <button id="quick-start-assistant" class="btn ghost" type="button" data-i18n="Abrir asistente de escenario">Abrir asistente de escenario</button>
         <button id="quick-start-templates" class="btn ghost" type="button" data-i18n="Usar uno de mis modelos">Usar uno de mis modelos</button>
         <button id="quick-start-skip" class="btn ghost" type="button" data-i18n="Prefiero empezar solo">Prefiero empezar solo</button>
         <button class="btn primary" type="submit" data-i18n="Crear escenario">Crear escenario</button>
