@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-DELdTqHS.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CXUmY2_y.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-BsXO6Isq.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-CKJCCaI-.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -642,6 +642,7 @@
           <button id="element-add-crossbeam-z" class="btn stand-truss-action" type="button" hidden>＋ Traverso Z · 3 m</button>
           <button id="element-add-side-section" class="btn stand-truss-action" type="button" hidden>＋ Aggiungi sezione laterale · 3 m</button>
           <button id="element-add-above" class="btn stand-truss-action" type="button" hidden>＋ Aggiungi sezione sopra · 3 m</button>
+          <button id="element-roof-above" class="btn stand-truss-action" type="button" hidden data-i18n="Metti sopra la struttura">Metti sopra la struttura</button>
           <button id="element-structure-lock" class="btn ghost structure-lock" type="button" aria-pressed="true" hidden>🔒 Struttura bloccata · tocca per sbloccare</button>
           <button id="element-hang-array" class="btn primary structure-lock" type="button" hidden>＋ Colgar line array</button>
           <label id="tower-array-count-control" class="step-field" hidden data-i18n="Casse nell’array delay">Casse nell’array delay
@@ -897,6 +898,16 @@
     </section>
     <h3 class="library-section-title" data-i18n="Biblioteca">Biblioteca</h3>
     <div id="model-element-catalog" class="model-element-catalog"></div>
+  </dialog>
+  <dialog id="structure-placement-dialog" class="library-dialog structure-placement-dialog" aria-labelledby="structure-placement-title">
+    <div class="library-header"><div><h2 id="structure-placement-title" data-i18n="Dove vuoi aggiungerlo?">Dove vuoi aggiungerlo?</h2></div></div>
+    <p class="hint" data-i18n="Scegli dove aggiungere l’elemento. La posizione proposta è evidenziata.">Scegli dove aggiungere l’elemento. La posizione proposta è evidenziata.</p>
+    <div class="structure-placement-options">
+      <button class="btn primary" type="button" data-structure-placement="above" data-i18n="Sopra la struttura">Sopra la struttura</button>
+      <button class="btn ghost" type="button" data-structure-placement="side" data-i18n="Di lato alla struttura">Di lato alla struttura</button>
+      <button class="btn ghost" type="button" data-structure-placement="ground" data-i18n="A terra">A terra</button>
+    </div>
+    <div class="dialog-actions"><button id="structure-placement-cancel" class="btn ghost" type="button" data-i18n="Annulla">Annulla</button></div>
   </dialog>
   <dialog id="audio-coverage-dialog" class="library-dialog audio-coverage-dialog" aria-labelledby="audio-coverage-title">
     <div class="library-header"><div><span class="eyebrow">ANALISI DEL SISTEMA PA</span><h2 id="audio-coverage-title">Anteprima di copertura</h2><p id="audio-coverage-summary"></p></div><button id="audio-coverage-close" class="tool-btn" aria-label="Chiudi anteprima audio">×</button></div>
