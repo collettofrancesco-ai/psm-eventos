@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-WpNwoTGT.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-C1z_tUdc.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-B-e1QLa5.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-DtFLm5uA.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -554,15 +554,20 @@
       <div id="selection-bar" class="selection-bar" role="group" aria-label="Oggetto selezionato" hidden>
         <div class="selection-bar-heading">
           <span id="selection-bar-name"></span>
+          <label id="selection-bar-size-label" class="selection-bar-size" hidden><span id="selection-bar-size-caption"></span><span id="selection-bar-size-unit" class="length-unit">(m)</span><input id="selection-bar-size" type="number" min="0" max="1000" step="0.01" aria-label="Lunghezza" data-i18n-aria-label="Lunghezza"></label>
           <select id="selection-bar-riser-height" aria-label="Altura" data-i18n-aria-label="Altura" hidden></select>
           <button id="selection-bar-move" class="btn ghost" type="button" aria-label="Sposta oggetto" data-i18n-aria-label="Sposta oggetto" title="Sposta oggetto" data-i18n-title="Sposta oggetto">↕</button>
           <button id="selection-bar-duplicate" class="btn ghost" type="button" aria-label="Duplica" data-i18n-aria-label="Duplica" title="Duplica" data-i18n-title="Duplica">⧉</button>
+          <button id="selection-bar-move-piece" class="btn ghost" type="button" aria-label="Sposta struttura" data-i18n-aria-label="Sposta struttura" aria-pressed="false" hidden>Sposta struttura</button>
+          <button id="selection-bar-duplicate-piece" class="btn ghost" type="button" aria-label="Duplica solo questo pezzo" data-i18n-aria-label="Duplica solo questo pezzo" title="Duplica solo questo pezzo" data-i18n-title="Duplica solo questo pezzo" hidden>⧉ 1</button>
+          <button id="selection-bar-select-structure" class="btn ghost" type="button" data-i18n="Seleziona tutta la struttura" hidden>Seleziona tutta la struttura</button>
+          <button id="selection-bar-delete-piece" class="btn ghost" type="button" data-i18n="Solo questo pezzo" hidden>Solo questo pezzo</button>
           <button id="selection-bar-rotate-left" class="btn ghost" type="button" aria-label="Ruota a sinistra di 15°" data-i18n-aria-label="Ruota a sinistra di 15°" title="Ruota a sinistra di 15°" data-i18n-title="Ruota a sinistra di 15°">↶</button>
           <button id="selection-bar-rotate-right" class="btn ghost" type="button" aria-label="Ruota a destra di 15°" data-i18n-aria-label="Ruota a destra di 15°" title="Ruota a destra di 15°" data-i18n-title="Ruota a destra di 15°">↷</button>
           <button id="selection-bar-above" class="btn ghost" type="button" aria-label="Aggiungi sezione sopra" data-i18n-aria-label="Aggiungi sezione sopra" title="Aggiungi sezione sopra" data-i18n-title="Aggiungi sezione sopra" hidden>↑</button>
           <button id="selection-bar-side" class="btn ghost" type="button" aria-label="Aggiungi sezione laterale" data-i18n-aria-label="Aggiungi sezione laterale" title="Aggiungi sezione laterale" data-i18n-title="Aggiungi sezione laterale" hidden>↔</button>
           <button id="selection-bar-details" class="btn ghost" type="button" aria-expanded="false" aria-controls="model-element-inspector" data-i18n="Dettagli">Dettagli</button>
-          <button id="selection-bar-delete" class="btn danger" type="button" aria-label="Elimina" data-i18n-aria-label="Elimina" title="Elimina" data-i18n-title="Elimina"><span aria-hidden="true">🗑</span></button>
+          <button id="selection-bar-delete" class="btn danger" type="button" aria-label="Elimina" data-i18n-aria-label="Elimina" title="Elimina" data-i18n-title="Elimina"><span aria-hidden="true">🗑</span> <span data-i18n="Elimina">Elimina</span></button>
           <button id="selection-bar-close" class="btn ghost" type="button" aria-label="Deseleziona" data-i18n-aria-label="Deseleziona" title="Deseleziona" data-i18n-title="Deseleziona">✕</button>
         </div>
         <p id="selection-bar-hint" class="sr-only" data-i18n="Arrastra el objeto para moverlo; arrastra el fondo para girar la vista.">Arrastra el objeto para moverlo; arrastra el fondo para girar la vista.</p>
@@ -631,10 +636,24 @@
           <label>X <span>(m)</span><input id="element-x" type="number" step="0.001"></label>
           <label>Y <span>(m)</span><input id="element-y" type="number" step="0.001"></label>
           <label>Z <span>(m)</span><input id="element-z" type="number" step="0.001"></label>
-          <label>Larghezza <span>(m)</span><input id="element-width" type="number" min="0.05" max="30" step="0.01"></label>
-          <label>Altezza <span>(m)</span><input id="element-height" type="number" min="0.05" max="30" step="0.01"></label>
-          <label>Profondità <span>(m)</span><input id="element-depth" type="number" min="0.05" max="25" step="0.01"></label>
+          <label><span id="element-width-label" data-i18n="Larghezza">Larghezza</span> <span class="model-length-unit length-unit">(m)</span><input id="element-width" type="number" min="0" max="1000" step="0.01"></label>
+          <label><span data-i18n="Altezza">Altezza</span> <span class="model-length-unit length-unit">(m)</span><input id="element-height" type="number" min="0" max="1000" step="0.01"></label>
+          <label><span data-i18n="Profondità">Profondità</span> <span class="model-length-unit length-unit">(m)</span><input id="element-depth" type="number" min="0" max="1000" step="0.01"></label>
         </div>
+        <div class="element-resize-options">
+          <label><span data-i18n="Cresce da">Cresce da</span><select id="element-resize-anchor"><option value="base" data-i18n="Base">Base</option><option value="center" data-i18n="Centro">Centro</option><option value="top" data-i18n="Alto">Alto</option></select></label>
+          <label id="element-linked-move-wrap" hidden><input id="element-linked-move" type="checkbox" checked><span data-i18n="Muovi i pezzi collegati">Muovi i pezzi collegati</span></label>
+        </div>
+        <section id="ready-group-dimensions" class="ready-group-dimensions" hidden aria-label="Misure struttura">
+          <h4 data-i18n="Misure struttura">Misure struttura</h4>
+          <div class="inspector-fields">
+            <label><span data-i18n="Larghezza">Larghezza</span> <span class="length-unit">(m)</span><input id="ready-group-width" type="number" min="0" max="1000" step="0.01"></label>
+            <label><span data-i18n="Profondità">Profondità</span> <span class="length-unit">(m)</span><input id="ready-group-depth" type="number" min="0" max="1000" step="0.01"></label>
+            <label><span data-i18n="Altezza">Altezza</span> <span class="length-unit">(m)</span><input id="ready-group-height" type="number" min="0" max="1000" step="0.01"></label>
+          </div>
+          <button id="ready-group-apply" class="btn primary" type="button" data-i18n="Applica misure struttura">Applica misure struttura</button>
+          <p class="hint" data-i18n="La struttura viene rigenerata mantenendo centro e rotazione; l’operazione si annulla in un passaggio.">La struttura viene rigenerata mantenendo centro e rotazione; l’operazione si annulla in un passaggio.</p>
+        </section>
         <label id="model-roof-color-control" class="step-field" hidden data-i18n="Color del techo">Color del techo
           <input id="model-roof-color" type="color" value="#123d6b" aria-label="Color del techo">
         </label>
