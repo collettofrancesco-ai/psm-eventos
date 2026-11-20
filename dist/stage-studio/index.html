@@ -11,8 +11,8 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-T33IHSic.js"></script>
-  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-B1TEX16N.css">
+  <script type="module" crossorigin src="/stage-studio/assets/index-CvF-wWO1.js"></script>
+  <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BCpP3VGF.css">
 </head>
 <body>
   <div id="boot-splash" role="status" aria-label="PSM Stage Studio"><i aria-hidden="true"></i><span>PSM STAGE STUDIO</span></div>
@@ -553,33 +553,19 @@
       <div id="selection-bar" class="selection-bar" role="group" aria-label="Oggetto selezionato" hidden>
         <div class="selection-bar-heading">
           <span id="selection-bar-name"></span>
-          <select id="selection-bar-riser-height" aria-label="Altura" hidden></select>
-          <button id="selection-bar-delete" class="btn danger" type="button" aria-label="Elimina" data-i18n-aria-label="Elimina"><span aria-hidden="true">🗑</span> <span class="selection-delete-text" data-i18n="Elimina">Elimina</span></button>
-          <button id="selection-bar-close" class="btn ghost" type="button" aria-label="Deseleziona">✕</button>
+          <select id="selection-bar-riser-height" aria-label="Altura" data-i18n-aria-label="Altura" hidden></select>
+          <button id="selection-bar-move" class="btn ghost" type="button" aria-label="Sposta oggetto" data-i18n-aria-label="Sposta oggetto" title="Sposta oggetto" data-i18n-title="Sposta oggetto">↕</button>
+          <button id="selection-bar-duplicate" class="btn ghost" type="button" aria-label="Duplica" data-i18n-aria-label="Duplica" title="Duplica" data-i18n-title="Duplica">⧉</button>
+          <button id="selection-bar-rotate-left" class="btn ghost" type="button" aria-label="Ruota a sinistra di 15°" data-i18n-aria-label="Ruota a sinistra di 15°" title="Ruota a sinistra di 15°" data-i18n-title="Ruota a sinistra di 15°">↶</button>
+          <button id="selection-bar-rotate-right" class="btn ghost" type="button" aria-label="Ruota a destra di 15°" data-i18n-aria-label="Ruota a destra di 15°" title="Ruota a destra di 15°" data-i18n-title="Ruota a destra di 15°">↷</button>
+          <button id="selection-bar-above" class="btn ghost" type="button" aria-label="Aggiungi sezione sopra" data-i18n-aria-label="Aggiungi sezione sopra" title="Aggiungi sezione sopra" data-i18n-title="Aggiungi sezione sopra" hidden>↑</button>
+          <button id="selection-bar-side" class="btn ghost" type="button" aria-label="Aggiungi sezione laterale" data-i18n-aria-label="Aggiungi sezione laterale" title="Aggiungi sezione laterale" data-i18n-title="Aggiungi sezione laterale" hidden>↔</button>
+          <button id="selection-bar-details" class="btn ghost" type="button" aria-expanded="false" aria-controls="model-element-inspector" data-i18n="Dettagli">Dettagli</button>
+          <button id="selection-bar-delete" class="btn danger" type="button" aria-label="Elimina" data-i18n-aria-label="Elimina" title="Elimina" data-i18n-title="Elimina"><span aria-hidden="true">🗑</span></button>
+          <button id="selection-bar-close" class="btn ghost" type="button" aria-label="Deseleziona" data-i18n-aria-label="Deseleziona" title="Deseleziona" data-i18n-title="Deseleziona">✕</button>
         </div>
-        <p id="selection-bar-hint" class="selection-bar-hint" data-i18n="Arrastra el objeto para moverlo; arrastra el fondo para girar la vista.">Arrastra el objeto para moverlo; arrastra el fondo para girar la vista.</p>
-        <div class="selection-edit-actions">
-          <button id="selection-bar-rotate-left" class="btn ghost" type="button" aria-label="Ruota a sinistra di 15°" data-i18n-aria-label="Ruota a sinistra di 15°">↶ 15°</button>
-          <button id="selection-bar-rotate-right" class="btn ghost" type="button" aria-label="Ruota a destra di 15°" data-i18n-aria-label="Ruota a destra di 15°">↷ 15°</button>
-          <button id="selection-bar-duplicate" class="btn ghost" type="button" data-i18n="Duplica">Duplica</button>
-          <button id="selection-bar-height" class="btn ghost" type="button" aria-pressed="false">↕ <span data-i18n="Altura">Altura</span></button>
-        </div>
-        <details class="selection-position-panel">
-          <summary data-i18n="Ajustar posición">Ajustar posición</summary>
-          <div class="selection-move-controls" role="group" aria-label="Sposta oggetto" data-i18n-aria-label="Sposta oggetto">
-          <label class="selection-step-label" for="selection-bar-step"><span data-i18n="Passo di spostamento">Passo</span>
-            <select id="selection-bar-step" aria-label="Passo di spostamento" data-i18n-aria-label="Passo di spostamento">
-              <option value="0.25">0,25 m</option><option value="0.5">0,5 m</option><option value="1">1 m</option><option value="2.57">2,57 m</option>
-            </select>
-          </label>
-          <button class="selection-nudge" type="button" data-axis="x" data-direction="-1" aria-label="Sposta sull’asse X negativo" data-i18n-aria-label="Sposta sull’asse X negativo">X−</button>
-          <button class="selection-nudge" type="button" data-axis="x" data-direction="1" aria-label="Sposta sull’asse X positivo" data-i18n-aria-label="Sposta sull’asse X positivo">X+</button>
-          <button class="selection-nudge" type="button" data-axis="z" data-direction="-1" aria-label="Sposta sull’asse Z negativo" data-i18n-aria-label="Sposta sull’asse Z negativo">Z−</button>
-          <button class="selection-nudge" type="button" data-axis="z" data-direction="1" aria-label="Sposta sull’asse Z positivo" data-i18n-aria-label="Sposta sull’asse Z positivo">Z+</button>
-          <button class="selection-nudge" type="button" data-axis="y" data-direction="1" aria-label="Alza oggetto" data-i18n-aria-label="Alza oggetto">↑</button>
-          <button class="selection-nudge" type="button" data-axis="y" data-direction="-1" aria-label="Abbassa oggetto" data-i18n-aria-label="Abbassa oggetto">↓</button>
-          </div>
-        </details>
+        <p id="selection-bar-hint" class="sr-only" data-i18n="Arrastra el objeto para moverlo; arrastra el fondo para girar la vista.">Arrastra el objeto para moverlo; arrastra el fondo para girar la vista.</p>
+        <div class="selection-edit-actions" hidden><button id="selection-bar-height" class="btn ghost" type="button" aria-pressed="false">↕ <span data-i18n="Altura">Altura</span></button></div>
       </div>
       <button id="btn-toggle-view-controls" class="tool-btn view-controls-toggle" type="button" aria-pressed="false"><span aria-hidden="true">▴</span> <span id="view-controls-label">Ocultar controles</span></button>
       <div class="viewport-hud">
@@ -639,7 +625,7 @@
         <p class="hint model-estimate-note">Gli oggetti modellati compaiono nella distinta, ma non hanno un prezzo nel preventivo.</p>
       </section>
       <section id="model-element-inspector" class="model-inspector" aria-labelledby="model-inspector-title" hidden>
-        <div class="inspector-heading"><h3 id="model-inspector-title">4 · Modifica oggetto</h3><span id="model-inspector-type"></span></div>
+        <div class="inspector-heading"><button id="inspector-resize-handle" class="inspector-resize-handle" type="button" aria-label="Ridimensiona pannello dettagli" data-i18n-aria-label="Ridimensiona pannello dettagli" title="Trascina per ridimensionare" data-i18n-title="Trascina per ridimensionare"><span aria-hidden="true">⠿</span></button><h3 id="model-inspector-title" data-i18n="Modifica oggetto selezionato">4 · Modifica oggetto</h3><span id="model-inspector-type"></span><div class="inspector-size-controls" role="group" aria-label="Dimensione pannello" data-i18n-aria-label="Dimensione pannello"><button type="button" data-inspector-size="compact" data-i18n="Compatto">Compatto</button><button type="button" data-inspector-size="medium" data-i18n="Medio">Medio</button><button type="button" data-inspector-size="extended" data-i18n="Esteso">Esteso</button></div><button id="inspector-hide" class="btn ghost" type="button" aria-label="Nascondi dettagli" data-i18n-aria-label="Nascondi dettagli" title="Nascondi dettagli" data-i18n-title="Nascondi dettagli">×</button></div>
         <div class="inspector-fields">
           <label>X <span>(m)</span><input id="element-x" type="number" step="0.001"></label>
           <label>Y <span>(m)</span><input id="element-y" type="number" step="0.001"></label>
