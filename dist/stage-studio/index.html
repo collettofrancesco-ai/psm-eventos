@@ -11,7 +11,7 @@
   <link rel="icon" type="image/png" href="/stage-studio/favicon.png">
   <link rel="apple-touch-icon" href="/stage-studio/favicon.png">
   <link rel="manifest" href="/stage-studio/manifest.webmanifest">
-  <script type="module" crossorigin src="/stage-studio/assets/index-CvF-wWO1.js"></script>
+  <script type="module" crossorigin src="/stage-studio/assets/index-D9uBnzi2.js"></script>
   <link rel="stylesheet" crossorigin href="/stage-studio/assets/index-BCpP3VGF.css">
 </head>
 <body>
@@ -324,10 +324,11 @@
             <div class="ready-structure-preview" aria-hidden="true"><svg viewBox="0 0 160 72"><g fill="none" stroke="currentColor" stroke-width="3"><path d="M25 61V20l55-12 55 12v41M25 20l55 13 55-13M80 33v29M25 61l55 2 55-2"/><path d="m25 20 14 3-14 4m55-7v13m55-13-14 3 14 4" stroke-width="1"/></g></svg></div>
             <div class="frame-builder-fields ready-structure-fields">
               <label for="ready-structure-type" data-i18n="Tipo">Tipo<select id="ready-structure-type"></select></label>
-              <label for="ready-structure-width" data-i18n="Larghezza (m)">Larghezza (m)<input id="ready-structure-width" type="number" min="2" max="18" step="0.5" value="6" inputmode="decimal"></label>
-              <label for="ready-structure-depth" data-i18n="Profondità (m)">Profondità (m)<input id="ready-structure-depth" type="number" min="2" max="18" step="0.5" value="4" inputmode="decimal"></label>
-              <label for="ready-structure-height" data-i18n="Altezza (m)">Altezza (m)<input id="ready-structure-height" type="number" min="2" max="18" step="0.5" value="3" inputmode="decimal"></label>
+              <label for="ready-structure-width"><span data-i18n="Larghezza">Larghezza</span> <span class="length-unit">(m)</span><input id="ready-structure-width" type="number" step="any" value="6" inputmode="decimal"></label>
+              <label for="ready-structure-depth"><span data-i18n="Profondità">Profondità</span> <span class="length-unit">(m)</span><input id="ready-structure-depth" type="number" step="any" value="4" inputmode="decimal"></label>
+              <label for="ready-structure-height"><span data-i18n="Altezza">Altezza</span> <span class="length-unit">(m)</span><input id="ready-structure-height" type="number" step="any" value="3" inputmode="decimal"></label>
             </div>
+            <p id="ready-structure-summary" class="hint" aria-live="polite"></p>
             <label for="ready-structure-variant" data-i18n="Variante">Variante<select id="ready-structure-variant"></select></label>
             <p id="ready-structure-status" class="hint frame-builder-status" role="status" aria-live="polite"></p>
             <button id="btn-create-ready-structure" class="btn primary full" type="button" data-i18n="Inserisci struttura">Inserisci struttura</button>
